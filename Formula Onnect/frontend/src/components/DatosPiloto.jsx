@@ -80,12 +80,23 @@ export const DatosPiloto = () => {
               <p style={{ fontSize: "2vh", textAlign: "center", color: "white" }}>{pilotos.nacionalidadPiloto}</p>
             </div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginBottom: "2vh", paddingLeft:"20vw" }}>
+          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginBottom: "2vh", paddingLeft:"15vw" }}>
             {driverData && (
-              <div style={{ color: "white" }}>
-                <p>Fecha de nacimiento: {driverData.birthDate}</p>
-                <p>Lugar de nacimiento: {driverData.birthPlace}</p>
-                <p>Fecha de fallecimiento: {driverData.deathDate}</p>
+              <div style={{ color: "white", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", marginBottom: "2vh" }}>
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", padding: "1vh" }}>
+                    <p>Fecha de nacimiento:</p>
+                    <p>{driverData.birthDate}</p>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", padding: "1vh" }}>
+                    <p>Lugar de nacimiento:</p>
+                    <p>{driverData.birthPlace}</p>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", padding: "1vh" }}>
+                    <p>Fecha de fallecimiento:</p>
+                    <p>{driverData.deathDate}</p>
+                  </div>
+                </div>
                 <p>Lugar de fallecimiento: {driverData.deathPlace}</p>
                 <p>Año de debut: {driverData.debutYear}</p>
                 <p>Mundiales ganados: {driverData.championships}</p>
