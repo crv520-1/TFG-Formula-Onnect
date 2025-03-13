@@ -24,6 +24,7 @@ const meGustaRoutes = require('./routes/meGusta');
 const prediccionesRoutes = require('./routes/predicciones');
 const publicacionesRoutes = require('./routes/publicaciones');
 const seguidoresRoutes = require('./routes/seguidores');
+const scrapingPilotosRoutes = require('./routes/scrapingPilotos');
 
 app.use('/api/pilotos', pilotosRoutes);
 app.use('/api/equipos', equiposRoutes);
@@ -34,6 +35,7 @@ app.use('/api/meGusta', meGustaRoutes);
 app.use('/api/predicciones', prediccionesRoutes);
 app.use('/api/publicaciones', publicacionesRoutes);
 app.use('/api/seguidores', seguidoresRoutes);
+app.use('/api/scrapingPilotos', scrapingPilotosRoutes);
 
 // Iniciar servidor
 app.listen(PORT, () => console.log(`Servidor corriendo en http://localhost:${PORT}`));

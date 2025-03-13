@@ -7,6 +7,7 @@ export const DatosPiloto = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [pilotos, setPilotos] = useState([]);
+  const [driverData, setDriverData] = useState(null);
   const { idPiloto } = location.state || {};
 
   useEffect(() => {
@@ -19,6 +20,12 @@ export const DatosPiloto = () => {
           return;
         }
         setPilotos(piloto);
+
+        // Consultar la wikipedia con la url del piloto para obtener los datos de interés
+        const scraperResponse = await axios.get(`http://localhost:3000/api/scrapingPilotos/driver-data`, {
+          params: { url: piloto.urlPiloto }
+        });
+        setDriverData(scraperResponse.data);
       } catch (error) {
         console.error("Error en la API", error);
       }
@@ -74,7 +81,22 @@ export const DatosPiloto = () => {
             </div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginBottom: "2vh", paddingLeft:"20vw" }}>
-            <p> {pilotos.urlPiloto} </p>
+            {driverData && (
+              <div style={{ color: "white" }}>
+                <p>Fecha de nacimiento: {driverData.birthDate}</p>
+                <p>Lugar de nacimiento: {driverData.birthPlace}</p>
+                <p>Fecha de fallecimiento: {driverData.deathDate}</p>
+                <p>Lugar de fallecimiento: {driverData.deathPlace}</p>
+                <p>Año de debut: {driverData.debutYear}</p>
+                <p>Mundiales ganados: {driverData.championships}</p>
+                <p>Victorias: {driverData.wins}</p>
+                <p>Poles: {driverData.poles}</p>
+                <p>Vueltas rápidas: {driverData.fastestLaps}</p>
+                <p>Podios: {driverData.podiums}</p>
+                <p>Puntos totales: {driverData.points}</p>
+                <p>Grandes Premios terminados: {driverData.racesFinished}</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
