@@ -32,11 +32,21 @@ async function getDriverData(url) {
     const data = await page.evaluate(() => {
       const getTableData = (headerText) => {
         const rows = Array.from(document.querySelectorAll('.infobox tr'));
+        const sectionHeaderIndex = rows.findIndex(r => r.querySelector('th') && r.querySelector('th').textContent.includes('Formula One World Championship career'));
+        if (sectionHeaderIndex === -1) return null;
+
+        const sectionRows = rows.slice(sectionHeaderIndex + 1);
+        const row = sectionRows.find(r => r.querySelector('th') && r.querySelector('th').textContent.includes(headerText));
+        return row ? row.querySelector('td') : null;
+      };
+
+      const getVida = (headerText) => {
+        const rows = Array.from(document.querySelectorAll('.infobox tr'));
         const row = rows.find(r => r.querySelector('th') && r.querySelector('th').textContent.includes(headerText));
         return row ? row.querySelector('td') : null;
       };
 
-      const bornCell = getTableData('Born');
+      const bornCell = getVida('Born');
       let birthDate = null;
       let birthPlace = null;
 
@@ -52,19 +62,57 @@ async function getDriverData(url) {
         birthPlace = bornCell.querySelector('.birthplace')?.textContent.trim() || null;
       }
 
+      const deathCell = getVida('Died');
+      let deathDate = null;
+      let deathPlace = null;
+
+      if (deathCell) {
+        // Extraer fecha de fallecimiento
+        const dateNode = Array.from(deathCell.childNodes).find(node => 
+          node.nodeType === Node.TEXT_NODE && 
+          node.nodeValue.trim().match(/\d{1,2} \w+ \d{4}/)
+        );
+        deathDate = dateNode?.nodeValue.trim() || null;
+
+        // Extraer lugar de fallecimiento
+        deathPlace = deathCell.querySelector('.deathplace')?.textContent.trim() || null;
+      } else {
+        deathDate = 'Vivo';
+        deathPlace = 'Vivo';
+      }
+
+      const firstWinCell = getTableData('First win');
+      let firstWin = null;
+      if (firstWinCell) {
+        firstWin = firstWinCell.textContent.trim();
+      } else {
+        firstWin = 'No ha ganado';
+      }
+
+      const racesFinishedCell = getTableData('Entries');
+      let racesFinished = null;
+      if (racesFinishedCell) {
+        // Extraer carreras terminadas
+        const racesFinishedText = racesFinishedCell.textContent.trim();
+        const match = racesFinishedText.match(/^(\d+)/);
+        racesFinished = match ? match[1] : racesFinishedText;
+      }
+
       return {
         birthDate, // Fecha de nacimiento
         birthPlace, // Lugar de nacimiento
-        deathPlace: getTableData('Died')?.textContent.trim() || null, // Lugar de fallecimiento (si aplica)
-        deathDate: getTableData('Died')?.textContent.trim() || null, // Fecha de fallecimiento (si aplica)
-        debutYear: getTableData('Formula One World Championship debut')?.textContent.trim() || null, // Año de debut
+        deathPlace, // Lugar de fallecimiento (si aplica)
+        deathDate, // Fecha de fallecimiento (si aplica)
+        firstRace: getTableData('First entry')?.textContent.trim() || null, // Carrera de debut
+        lastRace: getTableData('Last entry')?.textContent.trim() || null, // Carrera de retiro
+        firstWin, // Primera victoria
         championships: getTableData('Championships')?.textContent.trim() || null, // Mundiales ganados
         wins: getTableData('Wins')?.textContent.trim() || null, // Victorias
         poles: getTableData('Pole positions')?.textContent.trim() || null, // Poles
         fastestLaps: getTableData('Fastest laps')?.textContent.trim() || null, // Vueltas rápidas
         podiums: getTableData('Podiums')?.textContent.trim() || null, // Podios
         points: getTableData('Career points')?.textContent.trim() || null, // Puntos totales
-        racesFinished: getTableData('Entries')?.textContent.trim() || null, // Grandes Premios terminados
+        racesFinished, // Carreras terminadas
       };
     });
 
