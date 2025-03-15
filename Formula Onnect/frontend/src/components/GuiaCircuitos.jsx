@@ -61,7 +61,7 @@ export const GuiaCircuitos = () => {
             {row.map((circuito) => (
               <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.idCircuitos)} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "1vh", backgroundColor:"#2c2c2c", borderRadius:"1vh", width: "35vh", height: "30vh", border:"none" }}>
                 <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{circuito.nombreCircuito}</p>
-                <img src={getImagenCircuito(circuito.circuitId)} alt="Foto de piloto" style={{ width: "30vh", height: "25vh", paddingTop:"0.5vh" }} />
+                <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del circuito" style={{ width: "30vh", height: "25vh", paddingTop:"0.5vh" }} />
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop:"0.5vh" }}>
                     <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} style={{ width: "5vh", height: "3vh" }} />
                     <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh", paddingLeft:"0.5vw" }}>{circuito.ciudad}</p>
