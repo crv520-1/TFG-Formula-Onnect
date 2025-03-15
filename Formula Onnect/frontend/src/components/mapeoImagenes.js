@@ -229,3 +229,49 @@ function getImagenEquipo(constructorId){
 }
 
 export { getImagenEquipo };
+
+function getLivery(constructorId) {
+    const livery = {
+        "arrows" : "images/liverys/Arrow.jpg",
+        "bar" : "images/liverys/BAR.jpg",
+        "benetton" : "images/liverys/Benetton.jpg",
+        "ferrari" : "images/liverys/Ferrari.jpg",
+        "jaguar" : "images/liverys/Jaguar.jpg",
+        "jordan" : "images/liverys/Jordan.jpg",
+        "mclaren" : "images/liverys/McLaren.jpg",
+        "minardi" : "images/liverys/Minardi.jpg",
+        "prost" : "images/liverys/Prost.jpg",
+        "sauber" : "images/liverys/Sauber.jpg",
+        "williams" : "images/liverys/Williams.jpg",
+        "renault" : "images/liverys/Renault.jpg",
+        "toyota" : "images/liverys/Toyota.jpg",
+        "red_bull" : "images/liverys/Red Bull.jpg",
+        "bmw_sauber" : "images/liverys/BMW Sauber.jpg",
+        "honda" : "images/liverys/Honda.jpg",
+        "mf1" : "images/liverys/MF1.jpg",
+        "spyker_mf1" : "images/liverys/Spyker MF1.jpg",
+        "super_aguri" : "images/liverys/Super Aguri.jpg",
+        "toro_rosso" : "images/liverys/Toro Rosso.jpg",
+        "spyker" : "images/liverys/Spyker.jpg",
+        "force_india" : "images/liverys/Force India.jpg",
+        "brawn" : "images/liverys/Brawn.jpg",
+        "hrt" : "images/liverys/HRT.jpg",
+        "lotus_racing" : "images/liverys/Team Lotus.jpg",
+        "mercedes" : "images/liverys/Mercedes.jpg",
+        "virgin" : "images/liverys/Virgin.jpg",
+        "caterham" : "images/liverys/Caterham.jpg",
+        "lotus_f1" : "images/liverys/Lotus F1.jpg",
+        "marussia" : "images/liverys/Marussia.jpg",
+        "manor" : "images/liverys/Manor Marussia.jpg",
+        "haas" : "images/liverys/Haas.jpg",
+        "alfa" : "images/liverys/Alfa Romeo.jpg",
+        "racing_point" : "images/liverys/Racing Point.jpg",
+        "alphatauri" : "images/liverys/Alpha Tauri.jpg",
+        "alpine" : "images/liverys/Alpine.jpg",
+        "aston_martin" : "images/liverys/Aston Martin.jpg",
+        "rb" : "images/liverys/RB.jpg",
+    }
+    return livery[constructorId] || 'null';
+}
+
+export { getLivery };
