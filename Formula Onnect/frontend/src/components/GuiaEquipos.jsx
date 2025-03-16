@@ -40,7 +40,7 @@ export const GuiaEquipos = () => {
     const handleEquipo = (idEquipo) => {
         // Navegar a la vista de un equipo
         console.log("Equipo", idEquipo);
-        //navigate(`/DatosEquipo`, { state: { idEquipo } });
+        navigate(`/DatosEquipo`, { state: { idEquipo } });
     }
 
   return (
