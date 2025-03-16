@@ -1,7 +1,8 @@
 const axios = require('axios');
 const db = require('./models/equiposModel');
 const dotenv = require('dotenv');
-const { getPaisISO, getTraduccionPais } = require('./mapeoPaises');
+const { getPaisISO, getTraduccionPais } = require('./scripts/mapeoPaises');
+const { getURLWikiCastellanoEquipo } = require('./scripts/mapeoURLWiki');
 
 dotenv.config();
 
@@ -27,7 +28,8 @@ async function buscarYAlmacenarEquipos() {
                             nombreEquipo: equipo.name,
                             nacionalidadEquipo: getTraduccionPais(equipo.nationality),
                             urlEquipo: equipo.url,
-                            isoNacEqui: getPaisISO(equipo.nationality)
+                            isoNacEqui: getPaisISO(equipo.nationality),
+                            urlCastellano: getURLWikiCastellanoEquipo(equipo.constructorId),
                         });
                     }
                 });
@@ -48,7 +50,7 @@ async function buscarYAlmacenarEquipos() {
                 console.log(`Datos de los equipos de la temporada ${year} almacenados correctamente.`);
                 
                 // Esperar antes de la próxima solicitud para evitar la limitación
-                await esperar(500); // Espera 500ms antes de hacer la siguiente petición
+                await esperar(5000); // Espera 500ms antes de hacer la siguiente petición
 
             } catch (error) {
                 console.error(`Error en el año ${year}:`, error);

@@ -1,7 +1,7 @@
 const axios = require('axios');
 const db = require('./models/circuitosModel');
 const dotenv = require('dotenv');
-const { getPaisISO, getTraduccionPais } = require('./mapeoPaises');
+const { getPaisISO, getTraduccionPais } = require('./scripts/mapeoPaises');
 
 dotenv.config();
 

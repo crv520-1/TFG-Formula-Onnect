@@ -25,8 +25,8 @@ exports.equipoExiste = async (constructorId) => {
 
 // Almacenar un nuevo equipo
 exports.postEquipos = async (equipo, callback) => {
-  const query = 'INSERT INTO Equipos (constructorId, nombreEquipo, nacionalidadEquipo, urlEquipo, isoNacEqui) VALUES (?, ?, ?, ?, ?)';
-  const values = [equipo.constructorId, equipo.nombreEquipo, equipo.nacionalidadEquipo, equipo.urlEquipo, equipo.isoNacEqui];
+  const query = 'INSERT INTO Equipos (constructorId, nombreEquipo, nacionalidadEquipo, urlEquipo, isoNacEqui, urlCastellano) VALUES (?, ?, ?, ?, ?, ?)';
+  const values = [equipo.constructorId, equipo.nombreEquipo, equipo.nacionalidadEquipo, equipo.urlEquipo, equipo.isoNacEqui, equipo.urlCastellano];
   try {
     const [result] = await db.query(query, values);
     return result;
