@@ -59,7 +59,7 @@ async function getDriverData(url) {
         birthDate = dateNode?.nodeValue.trim() || null;
 
         // Extraer lugar de nacimiento
-        birthPlace = bornCell.querySelector('.birthplace')?.textContent.trim() || null;
+        birthPlace = bornCell.querySelector('.birthplace')?.textContent.replace(/\[.*?\]/g, '').trim() || null;
       }
 
       const deathCell = getVida('Died');
@@ -75,7 +75,7 @@ async function getDriverData(url) {
         deathDate = dateNode?.nodeValue.trim() || null;
 
         // Extraer lugar de fallecimiento
-        deathPlace = deathCell.querySelector('.deathplace')?.textContent.trim() || null;
+        deathPlace = deathCell.querySelector('.deathplace')?.textContent.replace(/\[.*?\]/g, '').trim() || null;
       } else {
         deathDate = 'Vivo';
         deathPlace = 'Vivo';
@@ -84,7 +84,7 @@ async function getDriverData(url) {
       const firstWinCell = getTableData('First win');
       let firstWin = null;
       if (firstWinCell) {
-        firstWin = firstWinCell.textContent.trim();
+        firstWin = firstWinCell.textContent.replace(/\[.*?\]/g, '').trim();
       } else {
         firstWin = 'No ha ganado';
       }
@@ -93,7 +93,7 @@ async function getDriverData(url) {
       let racesFinished = null;
       if (racesFinishedCell) {
         // Extraer carreras terminadas
-        const racesFinishedText = racesFinishedCell.textContent.trim();
+        const racesFinishedText = racesFinishedCell.textContent.replace(/\[.*?\]/g, '').trim();
         const match = racesFinishedText.match(/^(\d+)/);
         racesFinished = match ? match[1] : racesFinishedText;
       }
@@ -103,15 +103,15 @@ async function getDriverData(url) {
         birthPlace, // Lugar de nacimiento
         deathPlace, // Lugar de fallecimiento (si aplica)
         deathDate, // Fecha de fallecimiento (si aplica)
-        firstRace: getTableData('First entry')?.textContent.trim() || null, // Carrera de debut
-        lastRace: getTableData('Last entry')?.textContent.trim() || null, // Carrera de retiro
+        firstRace: getTableData('First entry')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Carrera de debut
+        lastRace: getTableData('Last entry')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Carrera de retiro
         firstWin, // Primera victoria
-        championships: getTableData('Championships')?.textContent.trim() || null, // Mundiales ganados
-        wins: getTableData('Wins')?.textContent.trim() || null, // Victorias
-        poles: getTableData('Pole positions')?.textContent.trim() || null, // Poles
-        fastestLaps: getTableData('Fastest laps')?.textContent.trim() || null, // Vueltas rápidas
-        podiums: getTableData('Podiums')?.textContent.trim() || null, // Podios
-        points: getTableData('Career points')?.textContent.trim() || null, // Puntos totales
+        championships: getTableData('Championships')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Mundiales ganados
+        wins: getTableData('Wins')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Victorias
+        poles: getTableData('Pole positions')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Poles
+        fastestLaps: getTableData('Fastest laps')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Vueltas rápidas
+        podiums: getTableData('Podiums')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Podios
+        points: getTableData('Career points')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Puntos totales
         racesFinished, // Carreras terminadas
       };
     });
