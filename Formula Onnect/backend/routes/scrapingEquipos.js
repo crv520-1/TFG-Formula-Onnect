@@ -4,14 +4,14 @@ const puppeteer = require('puppeteer');
 const router = express.Router();
 
 router.get('/equipo-data', async (req, res) => {
-  const { url } = req.query;
+  const { index, urlEng, urlEsp } = req.query;
   
-  if (!url) {
-    return res.status(400).json({ error: 'URL parameter is required' });
+  if (!urlEng || !urlEsp || !index) {
+    return res.status(400).json({ error: 'Los parametros index y URL son necesarios' });
   }
   
   try {
-    const data = await getEquipoData(url);
+    const data = await getEquipoData(index, urlEng, urlEsp);
     res.json(data);
   } catch (error) {
     console.error('Error scraping equipo data:', error);
@@ -19,20 +19,28 @@ router.get('/equipo-data', async (req, res) => {
   }
 });
 
-async function getEquipoData(url) {
+// Si no obtenemos un dato que se haga rellamada a si mismo para obtenerlo de la otra URL
+// Probar primero con la URL de la Wikipedia de España para el tema de los puntos de Ferrari
+// Probar en segunda y última ocasión con la URL de la Wikipedia en inglés
+// Si no se obtiene el dato, devolver "Sin datos encontrados"
+// Enviar un index para saber si ya ha probado con la versión inglesa y española
+// Si el index es 0 es que va a probar con España y si es 1 ya ha probado con España y va a probar con la versión inglesa
+// Si el index es 2 es que ya ha probado con ambas versiones y no ha encontrado el dato por lo que devolvemos "Sin datos encontrados"
+async function getEquipoData(index, urlEng, urlEsp) {
   const browser = await puppeteer.launch({ 
     headless: "new" // Updated syntax for newer Puppeteer
   });
   const page = await browser.newPage();
 
   try {
-    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    await page.goto(urlEsp, { waitUntil: 'domcontentloaded' });
 
     // Extraer datos del equipo
     const data = await page.evaluate(() => {
       const getTableData = (headerText) => {
         const rows = Array.from(document.querySelectorAll('.infobox tr'));
-        const sectionHeaderIndex = rows.findIndex(r => r.querySelector('th') && r.querySelector('th').textContent.includes('Formula One World Championship career'));
+        // Poner tanto la versión española como la versión inglesa de la tabla
+        const sectionHeaderIndex = rows.findIndex(r => r.querySelector('th') && (r.querySelector('th').textContent.includes('Fórmula 1') || r.querySelector('th').textContent.includes('F1')));
         if (sectionHeaderIndex === -1) return null;
 
         const sectionRows = rows.slice(sectionHeaderIndex + 1);
@@ -46,7 +54,7 @@ async function getEquipoData(url) {
         return row ? row.querySelector('td') : null;
       };
 
-      const racesFinishedCell = getTableData('Races entered');
+      const racesFinishedCell = getTableData('Carreras');
       let racesFinished = null;
       if (racesFinishedCell) {
         // Extraer carreras terminadas
@@ -55,15 +63,13 @@ async function getEquipoData(url) {
         racesFinished = match ? match[1] : racesFinishedText;
       }
 
-      const winsCell = getTableData('Race victories');
+      const winsCell = getTableData('Victorias');
       let wins = null;
       if (winsCell) {
         // Extraer victorias
         const winsText = winsCell.textContent.replace(/\[.*?\]/g, '').trim();
         const match = winsText.match(/^(\d+)/);
         wins = match ? match[1] : winsText;
-      } else {
-        wins = "Sin datos encontrados"
       }
 
       const polesCell = getTableData('Pole positions');
@@ -73,21 +79,17 @@ async function getEquipoData(url) {
         const polesText = polesCell.textContent.replace(/\[.*?\]/g, '').trim();
         const match = polesText.match(/^(\d+)/);
         poles = match ? match[1] : polesText;
-      } else {
-        poles = "Sin datos encontrados"
       }
 
-      const foundersCell = getHistoria('Founder(s)');
-      let founders = "Desconocidos";
+      const foundersCell = getHistoria('Fundador/es');
+      let founders = null;
       if (foundersCell) {
-        founders = Array.from(foundersCell.querySelectorAll('a')) // Obtiene todos los enlaces (nombres de personas)
-          .map(a => a.textContent.replace(/\[.*?\]/g, '').trim()) // Extrae el texto sin espacios extra
-          .join(', '); // Une los nombres separados por comas
+        founders = foundersCell.textContent.replace(/\[.*?\]/g, '').trim()
       } else {
-        founders = "Desconocidos";
+        founders = "Desconocido";
       }
 
-      const pointsCell = getTableData('Points');
+      const pointsCell = getTableData('Puntos');
       let points = null;
       if (pointsCell) {
         // Extraer puntos
@@ -100,14 +102,14 @@ async function getEquipoData(url) {
 
       return {
         founders, // Fundadores
-        firstRace: getTableData('First entry')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Carrera de debut
-        lastRace: getTableData('Last entry')?.textContent.replace(/\[.*?\]/g, '').trim() || getTableData('Final entry')?.textContent.replace(/\[.*?\]/g, '').trim() || "Desconocida", // Carrera de retiro
-        constructorChampionships: getTableData('Constructors Championships')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Mundiales de constructores ganados
-        driverChampionships: getTableData('Drivers Championships')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Mundiales de pilotos ganados
+        firstRace: getTableData('Debut')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Carrera de debut
+        lastRace: getTableData('Última carrera')?.textContent.replace(/\[.*?\]/g, '').trim() || "Desconocida", // Carrera de retiro
+        constructorChampionships: getTableData('Campeonatos de Constructores')?.textContent.replace(/\[.*?\]/g, '').trim() || getTableData('Campeonatos de Escuderías')?.textContent.replace(/\[.*?\]/g, '').trim() || "No hay datos", // Mundiales de constructores ganados
+        driverChampionships: getTableData('Campeonatos de Pilotos')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Mundiales de pilotos ganados
         wins, // Victorias
         poles, // Poles
-        fastestLaps: getTableData('Fastest laps')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Vueltas rápidas
-        podiums: getTableData('Podiums')?.textContent.replace(/\[.*?\]/g, '').trim() || "Sin datos encontrados", // Podios
+        fastestLaps: getTableData('Vueltas rápidas')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Vueltas rápidas
+        podiums: getTableData('Podios')?.textContent.replace(/\[.*?\]/g, '').trim() || "Sin datos encontrados", // Podios
         points, // Puntos totales
         racesFinished, // Carreras terminadas
       };
