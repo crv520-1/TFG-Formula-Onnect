@@ -27,7 +27,12 @@ async function buscarYAlmacenarCircuitos() {
                         urlCircuito: circuito.url,
                         pais: getTraduccionPais(circuito.Location.country),
                         isoPais: getPaisISO(circuito.Location.country),
-                        ciudad: circuito.Location.locality
+                        ciudad: circuito.Location.locality,
+                        primeraCarrera: getPrimeraCarrera(circuito.circuitId),
+                        ultimaCarrera: getUltimaCarrera(circuito.circuitId),
+                        longitudCircuito: getLongitudCircuito(circuito.circuitId),
+                        vueltas: getVueltas(circuito.circuitId),
+                        recordPista: getRecordPista(circuito.circuitId)
                     });
                 }
             });
