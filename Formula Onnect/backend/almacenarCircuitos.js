@@ -2,6 +2,7 @@ const axios = require('axios');
 const db = require('./models/circuitosModel');
 const dotenv = require('dotenv');
 const { getPaisISO, getTraduccionPais } = require('./scripts/mapeoPaises');
+const { getPrimeraCarrera, getUltimaCarrera, getLongitudCircuito, getVueltas, getRecordPista, getURLStats } = require('./scripts/mapeoDatosCircuito');
 
 dotenv.config();
 
@@ -32,7 +33,8 @@ async function buscarYAlmacenarCircuitos() {
                         ultimaCarrera: getUltimaCarrera(circuito.circuitId),
                         longitudCircuito: getLongitudCircuito(circuito.circuitId),
                         vueltas: getVueltas(circuito.circuitId),
-                        recordPista: getRecordPista(circuito.circuitId)
+                        recordPista: getRecordPista(circuito.circuitId),
+                        URLRecords: getURLStats(circuito.circuitId)
                     });
                 }
             });
