@@ -60,6 +60,11 @@ async function getDriverData(url) {
 
         // Extraer lugar de nacimiento
         birthPlace = bornCell.querySelector('.birthplace')?.textContent.replace(/\[.*?\]/g, '').trim() || null;
+        if (birthPlace === null) {
+          const bornText = bornCell.textContent.replace(/\[.*?\]/g, '').trim();
+          const birthPlaceMatch = bornText.match(/(?:\d{1,2} \w+ \d{4},?\s*)(.*)/);
+          birthPlace = birthPlaceMatch ? birthPlaceMatch[1].replace(/\(.*?\)/g, '').trim() : "Desconocido";
+        }
       }
 
       const deathCell = getVida('Died');
@@ -76,6 +81,11 @@ async function getDriverData(url) {
 
         // Extraer lugar de fallecimiento
         deathPlace = deathCell.querySelector('.deathplace')?.textContent.replace(/\[.*?\]/g, '').trim() || null;
+        if (deathPlace === null) {
+          const deathText = deathCell.textContent.replace(/\[.*?\]/g, '').trim();
+          const deathPlaceMatch = deathText.match(/(?:\d{1,2} \w+ \d{4},?\s*)(.*)/);
+          deathPlace = deathPlaceMatch ? deathPlaceMatch[1].replace(/\(.*?\)/g, '').trim() : "Vivo";
+        }
       } else {
         deathDate = 'Vivo';
         deathPlace = 'Vivo';
