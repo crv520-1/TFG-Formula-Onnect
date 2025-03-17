@@ -40,7 +40,7 @@ export const GuiaCircuitos = () => {
     const handleCircuito = (idCircuito) => {
         // Navegar a la vista de un circuito
         console.log("Circuito", idCircuito);
-        //navigate(`/DatosCircuito`, { state: { idCircuito } });
+        navigate(`/DatosCircuito`, { state: { idCircuito } });
     }
 
   return (
