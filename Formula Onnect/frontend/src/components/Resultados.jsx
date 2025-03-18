@@ -73,7 +73,7 @@ export const Resultados = () => {
       </div>
       <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto" }}>
         {circuitos.map((circuito) => (
-          <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.idCircuitos, year, circuito.ronda)} style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C" }}>
+          <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.circuitId, year, circuito.ronda)} style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C" }}>
             <div key={circuito.idCircuitos} style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
               <img src={getImagenCircuito(circuito.circuitId)} alt={circuito.circuitId} style={{ width: "45vh", height: "25vh" }} />
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", paddingLeft: "5vw" }}>
