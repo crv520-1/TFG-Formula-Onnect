@@ -21,6 +21,7 @@ import PublicacionesOtroUsuario from "./components/PublicacionesOtroUsuario";
 import Registro1 from "./components/Registro1";
 import RegistroNext from "./components/RegistroNext";
 import Resultados from "./components/Resultados";
+import ResultadoCircuito from "./components/resultadoCircuito";
 import { UsuarioProvider } from "./context/UsuarioContext";
 
 const Layout = () => {
@@ -48,7 +49,7 @@ const Layout = () => {
           <Route path="/DatosPiloto" element={<DatosPiloto />} />
           <Route path="/DatosCircuito" element={<DatosCircuito />} />
           <Route path="/DatosEquipo" element={<DatosEquipo/>} />
-          <Route path="/resultadoCircuito" element={<resultadoCircuito />} />
+          <Route path="/ResultadoCircuito" element={<ResultadoCircuito />} />
         </Routes>
       </div>
     </div>

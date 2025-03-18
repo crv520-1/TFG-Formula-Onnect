@@ -54,7 +54,7 @@ export const Resultados = () => {
   const handleCircuito = (circuitId, year, round) => {
     // Navegar a la vista de los resultados de un circuito
     console.log("Datos", circuitId, year, round);
-    navigate(`/resultadoCircuito`, { state: { circuitId, year, round } });
+    navigate(`/ResultadoCircuito`, { state: { circuitId, year, round } });
   }
 
   // Generate array of years from 2000 to 2025
