@@ -51,10 +51,10 @@ export const Resultados = () => {
     fetchData();
   }, [year]);
 
-  const handleCircuito = (idCircuito) => {
+  const handleCircuito = (circuitId, year, round) => {
     // Navegar a la vista de los resultados de un circuito
-    console.log("Circuito", idCircuito);
-    //navigate(`/DatosCircuito`, { state: { idCircuito } });
+    console.log("Datos", circuitId, year, round);
+    navigate(`/resultadoCircuito`, { state: { circuitId, year, round } });
   }
 
   // Generate array of years from 2000 to 2025
@@ -73,7 +73,7 @@ export const Resultados = () => {
       </div>
       <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto" }}>
         {circuitos.map((circuito) => (
-          <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.idCircuitos)} style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C" }}>
+          <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.idCircuitos, year, circuito.ronda)} style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C" }}>
             <div key={circuito.idCircuitos} style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
               <img src={getImagenCircuito(circuito.circuitId)} alt={circuito.circuitId} style={{ width: "45vh", height: "25vh" }} />
               <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", paddingLeft: "5vw" }}>
