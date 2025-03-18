@@ -37,17 +37,19 @@ export const ResultadoCircuito = () => {
 
           const horariosGranPremioResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/races.json`);
           const horariosGranPremioData = horariosGranPremioResponse.data.MRData.RaceTable.Races[0];
+          const hasSprint = !!horariosGranPremioData.Sprint; //Comprueba que exista la propiedad Sprint y en caso afirmativo lo pone en true mediante el doble signo de exclamación
           horariosGranPremio.push({
             diaCarrera: horariosGranPremioData.date ? horariosGranPremioData.date : "N/A fecha",
             horaCarrera: horariosGranPremioData.time ? horariosGranPremioData.time : "N/A hora",
             diaClasificacion: horariosGranPremioData.Qualifying.date ? horariosGranPremioData.Qualifying.date : "N/A fecha",
             horaClasificacion: horariosGranPremioData.Qualifying.time ? horariosGranPremioData.Qualifying.time : "N/A hora",
-            diaFP3: horariosGranPremioData.ThirdPractice ? horariosGranPremioData.ThirdPractice.date : horariosGranPremioData.SprintQualifying ? horariosGranPremioData.Sprint.date : "N/A fecha",
-            horaFP3: horariosGranPremioData.ThirdPractice ? horariosGranPremioData.ThirdPractice.time : horariosGranPremioData.SprintQualifying ? horariosGranPremioData.Sprint.time : "N/A hora",
+            diaFP3: horariosGranPremioData.ThirdPractice ? horariosGranPremioData.ThirdPractice.date : horariosGranPremioData.Sprint ? horariosGranPremioData.Sprint.date : "N/A fecha",
+            horaFP3: horariosGranPremioData.ThirdPractice ? horariosGranPremioData.ThirdPractice.time : horariosGranPremioData.Sprint ? horariosGranPremioData.Sprint.time : "N/A hora",
             diaFP2: horariosGranPremioData.SecondPractice ? horariosGranPremioData.SecondPractice.date : horariosGranPremioData.SprintQualifying ? horariosGranPremioData.SprintQualifying.date : "N/A fecha",
             horaFP2: horariosGranPremioData.SecondPractice ? horariosGranPremioData.SecondPractice.time : horariosGranPremioData.SprintQualifying ? horariosGranPremioData.SprintQualifying.time : "N/A hora",
             diaFP1: horariosGranPremioData.FirstPractice ? horariosGranPremioData.FirstPractice.date : "N/A fecha",
             horaFP1: horariosGranPremioData.FirstPractice ? horariosGranPremioData.FirstPractice.time : "N/A hora",
+            hasSprint: hasSprint
           });
         } 
         catch (error) {
@@ -57,10 +59,16 @@ export const ResultadoCircuito = () => {
     fetchData();
   }, [circuitId]);
 
+  const handleCalendario = (e) => {
+    e.preventDefault();
+    navigate("/Resultados");
+    console.log("Calendario");
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
-        <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center" }}>Calendario</h2>
+        <button type='submit' onClick={handleCalendario} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#C40000" }}>Calendario</button>
       </div>
       <img src={getImagenCircuito(circuitos.circuitId)} alt={circuitos.circuitId} />
     </div>
