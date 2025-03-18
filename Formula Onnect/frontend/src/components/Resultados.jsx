@@ -19,10 +19,10 @@ export const Resultados = () => {
             ? new Date(circuitoAno.FirstPractice.date).toLocaleDateString('es-ES')
             : new Date(circuitoAno.date).toLocaleDateString('es-ES');
             circuitosDatos.push({
-            circuitId: circuitoAno.Circuit.circuitId,
-            fechaCarrera: new Date(circuitoAno.date).toLocaleDateString('es-ES'),
-            fechaInicioFinDeSemana: fechaInicioFinDeSemana,
-            ronda: circuitoAno.round
+              circuitId: circuitoAno.Circuit.circuitId,
+              fechaCarrera: new Date(circuitoAno.date).toLocaleDateString('es-ES'),
+              fechaInicioFinDeSemana: fechaInicioFinDeSemana,
+              ronda: circuitoAno.round
             });
         });
         
