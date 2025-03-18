@@ -48,6 +48,7 @@ const Layout = () => {
           <Route path="/DatosPiloto" element={<DatosPiloto />} />
           <Route path="/DatosCircuito" element={<DatosCircuito />} />
           <Route path="/DatosEquipo" element={<DatosEquipo/>} />
+          <Route path="/resultadoCircuito" element={<resultadoCircuito />} />
         </Routes>
       </div>
     </div>

@@ -80,7 +80,7 @@ export const Dashboard = () => {
             <p style={{ color: "white", fontSize:"2vh" }}>Clasificación</p>
         </button>
         <br />
-        <button type="submit" onClick={handleResultados} style={{ padding:"1vw", backgroundColor: getBoton("/Resultados"), borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
+        <button type="submit" onClick={handleResultados} style={{ padding:"1vw", backgroundColor: location.pathname === "/Resultados" || location.pathname === "/resultadoCircuito" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
             <FlagIcon style={{ color: "white", width:"3vw", height:"3vh" }} />
             <p style={{ color: "white", fontSize:"2vh" }}>Resultados</p>
         </button>
