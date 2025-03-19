@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
-import { getImagenCircuito } from './mapeoImagenes.js';
+import { getImagenCircuito, getImagenEquipo } from './mapeoImagenes.js';
 
 export const ResultadoCircuito = () => {
   const navigate = useNavigate();
@@ -105,6 +105,28 @@ export const ResultadoCircuito = () => {
       return (
         <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>No se ha disputado aún la carrera</p>
       )
+    } else {
+      return (
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh" }}>
+          <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>Resultados carrera</p>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", width: "100%" }}>
+            {posiciones.map((posicion, index) => {
+              const isEven = index % 2 !== 0;
+              return (
+                <div key={index} style={{ display: "flex", flexDirection: "row", alignItems: "center", backgroundColor: "#1a1a1a", padding: "5px 10px", borderRadius: "0.5vh", marginBottom: "1vh", paddingLeft: "0.5vh", transform: isEven ? "translateY(1.5vh)" : "none" }}>
+                  <div style={{ minWidth: "25px", textAlign: "center", backgroundColor: "#C40000", borderRadius: "50%", padding: "2px" }}>
+                    <span style={{ fontSize: "1.5vh", color: "white", fontWeight: "bold" }}>{posicion.position}</span>
+                  </div>
+                  <span style={{ fontSize: "1.5vh", color: "white", margin: "0 10px" }}>{posicion.driver}</span>
+                  <img src={getImagenEquipo(posicion.constructorId)} alt={posicion.constructorId} style={{ width: "5vh", height: "5vh", objectFit:"contain" }}/>
+                  <span style={{ fontSize: "1.4vh", color: "#aaa", marginLeft: "10px" }}>{posicion.status}</span>
+                  <span style={{ fontSize: "1.4vh", color: "#ffcc00", marginLeft: "10px" }}>{`+${posicion.puntos}`}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )
     }
   }
 
@@ -131,8 +153,8 @@ export const ResultadoCircuito = () => {
             )}
           </div>  
         </div>
+        {mostrarDisputada(disputada)}
       </div>
-      {mostrarDisputada(disputada)}
     </div>
   )
 }
