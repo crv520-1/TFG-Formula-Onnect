@@ -1,12 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getImagenCircuito } from './mapeoImagenes.js';
 
 export const Resultados = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { ano } = location.state || {};
   const [circuitos, setCircuitos] = useState([]);
-  const [year, setYear] = useState(2025);
+  const [year, setYear] = useState(ano || 2025);
   let circuitosDatos = [];
 
   useEffect(() => {
