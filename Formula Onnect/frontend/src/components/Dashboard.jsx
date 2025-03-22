@@ -28,7 +28,7 @@ export const Dashboard = () => {
 
     const handleGuia = (e) => {
         e.preventDefault();
-        navigate("/Guia");
+        navigate("/GuiaPilotos");
         console.log("Guía");
     }
 
@@ -65,7 +65,7 @@ export const Dashboard = () => {
             <p style={{ color: "white", fontSize:"2vh" }}>Inicio</p>
         </button>
         <br />
-        <button type="submit" onClick={handleGuia} style={{ padding:"1vw", backgroundColor: location.pathname === "/Guia" || location.pathname === "/GuiaCircuitos" || location.pathname === "/GuiaPilotos" || location.pathname === "/GuiaEquipos" || location.pathname === "/DatosPiloto" || location.pathname === "/DatosEquipo" || location.pathname === "/DatosCircuito" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
+        <button type="submit" onClick={handleGuia} style={{ padding:"1vw", backgroundColor: location.pathname === "/GuiaCircuitos" || location.pathname === "/GuiaPilotos" || location.pathname === "/GuiaEquipos" || location.pathname === "/DatosPiloto" || location.pathname === "/DatosEquipo" || location.pathname === "/DatosCircuito" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
             <BookOpenIcon style={{ color: "white", width:"3vw", height:"3vh" }} />
             <p style={{ color: "white", fontSize:"2vh" }}>Guía</p>
         </button>

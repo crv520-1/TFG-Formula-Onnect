@@ -19,12 +19,6 @@ export const GuiaPilotos = () => {
     fetchData();
   }, []);
 
-  const handleF1 = (e) => {
-    e.preventDefault();
-    navigate("/Guia");
-    console.log("F1");
-  }
-
   const handleEquipos = (e) => {
     e.preventDefault();
     navigate("/GuiaEquipos");
@@ -46,8 +40,7 @@ export const GuiaPilotos = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
-        <button type='submit' onClick={handleF1} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>F1</button>
-        <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", marginLeft: "20vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Pilotos</h2>
+        <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Pilotos</h2>
         <button type='submit' onClick={handleEquipos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Equipos</button>
         <button type='submit' onClick={handleCircuitos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Circuitos</button>
       </div>
@@ -60,7 +53,7 @@ export const GuiaPilotos = () => {
           <div key={rowIndex} style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
             {row.map((piloto) => (
               <button key={piloto.idPilotos} onClick={() => handlePiloto(piloto.idPilotos)} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "1vh", backgroundColor:"#2c2c2c", borderRadius:"1vh", width: "23vh", height: "23vh", border:"none" }}>
-                <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" style={{ width: "15vh", height: "15vh" }} />
+                <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" style={{ width: "15vh", height: "15vh", objectFit:"contain" }} />
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                   <div style={{ display: "flex", flexDirection: "column", paddingRight:"2vw", textAlign: "left" }}>
                     <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{piloto.nombrePiloto}</p>
