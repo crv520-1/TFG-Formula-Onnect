@@ -73,7 +73,7 @@ export const Resultados = () => {
           {years.map(year => ( <option key={year} value={year}>{year}</option> ))}
         </select>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto" }}>
+      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", padding:"2vh" }}>
         {circuitos.map((circuito) => (
           <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.circuitId, year, circuito.ronda)} style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C" }}>
             <div key={circuito.idCircuitos} style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
