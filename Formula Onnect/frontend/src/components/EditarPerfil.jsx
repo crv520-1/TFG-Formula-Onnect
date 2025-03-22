@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
+import { validarContraseña } from "./validarContraseña.js";
 
 export const EditarPerfil = () => {
     const navigate = useNavigate();
@@ -92,37 +93,43 @@ export const EditarPerfil = () => {
         console.log("Cancelar");
     }
 
+    
+
     const handleGuardar = async (e) => {
         e.preventDefault();
+        
         if (!nickName || !nombreCompleto || !contraseña || !contraseñaRepe) {
             alert("Por favor, llene todos los campos");
             return;
-        } else {
-            console.log("Campos llenos");
-            if (contraseña !== contraseñaRepe) {
-                alert("Las contraseñas no coinciden");
-                return;
-            } else {
-                console.log("Contraseñas coinciden");
-                const usuarioActualizado = {
-                    nickName: nickName,
-                    nombreCompleto: nombreCompleto,
-                    email: usuario.email,
-                    contrasena: contraseña,
-                    pilotoFav: pilotoSeleccionado,
-                    equipoFav: equipoSeleccionado,
-                    circuitoFav: circuitoSeleccionado,
-                    fotoPerfil: usuario.fotoPerfil
-                };
-                console.log(usuarioActualizado);
-                try {
-                    await axios.put(`http://localhost:3000/api/usuarios/${idUsuario}`, usuarioActualizado);
-                } catch (error) {
-                    console.error(`Error al actualizar el usuario ${usuarioActualizado.nickName}:`, error);
-                }
-                navigate("/Perfil");
-            }
+        } 
+        
+        if (!validarContraseña(contraseña)) {
+            alert("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número");
+            return;
         }
+
+        if (contraseña !== contraseñaRepe) {
+            alert("Las contraseñas no coinciden");
+            return;
+        }
+                
+        const usuarioActualizado = {
+            nickName: nickName,
+            nombreCompleto: nombreCompleto,
+            email: usuario.email,
+            contrasena: contraseña,
+            pilotoFav: pilotoSeleccionado,
+            equipoFav: equipoSeleccionado,
+            circuitoFav: circuitoSeleccionado,
+            fotoPerfil: usuario.fotoPerfil
+        };
+        console.log(usuarioActualizado);
+        try {
+            await axios.put(`http://localhost:3000/api/usuarios/${idUsuario}`, usuarioActualizado);
+        } catch (error) {
+            console.error(`Error al actualizar el usuario ${usuarioActualizado.nickName}:`, error);
+        }
+        navigate("/Perfil");
     }
 
     if (cargando) { 

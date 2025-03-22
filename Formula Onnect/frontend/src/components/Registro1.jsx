@@ -2,6 +2,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { validarContraseña } from "./validarContraseña";
 
 const Registro1 = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -32,31 +33,40 @@ const Registro1 = () => {
             setTipo('password')
         }
     }
-
+    
     const handleContinuarRegistro = (e) => {
         e.preventDefault();
+    
         if (!nickName || !nombreCompleto || !email || !contraseña || !contraseñaRepe) {
-            alert("Por favor, llene todos los campos");
+            alert("Por favor, llene todos los campos.");
             return;
-        } else {
-            console.log("Campos llenos");   
-            if (contraseña !== contraseñaRepe) {
-                alert("Las contraseñas no coinciden");
-                return;
-            } else {
-                console.log("Contraseñas coinciden");
-                if (nickName === usuarios.nickName) {
-                    alert("El nombre de usuario ya existe");
-                    return;
-                } else if (email === usuarios.email) {
-                    alert("El email ya está registrado");
-                    return;
-                } else {
-                    console.log("Registro continuado");
-                    navigate("/RegistroNext", {state: { nickName, nombreCompleto, email, contraseña }});
-                }
-            }
         }
+    
+        if (contraseña !== contraseñaRepe) {
+            alert("Las contraseñas no coinciden.");
+            return;
+        }
+    
+        if (!validarContraseña(contraseña)) {
+            alert("La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.");
+            return;
+        }
+    
+        const usuarioExistente = usuarios.find(user => user.nickName === nickName);
+        const emailExistente = usuarios.find(user => user.email === email);
+    
+        if (usuarioExistente) {
+            alert("El nombre de usuario ya existe.");
+            return;
+        }
+    
+        if (emailExistente) {
+            alert("El email ya está registrado.");
+            return;
+        }
+    
+        console.log("Registro continuado");
+        navigate("/RegistroNext", { state: { nickName, nombreCompleto, email, contraseña } });
     };
 
     const handleIniciarSesion = (e) => {
