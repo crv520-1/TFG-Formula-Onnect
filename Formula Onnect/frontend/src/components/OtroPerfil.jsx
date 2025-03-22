@@ -10,9 +10,6 @@ export const OtroPerfil = () => {
     const { user: idUsuario } = useContext(UsuarioContext);
     const navigate = useNavigate();
     const [usuario, setUsuario] = useState([]);
-    const [pilotos, setPilotos] = useState([]);
-    const [equipos, setEquipos] = useState([]);
-    const [circuitos, setCircuitos] = useState([]);
     const [seguidores, setSeguidores] = useState([]);
     const [siguiendo, setSiguiendo] = useState([]);
     const [cargando, setCargando] = useState(true);
@@ -39,19 +36,16 @@ export const OtroPerfil = () => {
             // Obtener piloto favorito
             const pilotosResponse = await axios.get("http://localhost:3000/api/pilotos");
             const pilotoFav = pilotosResponse.data.find(p => p.idPilotos === usuarioEncontrado.pilotoFav);
-            setPilotos(pilotoFav);
             if (pilotoFav) setImagenPiloto(getImagenPiloto(pilotoFav.driverId));
     
             // Obtener equipo favorito
             const equiposResponse = await axios.get("http://localhost:3000/api/equipos");
             const equipoFav = equiposResponse.data.find(e => e.idEquipos === usuarioEncontrado.equipoFav);
-            setEquipos(equipoFav);
             if (equipoFav) setImagenEquipo(getImagenEquipo(equipoFav.constructorId));
     
             // Obtener circuito favorito
             const circuitosResponse = await axios.get("http://localhost:3000/api/circuitos");
             const circuitoFav = circuitosResponse.data.find(c => c.idCircuitos === usuarioEncontrado.circuitoFav);
-            setCircuitos(circuitoFav);
             if (circuitoFav) setImagenCircuito(getImagenCircuito(circuitoFav.circuitId));
     
             // Obtener número de publicaciones del usuario
