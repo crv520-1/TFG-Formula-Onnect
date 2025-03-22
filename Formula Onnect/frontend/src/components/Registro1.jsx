@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validarContraseña } from "./validarContraseña";
+import { validarEmail } from "./validarEmail";
 
 const Registro1 = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -39,6 +40,11 @@ const Registro1 = () => {
     
         if (!nickName || !nombreCompleto || !email || !contraseña || !contraseñaRepe) {
             alert("Por favor, llene todos los campos.");
+            return;
+        }
+
+        if (!validarEmail(email)) {
+            alert("Por favor, ingrese un email válido.");
             return;
         }
     
