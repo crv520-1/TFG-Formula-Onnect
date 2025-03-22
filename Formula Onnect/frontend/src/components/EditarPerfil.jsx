@@ -11,11 +11,8 @@ export const EditarPerfil = () => {
     const { user: idUsuario } = useContext(UsuarioContext);
     const [usuario, setUsuario] = useState([]);
     const [pilotos, setPilotos] = useState([]);
-    const [pilotoFav, setPilotoFav] = useState([]);
     const [equipos, setEquipos] = useState([]);
-    const [equipoFav, setEquiposFav] = useState([]);
     const [circuitos, setCircuitos] = useState([]);
-    const [circuitoFav, setCircuitoFav] = useState([]);
     const [pilotoSeleccionado, setPilotoSeleccionado] = useState("");
     const [equipoSeleccionado, setEquipoSeleccionado] = useState("");
     const [circuitoSeleccionado, setCircuitoSeleccionado] = useState("");
@@ -24,55 +21,47 @@ export const EditarPerfil = () => {
     const [contraseña, setContraseña] = useState("");
     const [contraseñaRepe, setContraseñaRepe] = useState("");
     const [cargando, setCargando] = useState(true);
-    const [imagenPiloto, setImagenPiloto] = useState("");
-    const [imagenEquipo, setImagenEquipo] = useState("");
-    const [imagenCircuito, setImagenCircuito] = useState("");
     const [tipo, setTipo] = useState("password");
     const [icono, setIcono] = useState(EyeSlashIcon);
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            // Obtener usuario
-            const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
-            const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUsuario);
-            if (!usuarioEncontrado) {
-              console.error("Usuario no encontrado");
-              return;
+            try {
+                // Obtener usuario
+                const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
+                const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUsuario);
+                if (!usuarioEncontrado) {
+                    console.error("Usuario no encontrado");
+                    return;
+                }
+                setUsuario(usuarioEncontrado);
+                setNickName(usuarioEncontrado.nickName);
+                setNombreCompleto(usuarioEncontrado.nombreCompleto);
+                setContraseña(usuarioEncontrado.contrasena);
+                setContraseñaRepe(usuarioEncontrado.contrasena);
+
+                // Obtener piloto favorito
+                const pilotosResponse = await axios.get("http://localhost:3000/api/pilotos");
+                setPilotos(pilotosResponse.data);
+                const pilFav = pilotosResponse.data.find(p => p.idPilotos === usuarioEncontrado.pilotoFav);
+                setPilotoSeleccionado(pilFav?.idPilotos || "");
+
+                // Obtener equipo favorito
+                const equiposResponse = await axios.get("http://localhost:3000/api/equipos");
+                setEquipos(equiposResponse.data);
+                const equiFav = equiposResponse.data.find(e => e.idEquipos === usuarioEncontrado.equipoFav);
+                setEquipoSeleccionado(equiFav?.idEquipos || "");
+
+                // Obtener circuito favorito
+                const circuitosResponse = await axios.get("http://localhost:3000/api/circuitos");
+                setCircuitos(circuitosResponse.data);
+                const circuFav = circuitosResponse.data.find(c => c.idCircuitos === usuarioEncontrado.circuitoFav);
+                setCircuitoSeleccionado(circuFav?.idCircuitos || "");
+
+                setCargando(false);
+            } catch (error) {
+                console.error("Error obteniendo datos:", error);
             }
-            setUsuario(usuarioEncontrado);
-            setNickName(usuarioEncontrado.nickName);
-            setNombreCompleto(usuarioEncontrado.nombreCompleto);
-            setContraseña(usuarioEncontrado.contrasena);
-            setContraseñaRepe(usuarioEncontrado.contrasena);
-    
-            // Obtener piloto favorito
-            const pilotosResponse = await axios.get("http://localhost:3000/api/pilotos");
-            setPilotos(pilotosResponse.data);
-            const pilFav = pilotosResponse.data.find(p => p.idPilotos === usuarioEncontrado.pilotoFav);
-            setPilotoFav(pilFav);
-            setPilotoSeleccionado(pilFav.idPilotos);
-            if (pilFav) setImagenPiloto(getImagenPiloto(pilFav.driverId));
-    
-            // Obtener equipo favorito
-            const equiposResponse = await axios.get("http://localhost:3000/api/equipos");
-            setEquipos(equiposResponse.data);
-            const equiFav = equiposResponse.data.find(e => e.idEquipos === usuarioEncontrado.equipoFav);
-            setEquiposFav(equiFav);
-            setEquipoSeleccionado(equiFav.idEquipos);
-            if (equiFav) setImagenEquipo(getImagenEquipo(equiFav.constructorId));
-    
-            // Obtener circuito favorito
-            const circuitosResponse = await axios.get("http://localhost:3000/api/circuitos");
-            setCircuitos(circuitosResponse.data);
-            const circuFav = circuitosResponse.data.find(c => c.idCircuitos === usuarioEncontrado.circuitoFav);
-            setCircuitoFav(circuFav);
-            setCircuitoSeleccionado(circuFav.idCircuitos);
-            if (circuFav) setImagenCircuito(getImagenCircuito(circuFav.circuitId));
-            setCargando(false);
-          } catch (error) {
-            console.error("Error obteniendo datos:", error);
-          }
         };
         fetchData();
     }, [idUsuario]);
