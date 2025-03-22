@@ -176,13 +176,13 @@ export const OtroPerfil = () => {
       </div>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop: "5vh" }}>
         <div style={{ width: "15vw", height: "25vh", borderRadius: "25px", backgroundColor:"#2c2c2c", display: "flex", justifyContent: "center", alignItems: "center" }} >
-          <img src={imagenPiloto} alt="Piloto" style={{ width: "90%", height: "100%" }} />
+          <img src={imagenPiloto} alt="Piloto" style={{ width: "90%", height: "100%", objectFit:"contain" }} />
         </div>
         <div style={{ width: "40vh", height: "20vh", paddingLeft: "15vh", display: "flex", justifyContent: "center", alignItems: "center" }} >
-          <img src={imagenEquipo} alt="Equipo" style={{ width: "90%", height: "100%", backgroundColor:"#2c2c2c", borderRadius: "25px" }} />
+          <img src={imagenEquipo} alt="Equipo" style={{ width: "90%", height: "100%", backgroundColor:"#2c2c2c", borderRadius: "25px", objectFit:"contain" }} />
         </div>
         <div style={{ width: "40vh", height: "25vh", paddingLeft: "15vh", display: "flex", justifyContent: "center", alignItems: "center" }} >
-          <img src={imagenCircuito} alt="Circuito" style={{ width: "100%", height: "100%", backgroundColor:"#2c2c2c", borderRadius: "25px" }} />
+          <img src={imagenCircuito} alt="Circuito" style={{ width: "100%", height: "100%", backgroundColor:"#2c2c2c", borderRadius: "25px", objectFit:"contain" }} />
         </div>
       </div>
     </div> 

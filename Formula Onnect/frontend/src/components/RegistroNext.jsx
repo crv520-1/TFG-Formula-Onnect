@@ -10,7 +10,6 @@ export const RegistroNext = () => {
     const [pilotos, setPilotos] = useState([]);
     const [equipos, setEquipos] = useState([]);
     const [circuitos, setCircuitos] = useState([]);
-    const [usuarios, setUsuarios] = useState([]);
     const [pilotoSeleccionado, setPilotoSeleccionado] = useState("");
     const [equipoSeleccionado, setEquipoSeleccionado] = useState("");
     const [circuitoSeleccionado, setCircuitoSeleccionado] = useState("");
@@ -35,11 +34,6 @@ export const RegistroNext = () => {
             setCircuitos(response.data);
         }).catch(error => {
             console.error("Error al obtener los circuitos:", error);
-        });
-        axios.get("http://localhost:3000/api/usuarios").then(response => {
-            setUsuarios(response.data);
-        }).catch(error => {
-            console.error("Error al obtener los usuarios:", error);
         });
     }, []);
 
