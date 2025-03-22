@@ -1,6 +1,6 @@
 import { ChatBubbleOvalLeftIcon, HandThumbUpIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 

@@ -1,13 +1,12 @@
 import { ChatBubbleOvalLeftIcon, HandThumbUpIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 
 export const Inicio = () => {
   const navigate = useNavigate();
   const { user: idUsuario } = useContext(UsuarioContext);
-  const [usuarioVisualizador, setUsuarioVisualizador] = useState(null);
   const [publicacionesConUsuarios, setPublicacionesConUsuarios] = useState([]);
   const [meGustasPublicaciones, setMeGustasPublicaciones] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -15,15 +14,6 @@ export const Inicio = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Obtener usuario visualizador (el usuario actual)
-        const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
-        const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUsuario);
-        if (!usuarioEncontrado) {
-          console.error("Usuario no encontrado");
-          return;
-        }
-        setUsuarioVisualizador(usuarioEncontrado);
-
         // Obtener todas las publicaciones
         const publicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones`);
         const publicacionesEncontradas = publicacionesResponse.data;
