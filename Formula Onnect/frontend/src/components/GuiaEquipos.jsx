@@ -57,7 +57,7 @@ export const GuiaEquipos = () => {
                             <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop:"0.5vh" }}>
                                 <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{equipo.nombreEquipo}</p>
                                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                                    <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} style={{ width: "5vh", height: "3vh", paddingLeft:"2vw" }} />
+                                    <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} style={{ width: "5vh", height: "3vh", paddingLeft:"2vw", objectFit:"contain" }} />
                                     <img src={getImagenEquipo(equipo.constructorId)} alt="Foto del equipo" style={{ width: "5vh", height: "3vh", paddingLeft:"2vw", paddingTop:"0.25vh", objectFit:"contain" }} />
                                 </div>
                             </div>

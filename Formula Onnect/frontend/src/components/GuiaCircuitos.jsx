@@ -56,7 +56,7 @@ export const GuiaCircuitos = () => {
                 <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{circuito.nombreCircuito}</p>
                 <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del circuito" style={{ width: "30vh", height: "25vh", paddingTop:"0.5vh", objectFit:"contain" }} />
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop:"0.5vh" }}>
-                    <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} style={{ width: "5vh", height: "3vh" }} />
+                    <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} style={{ width: "5vh", height: "3vh", objectFit:"contain" }} />
                     <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh", paddingLeft:"0.5vw" }}>{circuito.ciudad}</p>
                     <p style={{ fontSize: "2vh", margin: "0vh" }}>,</p>
                     <p style={{ fontSize: "2vh", margin: "0vh", paddingLeft:"0.25vw" }}>{circuito.pais}</p>

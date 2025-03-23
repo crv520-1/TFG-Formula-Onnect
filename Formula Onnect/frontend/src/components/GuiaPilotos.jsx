@@ -59,7 +59,7 @@ export const GuiaPilotos = () => {
                     <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{piloto.nombrePiloto}</p>
                     <p style={{ fontSize: "2vh", margin: "0vh" }}>{piloto.apellidoPiloto}</p>
                   </div>
-                  <img src={`https://flagcdn.com/w160/${piloto.isoNacPil}.png`} alt={piloto.isoNacPil} style={{ width: "6vh", height: "4vh" }} />
+                  <img src={`https://flagcdn.com/w160/${piloto.isoNacPil}.png`} alt={piloto.isoNacPil} style={{ width: "6vh", height: "4vh", objectFit:"contain" }} />
                 </div>
               </button>
             ))}
