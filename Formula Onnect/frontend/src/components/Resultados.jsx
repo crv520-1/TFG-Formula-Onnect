@@ -14,7 +14,7 @@ export const Resultados = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const circuitosAnoResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/races/`)
+        const circuitosAnoResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/races.json`)
         const circuitosAno = circuitosAnoResponse.data.MRData.RaceTable.Races;
         circuitosAno.forEach(circuitoAno => {
             const fechaInicioFinDeSemana = circuitoAno.FirstPractice 

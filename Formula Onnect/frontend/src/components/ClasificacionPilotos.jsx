@@ -12,7 +12,7 @@ export const Clasificacion = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const clasificacionResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/driverstandings/`);
+        const clasificacionResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/driverstandings.json`);
         const clasificacionData = clasificacionResponse.data.MRData.StandingsTable.StandingsLists[0];
         const standings = clasificacionData.DriverStandings.map(piloto => ({
           position: piloto.position,
