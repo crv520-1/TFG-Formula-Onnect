@@ -59,7 +59,7 @@ export const Resultados = () => {
     navigate(`/ResultadoCircuito`, { state: { circuitId, year, round } });
   }
 
-  // Generate array of years from 2000 to 2025
+  // Se crea un array que comprenda los años entre el 2000 y el 2025
   const years = Array.from({ length: 26 }, (_, i) => 2025 - i);
   
   return (
