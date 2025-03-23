@@ -67,8 +67,8 @@ export const ClasificacionEquipos = () => {
       </div>
       <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", padding:"2vh" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2vh" }}>
-          {clasificacion.map(equipo => (
-            <div key={equipo.constructorId} style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", backgroundColor:"#2c2c2c", borderRadius:"1vh", gap: "1vh", width:"22vw", justifyContent: "space-between" }}>
+          {clasificacion.map((equipo, index) => (
+            <div key={equipo.constructorId} style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", backgroundColor:"#2c2c2c", borderRadius:"1vh", gap: "1vh", width:"22vw", justifyContent: "space-between",  ...(clasificacion.length % 2 !== 0 && index === clasificacion.length - 1 ? { gridColumn: "1 / span 2", justifySelf: "center" } : {}) }}>
               <div style={{ display: "flex", flexDirection: "column", paddingLeft: "0.5vw" }}>
                 <div style={{ display: "flex", flexDirection: "row", paddingLeft: "1vw" }}>
                   <span style={{ fontSize: "2.5vh", color: getColorPosicion(Number(equipo.position)), textAlign: "center", paddingBottom:"1vh", fontWeight:getEstiloPosicion(Number(equipo.position)) }}>{equipo.position ? equipo.position : "-"}. </span>
