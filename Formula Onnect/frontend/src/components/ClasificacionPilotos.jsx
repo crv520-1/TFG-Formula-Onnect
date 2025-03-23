@@ -25,7 +25,7 @@ export const Clasificacion = () => {
           constructorName: piloto.Constructors[0].name,
           constructorId: piloto.Constructors[0].constructorId
         }));
-        setClasificacion(standings); // Actualizas el estado una sola vez
+        setClasificacion(standings);
         console.log(standings);
       } catch (error) {
         console.error("Error en la API", error);
