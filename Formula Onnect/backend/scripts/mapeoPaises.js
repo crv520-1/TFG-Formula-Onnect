@@ -96,7 +96,14 @@ function getTraduccionPais(nationality) {
     return traduccionPaises[nationality] || '';
 }
 
-module.exports = {
+// Se usa para exportar de cara a la aplicación web para usarlo en el frontend de la clasificación de pilotos y de equipos
+export { getPaisISO, getTraduccionPais };
+
+// IMPORTANTE. SI NO FUNCIONA LA BASE DE DATOS PROBAR A ACTIVAR ESTO.
+// Se usa para exportar de cara a la API de la base de datos
+/*module.exports = {
     getPaisISO,
     getTraduccionPais
-};
+};*/
+
+
