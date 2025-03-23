@@ -75,7 +75,7 @@ export const Dashboard = () => {
             <p style={{ color: "white", fontSize:"2vh" }}>Crear</p>
         </button>
         <br />
-        <button type="submit" onClick={handleClasificacion} style={{ padding:"1vw", backgroundColor: getBoton("/Clasificacion"), borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
+        <button type="submit" onClick={handleClasificacion} style={{ padding:"1vw", backgroundColor: location.pathname === "/Clasificacion" || location.pathname === "/ClasificacionEquipos" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
             <TrophyIcon style={{ color: "white", width:"3vw", height:"3vh" }} />
             <p style={{ color: "white", fontSize:"2vh" }}>Clasificación</p>
         </button>
