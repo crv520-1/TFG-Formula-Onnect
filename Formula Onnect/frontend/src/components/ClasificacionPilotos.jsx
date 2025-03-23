@@ -83,7 +83,7 @@ export const Clasificacion = () => {
               <div style={{ display: "flex", flexDirection: "column", paddingRight: "1vw" }}>
                 <span style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>#{piloto.numero} </span>
                 <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                  <img src={getImagenEquipo(piloto.constructorId)} alt="Foto de piloto" style={{ width: "5vh", height: "5vh", objectFit:"contain", paddingRight:"1vw" }} />
+                  <img src={getImagenEquipo(piloto.constructorId)} alt="Foto de equipo" style={{ width: "5vh", height: "5vh", objectFit:"contain", paddingRight:"1vw" }} />
                   <img src={`https://flagcdn.com/w160/${piloto.nacionalidad}.png`} alt={piloto.nacionalidad} style={{ width: "5vh", height: "5vh", objectFit:"contain" }} />
                 </div>
                 <span style={{ fontSize: "3vh", color: "white", textAlign: "center" }}>{piloto.points} PTS.</span>
