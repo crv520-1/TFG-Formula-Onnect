@@ -69,7 +69,7 @@ export const Resultados = () => {
       </div>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
         {/* Seleccionable para elegir el año */}
-        <select style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C", color:"white" }} onChange={(e) => setYear(e.target.value)} value={year}>
+        <select style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C", color:"white", fontSize:"1.25vh" }} onChange={(e) => setYear(e.target.value)} value={year}>
           {years.map(year => ( <option key={year} value={year}>{year}</option> ))}
         </select>
       </div>
