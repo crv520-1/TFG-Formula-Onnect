@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito, getImagenEquipo } from './mapeoImagenes.js';
+import { getStatusTraducido } from './mapeoStatus.js';
 
 export const ResultadoCircuito = () => {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ export const ResultadoCircuito = () => {
                 team: resultado.Constructor.name,
                 constructorId: resultado.Constructor.constructorId,
                 puntos: resultado.points,
-                status: resultado.status
+                status: getStatusTraducido(resultado.status)
               }));
               setPosiciones(nuevasPosiciones);
               console.log("Posiciones", posiciones);
@@ -89,7 +90,7 @@ export const ResultadoCircuito = () => {
                   driver: resultado.Driver.givenName + " " + resultado.Driver.familyName,
                   constructorId: resultado.Constructor.constructorId,
                   puntos: resultado.points,
-                  status: resultado.status
+                  status: getStatusTraducido(resultado.status)
                 }));
                 setSprintPosiciones(nuevasPosicionesSprint);
                 console.log("Posiciones Sprint", sprintPosiciones);
