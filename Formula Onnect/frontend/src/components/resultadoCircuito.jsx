@@ -218,7 +218,7 @@ export const ResultadoCircuito = () => {
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh", width: "100%", paddingBottom: "2vh" }}>
         <p style={{ fontSize: "2vh", color: "white" }}>{circuitos.nombreCircuito}</p>
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh", margin: "2vh" }}>
-          <img src={getImagenCircuito(circuitos.circuitId)} alt={circuitos.circuitId} style={{ width: "45vh", height: "25vh", objectFit:"contain" }}/>
+          <img src={getImagenCircuito(circuitos.circuitId)} alt={circuitos.circuitId} style={{ width: "50vh", height: "35vh", objectFit:"contain" }}/>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh", margin: "2vh" }}>
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh", margin: "2vh" }}>
               <img src={`https://flagcdn.com/w160/${circuitos.isoPais}.png`} alt={circuitos.isoPais} style={{ width: "6vh", height: "4vh", objectFit:"contain" }} />
