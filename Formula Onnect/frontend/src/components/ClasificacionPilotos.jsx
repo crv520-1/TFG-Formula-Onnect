@@ -43,6 +43,20 @@ export const Clasificacion = () => {
   // Se crea un array que comprenda los años entre el 2000 y el 2025
   const years = Array.from({ length: 26 }, (_, i) => 2025 - i);
 
+  const getColorPosicion = (posicion) => {
+    if (posicion === 1) return "#FFD700";
+    if (posicion === 2) return "#C0C0C0";
+    if (posicion === 3) return "#CD7F32";
+    return "white";
+  }
+
+  const getEstiloPosicion = (posicion) => {
+    if (posicion === 1) return "bold";
+    if (posicion === 2) return "bold";
+    if (posicion === 3) return "bold";
+    return "normal";
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
@@ -60,10 +74,10 @@ export const Clasificacion = () => {
           {clasificacion.map(piloto => (
             <div key={piloto.driverId} style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", backgroundColor:"#2c2c2c", borderRadius:"1vh", gap: "1vh", width:"24vw" }}>
               <div style={{ display: "flex", flexDirection: "column", paddingLeft: "1vw" }}>
-                <span style={{ fontSize: "3vh", color: "white", textAlign: "center" }}>{piloto.position ? piloto.position : "-"}. </span>
-                <span style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>{piloto.nombre}</span>
-                <span style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>{piloto.apellido}</span>
-                <span style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>{piloto.constructorName}</span>
+                <span style={{ fontSize: "2.5vh", color: getColorPosicion(Number(piloto.position)), textAlign: "center", paddingBottom:"1vh", fontWeight:getEstiloPosicion(Number(piloto.position)) }}>{piloto.position ? piloto.position : "-"}. </span>
+                <span style={{ fontSize: "1.75vh", color: "white", textAlign: "center" }}>{piloto.nombre}</span>
+                <span style={{ fontSize: "1.75vh", color: "white", textAlign: "center", fontWeight:"bold" }}>{piloto.apellido}</span>
+                <span style={{ fontSize: "1.5vh", color: "#aaa", textAlign: "center", paddingTop:"1vh" }}>{piloto.constructorName}</span>
               </div>
               <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" style={{ width: "15vh", height: "15vh", objectFit:"contain", paddingTop:"1vh" }} />
               <div style={{ display: "flex", flexDirection: "column", paddingRight: "1vw" }}>
