@@ -28,6 +28,23 @@ exports.getPublicacionesByIdUsuario = async (req, res) => {
     }
 };
 
+// Obtener una publicacion por su id
+exports.getPublicacionById = async (req, res) => {
+    const idPublicacion = req.params.id;
+
+    try {
+        const publicacion = await publicacionesController.getPublicacionById(idPublicacion);
+        if (!publicacion) {
+            return res.status(404).json({ error: 'Publicacion no encontrada' });
+        }
+        return res.json(publicacion);
+    }
+    catch (error) {
+        console.error("Error en la API:", error);
+        return res.status(500).json({ error: 'Error al buscar en la base de datos' });
+    }
+};
+
 // Crear una nueva publicacion
 exports.createPublicaciones = async (req, res) => {
     try {

@@ -21,6 +21,17 @@ exports.getPublicacionesByIdUsuario = async (idUsuario) => {
   }
 };
 
+// Obtener una publicación por su id
+exports.getPublicacionById = async (idPublicacion) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM Publicaciones WHERE idPublicaciones = ?', [idPublicacion]);
+    return rows[0];
+  } catch (error) {
+    console.error("Error en la consulta de publicación:", error);
+    throw error;
+  }
+};
+
 // Crear un nuevo usuario
 exports.createPublicaciones = async (publicaciones) => {
   const query = 'INSERT INTO publicaciones (texto, usuario, fechaPublicacion) VALUES (?, ?, ?)';
