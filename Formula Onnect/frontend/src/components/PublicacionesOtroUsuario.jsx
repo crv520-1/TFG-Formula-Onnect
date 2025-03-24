@@ -145,7 +145,7 @@ export const PublicacionesOtroUsuario = () => {
     
     const handleComentarios = (idPublicacion) => {
       // Pasar el ID de la publicación como parámetro para la vista de comentarios
-      navigate(`/Comentarios/${idPublicacion}`);
+      navigate(`/Comentarios`, { state: { idElemento: idPublicacion } });
     };
 
     const handleSeguir = async () => {
@@ -186,45 +186,47 @@ export const PublicacionesOtroUsuario = () => {
     } else {
   
     return (
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-        <h1 style={{ fontSize: "4vh", textAlign: "center" }}> {usuario.nickName} </h1>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-          <img src={usuario.fotoPerfil} alt="Foto de perfil" style={{ width: "15vh", height: "15vh", borderRadius: "50%", color:"white", backgroundColor:"white" }} />
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-              <p style={{ fontSize: "3vh", marginLeft: "1vh", margin: "1vh" }}>{usuario.nombreCompleto}</p>
+      <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+          <h1 style={{ fontSize: "4vh", textAlign: "center" }}> {usuario.nickName} </h1>
+          <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+            <img src={usuario.fotoPerfil} alt="Foto de perfil" style={{ width: "15vh", height: "15vh", borderRadius: "50%", color:"white", backgroundColor:"white" }} />
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                <p style={{ fontSize: "3vh", marginLeft: "1vh", margin: "1vh" }}>{usuario.nombreCompleto}</p>
+              </div>
+              <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
+                  <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Publicaciones </p>
+                  <p style={{ fontSize: "1.5vh", margin: "0" }}> {numeroPublicaciones} </p>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
+                  <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Seguidores </p>
+                  <p style={{ fontSize: "1.5vh", margin: "0" }}> {seguidores} </p>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
+                  <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Siguiendo </p>
+                  <p style={{ fontSize: "1.5vh", margin: "0" }}> {siguiendo} </p>
+                </div>
+              </div>
+              {!sigo ? (
+                <button type='submit' onClick={handleSeguir} style={{ fontSize: "2vh", height:"3vh", marginTop: "1vh", marginLeft:"1vw", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"#C40000", width:"15vw" }}>
+                  Seguir 
+                </button>
+              ) : (
+                <button type='submit' onClick={handleDejarSeguir} style={{ fontSize: "2vh", height:"3vh", marginTop: "1vh", marginLeft:"1vw", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"white", width:"15vw", color:"#C40000" }}>
+                  Dejar de seguir
+                </button>
+              )}
             </div>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
-                <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Publicaciones </p>
-                <p style={{ fontSize: "1.5vh", margin: "0" }}> {numeroPublicaciones} </p>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
-                <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Seguidores </p>
-                <p style={{ fontSize: "1.5vh", margin: "0" }}> {seguidores} </p>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
-                <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Siguiendo </p>
-                <p style={{ fontSize: "1.5vh", margin: "0" }}> {siguiendo} </p>
-              </div>
-            </div>
-            {!sigo ? (
-            <button type='submit' onClick={handleSeguir} style={{ fontSize: "2vh", height:"3vh", marginTop: "1vh", marginLeft:"1vw", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"#C40000", width:"15vw" }}>
-              Seguir 
-            </button>
-          ) : (
-            <button type='submit' onClick={handleDejarSeguir} style={{ fontSize: "2vh", height:"3vh", marginTop: "1vh", marginLeft:"1vw", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"white", width:"15vw", color:"#C40000" }}>
-              Dejar de seguir
-            </button>
-          )}
+          </div>
+          <br />
+          <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
+            <button type='submit' onClick={handleDatos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Datos</button>
+            <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", marginLeft: "35vh" }}>Publicaciones</h2>
           </div>
         </div>
-        <br />
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
-          <button type='submit' onClick={handleDatos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Datos</button>
-          <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", marginLeft: "35vh" }}>Publicaciones</h2>
-        </div>
-        <div style={{ paddingTop:"2vh"}}>
+        <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh" }}>
           {publicaciones.map((publicacion) => (
             <div key={publicacion.idPublicaciones} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor:"#2c2c2c", width:"50vw", height:"auto", borderRadius:"1vh", marginBottom: "2vh" }}>
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop:"1vh", width: "95%", paddingLeft: "1vh", paddingRight: "1vh" }}>
