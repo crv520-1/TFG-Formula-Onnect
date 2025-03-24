@@ -14,6 +14,7 @@ export const Comentarios = () => {
   const [usuarioPublicador, setUsuarioPublicador] = useState({});
   const [usuarioComentador, setUsuarioComentador] = useState({});
   const [meGustasPublicacion, setMeGustasPublicacion] = useState({});
+  const [numeroComentarios, setNumeroComentarios] = useState({});
   const [texto, setTexto] = useState("");
   const [hayComentarios, setHayComentarios] = useState(false);
   const maxCaracteres = 450;
@@ -56,6 +57,7 @@ export const Comentarios = () => {
       setPublicacion(publicacionEncontrada);
       cargarUsuarioPublicador(publicacionEncontrada.usuario);
       cargarMeGustasPublicacion(publicacionEncontrada.idPublicaciones);
+      cargarNumeroComentarios(publicacionEncontrada.idPublicaciones);
     } catch (error) {
       console.error("Error obteniendo publicación:", error);
     }
@@ -121,6 +123,21 @@ export const Comentarios = () => {
       setMeGustasPublicacion(meGusta);
     } catch (error) {
       console.error("Error obteniendo me gustas:", error);
+    }
+  }
+
+  const cargarNumeroComentarios = async (idPublicacion) => {
+    try {
+      const numeroComentariosResponse = await axios.get(`http://localhost:3000/api/comentarios/numero/${idPublicacion}`);
+      const numeroComentariosData = numeroComentariosResponse.data || [];
+
+      if (numeroComentariosData.length === 0) {
+        console.error("No se encontró el número de comentarios");
+        return;
+      }
+      setNumeroComentarios(numeroComentariosData);
+    } catch (error) {
+      console.error("Error obteniendo número de comentarios:", error);
     }
   }
 
@@ -237,7 +254,7 @@ export const Comentarios = () => {
               <div style={{ marginLeft: "27vw", display: "flex", alignItems: "center" }}>
                 <p style={{fontSize:"1.5vh"}}>{meGustasPublicacion[0]?.contador || 0}</p>
                 <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
-                <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>0</p>
+                <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{numeroComentarios.contador}</p>
                 <button type='button' style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
               )}
