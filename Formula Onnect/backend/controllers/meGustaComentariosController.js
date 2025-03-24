@@ -1,4 +1,4 @@
-const meGustaComentariosModel = require('./models/meGustaComentariosModel.js');
+const meGustaComentariosModel = require('../models/meGustaComentariosModel.js');
 
 // Obtener todos los me gusta de comentarios
 exports.getAllMeGustaComentarios = async (req, res) => {
