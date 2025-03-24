@@ -145,7 +145,7 @@ export const PublicacionesOtroUsuario = () => {
     
     const handleComentarios = (idPublicacion) => {
       // Pasar el ID de la publicación como parámetro para la vista de comentarios
-      navigate(`/Comentarios`, { state: { idElemento: idPublicacion } });
+      navigate(`/Comentarios`, { state: { idElemento: idPublicacion, previusPath: 2 } });
     };
 
     const handleSeguir = async () => {

@@ -119,7 +119,7 @@ export const Inicio = () => {
 
   const handleComentarios = (idPublicacion) => {
     // Navegar a comentarios con el ID de la publicación
-    navigate(`/Comentarios`, { state: { idElemento: idPublicacion } });
+    navigate(`/Comentarios`, { state: { idElemento: idPublicacion, previusPath: 0 } });
   };
 
   const handleVisitarPerfil = (idUser) => {
