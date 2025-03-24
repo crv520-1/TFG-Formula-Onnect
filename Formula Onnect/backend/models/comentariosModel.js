@@ -6,6 +6,7 @@ exports.getAllComentarios = async () => {
     const [rows] = await db.query('SELECT * FROM Comentarios');
     return rows;
   } catch (error) {
+    console.log("Error en la consulta de comentarios:", error);
     throw error;
   }
 };
@@ -16,6 +17,7 @@ exports.getComentariosByIdComentario = async (idComentarios) => {
     const [rows] = await db.query('SELECT * FROM Comentarios WHERE idComentarios = ?', [idComentarios]);
     return rows[0];
   } catch (error) {
+    console.log("Error en la consulta de comentario:", error);
     throw error;
   }
 };
@@ -26,6 +28,7 @@ exports.getComentariosByIdPublicacion = async (post) => {
     const [rows] = await db.query('SELECT * FROM Comentarios WHERE post = ?', [post]);
     return rows;
   } catch (error) {
+    console.log("Error en la consulta de comentarios:", error);
     throw error;
   }
 };
@@ -38,6 +41,7 @@ exports.createComentarios = async (comentario) => {
     const [result] = await db.query(query, values);
     return result.insertId;
   } catch (error) {
+    console.log("Error al crear el comentario:", error);
     throw error;
   }
 };
