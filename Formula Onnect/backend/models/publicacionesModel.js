@@ -10,7 +10,7 @@ exports.getAllPublicaciones = async () => {
   }
 };
 
-// Obtener un usuario por su id
+// Obtener una publicación por el id del usuario
 exports.getPublicacionesByIdUsuario = async (idUsuario) => {
   try {
     const [rows] = await db.query('SELECT * FROM Publicaciones WHERE usuario = ? ORDER BY fechaPublicacion DESC', [idUsuario]);

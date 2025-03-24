@@ -28,11 +28,11 @@ exports.getComentariosByIdComentario = async (req, res) => {
 };
 
 // Obtener los comentarios de una publicacion por su id
-exports.getComentariosByIdPublicacion = (req, res) => {
+exports.getComentariosByIdPublicacion = async (req, res) => {
     const post = req.params.id;
 
     try {
-        const comentarios = comentariosController.getComentariosByIdPublicacion(post);
+        const comentarios = await comentariosController.getComentariosByIdPublicacion(post);
         if (comentarios.length === 0) {
             return res.status(404).json({ error: 'Comentarios no encontrados' });
         }
@@ -44,7 +44,7 @@ exports.getComentariosByIdPublicacion = (req, res) => {
 }
 
 // Crear un nuevo comentario
-exports.createComentarios = (req, res) => {
+exports.createComentarios = async (req, res) => {
     try {
         const comentario = req.body;
         const insertId = comentariosController.createComentarios(comentario);
