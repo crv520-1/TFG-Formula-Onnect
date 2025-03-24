@@ -43,6 +43,19 @@ exports.getComentariosByIdPublicacion = async (req, res) => {
     }
 }
 
+// Obtener el numero de comentarios de una publicacion por el id de la publicacion
+exports.getNumeroComentariosByIdPublicacion = async (req, res) => {
+    const post = req.params.id;
+
+    try {
+        const numeroComentarios = await comentariosController.getNumeroComentariosByIdPublicacion(post);
+        return res.json(numeroComentarios);
+    } catch (error) {
+        console.error("Error en la API:", error);
+        return res.status(500).json({ error: 'Error al buscar en la base de datos' });
+    }
+}
+
 // Crear un nuevo comentario
 exports.createComentarios = async (req, res) => {
     try {
