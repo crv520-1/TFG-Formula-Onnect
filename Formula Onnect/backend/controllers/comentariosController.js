@@ -1,53 +1,56 @@
 const comentariosController = require('../models/comentariosModel.js');
 
 // Obtener todos los comentarios
-exports.getAllComentarios = (req, res) => {
-    comentariosController.getAllComentarios((err, results) => {
-    if (err) {
-      return res.status(500).json({error: 'Error al buscar en la base de datos'});
+exports.getAllComentarios = async (req, res) => {
+    try {
+        const comentarios = await comentariosController.getAllComentarios();
+        res.json(comentarios);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
-    res.json(results);
-  });
-}
+};
 
 // Obtener un comentario por su id
-exports.getComentariosByIdComentario = (req, res) => {
+exports.getComentariosByIdComentario = async (req, res) => {
     const idComentarios = req.params.id;
 
-    comentariosController.getComentariosByIdComentario(idComentarios, (err, results) => {
-        if (err) {
-            return res.status(500).json({error: 'Error al buscar en la base de datos'});
+    try {
+        const comentario = await comentariosController.getComentariosByIdComentario(idComentarios);
+        if (!comentario) {
+            return res.status(404).json({ error: 'Comentario no encontrado' });
         }
-        if (results.length === 0) {
-            return res.status(404).json({error: 'Comentario no encontrado'});
-        }
-        res.json(results);
-    });
-}
+        return res.json(comentario);
+    }
+    catch (error) {
+        console.error("Error en la API:", error);
+        return res.status(500).json({ error: 'Error al buscar en la base de datos' });
+    }
+};
 
 // Obtener los comentarios de una publicacion por su id
 exports.getComentariosByIdPublicacion = (req, res) => {
     const post = req.params.id;
 
-    comentariosController.getComentariosByIdPublicacion(post, (err, results) => {
-        if (err) {
-            return res.status(500).json({error: 'Error al buscar en la base de datos'});
+    try {
+        const comentarios = comentariosController.getComentariosByIdPublicacion(post);
+        if (comentarios.length === 0) {
+            return res.status(404).json({ error: 'Comentarios no encontrados' });
         }
-        if (results.length === 0) {
-            return res.status(404).json({error: 'Comentarios no encontrados'});
-        }
-        res.json(results);
-    });
+        return res.json(comentarios);
+    } catch {
+        console.error("Error en la API:", error);
+        return res.status(500).json({ error: 'Error al buscar en la base de datos' });
+    }
 }
 
 // Crear un nuevo comentario
 exports.createComentarios = (req, res) => {
-    const comentario = req.body;
-
-    comentariosController.createComentarios(comentario, (err, results) => {
-        if (err) {
-            return res.status(500).json({error: 'Error al crear en la base de datos'});
-        }
-        res.status(201).json({ message: 'Comentario creado exitosamente.', id: results.insertId });
-    });
+    try {
+        const comentario = req.body;
+        const insertId = comentariosController.createComentarios(comentario);
+        res.status(201).json({ message: 'Comentario creado exitosamente.', id: insertId });
+    } catch (error) {
+        console.error("Error en createComentarios:", error);
+        res.status(500).json({ error: 'Error al crear el comentario en la base de datos.' });
+    }
 };
