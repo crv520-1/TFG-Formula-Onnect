@@ -24,7 +24,7 @@ exports.getMeGustaComentariosById = async (idComentario) => {
 // Obtener el numero total de me gusta de un comentario
 exports.getMeGustaComentariosCount = async (idComentario) => {
   try {
-    const [rows] = await db.query('SELECT COUNT(*) AS contador FROM MeGustaComentarios WHERE idComentario = ?', [idComentario]);
+    const [rows] = await db.query('SELECT COUNT(*) AS contador FROM MeGustaComentarios WHERE idComent = ?', [idComentario]);
     return rows;
   } catch (error) {
     console.error("Error en la consulta de me gusta de comentarios:", error);
@@ -34,8 +34,8 @@ exports.getMeGustaComentariosCount = async (idComentario) => {
 
 // Crear un nuevo me gusta de comentario
 exports.createMeGustaComentarios = async (meGustaComentarios) => {
-  const query = 'INSERT INTO MeGustaComentarios (idUser, idComentario) VALUES (?, ?)';
-  const values = [meGustaComentarios.idUser, meGustaComentarios.idComentario];
+  const query = 'INSERT INTO MeGustaComentarios (iDusuario, idComent) VALUES (?, ?)';
+  const values = [meGustaComentarios.iDusuario, meGustaComentarios.idComent];
 
   try {
     const [result] = await db.query(query, values);
