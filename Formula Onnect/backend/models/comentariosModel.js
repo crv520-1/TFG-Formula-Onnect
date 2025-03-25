@@ -36,7 +36,7 @@ exports.getComentariosByIdPublicacion = async (post) => {
 // Obtener el numero de comentarios de una publicacion por el id de la publicacion
 exports.getNumeroComentariosByIdPublicacion = async (post) => {
   try {
-    const [rows] = await db.query('SELECT COUNT(*) AS contador FROM Comentarios WHERE post = ?', [post]);
+    const [rows] = await db.query('SELECT post, COUNT(*) AS contador FROM Comentarios WHERE post = ?', [post]);
     return rows[0];
   } catch (error) {
     console.log("Error en la consulta de comentarios:", error);

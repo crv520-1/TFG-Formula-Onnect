@@ -10,6 +10,7 @@ export const PerfilPublicaciones = () => {
   const [usuario, setUsuario] = useState({});
   const [publicaciones, setPublicaciones] = useState([]);
   const [meGustasPublicaciones, setMeGustasPublicaciones] = useState([]);
+  const [comentariosPublicaciones, setComentariosPublicaciones] = useState([]);
   const [seguidores, setSeguidores] = useState(0);
   const [siguiendo, setSiguiendo] = useState(0);
   const [numeroPublicaciones, setNumeroPublicaciones] = useState(0);
@@ -32,6 +33,7 @@ export const PerfilPublicaciones = () => {
       const publicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/${idUsuario}`);
       const publicacionesUsuario = publicacionesResponse.data || [];
       setPublicaciones(publicacionesUsuario);
+      
 
       // Obtener número de publicaciones del usuario
       const numeroPublicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUsuario}`);
@@ -63,32 +65,30 @@ export const PerfilPublicaciones = () => {
     }
   };
 
-  // Función para cargar los me gustas de las publicaciones
-  const cargarMeGustas = async () => {
+  const cargarDatosPublicaciones = async () => {
     if (publicaciones.length === 0) return;
 
     try {
-      // Crear un array con los IDs de las publicaciones
       const idsPublicaciones = publicaciones.map(publicacion => publicacion.idPublicaciones);
-      console.log("IdsPublicaciones", idsPublicaciones);
       
-      // Acumular todos los me gustas
-      let todosLosMeGustas = [];
+      const [comentariosResults, meGustasResults] = await Promise.all([
+        Promise.all(idsPublicaciones.map(idPublicacion => 
+            axios.get(`http://localhost:3000/api/comentarios/numero/${idPublicacion}`)
+        )),
+        Promise.all(idsPublicaciones.map(idPublicacion => 
+            axios.get(`http://localhost:3000/api/meGusta/${idPublicacion}`)
+        ))
+      ]);
       
-      // Obtener los me gustas para estas publicaciones
-      for (let i = 0; i < idsPublicaciones.length; i++) {
-        const meGustaResponse = await axios.get(`http://localhost:3000/api/meGusta/${idsPublicaciones[i]}`);
-        console.log("MeGustaResponse", meGustaResponse);
-        const meGusta = meGustaResponse.data || [];
-        
-        // Acumular los me gustas en lugar de sobreescribir
-        todosLosMeGustas = [...todosLosMeGustas, ...meGusta];
-      }
+      const todosLosComentarios = comentariosResults.flatMap(response => response.data || []);
+      setComentariosPublicaciones(todosLosComentarios);
       
-      // Establecer todos los me gustas acumulados
+      const todosLosMeGustas = meGustasResults.flatMap(response => response.data || []);
       setMeGustasPublicaciones(todosLosMeGustas);
+      
     } catch (error) {
-      console.error("Error obteniendo me gustas:", error);
+      console.error("Error obteniendo datos de publicaciones:", error);
+      setComentariosPublicaciones([]);
       setMeGustasPublicaciones([]);
     }
   };
@@ -100,7 +100,7 @@ export const PerfilPublicaciones = () => {
 
   // Cargar me gustas cuando cambian las publicaciones
   useEffect(() => {
-    cargarMeGustas();
+    cargarDatosPublicaciones();
   }, [publicaciones]);
 
   const handleDatos = (e) => {
@@ -133,7 +133,7 @@ export const PerfilPublicaciones = () => {
       await axios.post("http://localhost:3000/api/meGusta", nuevoMeGusta);
       
       // Actualizar me gustas después de añadir uno nuevo
-      cargarMeGustas();
+      cargarDatosPublicaciones();
     } catch (error) {
       console.error("Error al dar me gusta:", error);
     }
@@ -155,8 +155,12 @@ export const PerfilPublicaciones = () => {
   // Función para obtener el contador de me gustas para una publicación específica
   const obtenerContadorMeGusta = (idPublicacion) => {
     const meGusta = meGustasPublicaciones.find(mg => mg.idElemento === idPublicacion);
-    console.log(meGusta);
     return meGusta ? meGusta.contador : 0;
+  };
+
+  const obtenerContadorComentarios = (idPublicacion) => {
+    const comentarios = comentariosPublicaciones.find(comentario => comentario.post === idPublicacion);
+    return comentarios ? comentarios.contador : 0;
   };
 
   return (
@@ -202,7 +206,7 @@ export const PerfilPublicaciones = () => {
               <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
                 <p style={{fontSize:"1.5vh"}}>{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
                 <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
-                <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>0</p>
+                <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
                 <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
             </div>

@@ -35,19 +35,34 @@ export const Inicio = () => {
       });
       
       // Combinar publicaciones con datos de usuarios
-      const publicacionesCompletas = publicacionesEncontradas.map(publicacion => {
-        const usuarioPublicador = mapaUsuarios[publicacion.usuario];
-        return {
-          ...publicacion,
-          usuarioPublicador: usuarioPublicador || null
-        };
-      });
+      const publicacionesCompletas = await Promise.all(
+        publicacionesEncontradas.map(async (publicacion) => {
+          const usuarioPublicador = mapaUsuarios[publicacion.usuario];
+          const comentarios = await cargarComentarios(publicacion.idPublicaciones); // Esperar a que se resuelva
+          return {
+            ...publicacion,
+            usuarioPublicador: usuarioPublicador || null,
+            numeroComentarios: comentarios.contador || 0, // Usar la longitud de los comentarios
+          };
+        })
+      );
       
       setPublicacionesConUsuarios(publicacionesCompletas);
       setCargando(false);
     } catch (error) {
       console.error("Error obteniendo publicaciones:", error);
       setCargando(false);
+    }
+  };
+
+  const cargarComentarios = async (idPublicacion) => {
+    try {
+      const comentariosResponse = await axios.get(`http://localhost:3000/api/comentarios/numero/${idPublicacion}`);
+      const comentarios = comentariosResponse.data || [];
+      return comentarios;
+    } catch (error) {
+      console.error("Error obteniendo comentarios:", error);
+      return [];
     }
   };
 
@@ -161,7 +176,7 @@ export const Inicio = () => {
               <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
                 <p style={{fontSize:"1.5vh"}}>{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
                 <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
-                <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>0</p>
+                <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{publicacion.numeroComentarios}</p>
                 <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
             </div>
