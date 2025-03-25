@@ -81,14 +81,18 @@ export const Comentarios = () => {
         mapaUsuariosComentadores[user.idUsuario] = user;
       });
 
-      const comentariosCompletos = comentariosEncontrados.map(comentario => {
+      const promesasComentarios = comentariosEncontrados.map(async comentario => {
         const usuarioComentador = mapaUsuariosComentadores[comentario.user];
+        const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios/numero/${comentario.idComentarios}`);
+        const meGustasComentario = meGustasComentarioResponse.data || [];
+        const contadorMeGustas = meGustasComentario.length > 0 ? meGustasComentario[0].contador : 0;
         return {
           ...comentario,
-          usuarioComentador: usuarioComentador || null
+          usuarioComentador: usuarioComentador || null,
+          meGustaComentario: contadorMeGustas
         };
       });
-
+      const comentariosCompletos = await Promise.all(promesasComentarios);
       setComentarios(comentariosCompletos);
       setHayComentarios(true);
     } catch (error) {
@@ -181,26 +185,26 @@ export const Comentarios = () => {
   }
 
   const handleMeGustaComentario = async (idComentario) => {
-    //try {
-    //  const meGustasResponse = await axios.get(`http://localhost:3000/api/meGusta`);
-    //  const meGustas = meGustasResponse.data || [];
+    try {
+      const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios`);
+      const meGustasComentario = meGustasComentarioResponse.data || [];
 
-    //  if (meGustas.some(meGusta => meGusta.idElemento === idComentario && meGusta.idUser === idUsuario)) {
-    //    alert("Ya has dado me gusta a este comentario");
-    //    return;
-    //  }
+      if (meGustasComentario.some(meGustaComantario => meGustaComantario.idComent === idComentario && meGustaComantario.iDusuario === idUsuario)) {
+        alert("Ya has dado me gusta a este comentario");
+        return;
+      }
 
-    //  const nuevoMeGusta = {
-    //    idUser: idUsuario,
-    //    idElemento: idComentario
-    //  };
+      const nuevoMeGusta = {
+        iDusuario: idUsuario,
+        idComent: idComentario
+      };
 
-    //  await axios.post("http://localhost:3000/api/meGusta", nuevoMeGusta);
-    //  cargarComentarios();
-    //} catch (error) {
-    //  console.error("Error al dar me gusta:", error);
-    //}
-    console.log("Me gusta comentario falta de implementar", idComentario);
+      await axios.post("http://localhost:3000/api/meGustaComentarios", nuevoMeGusta);
+      cargarComentarios();
+    } catch (error) {
+      console.error("Error al dar me gusta:", error);
+    }
+    console.log("Me gusta comentario", idComentario);
   }
 
   const handleVisualizarPerfil = (idUser) => {
@@ -224,12 +228,14 @@ export const Comentarios = () => {
     };
     try {
       await axios.post("http://localhost:3000/api/comentarios", nuevoComentario);
+      setTexto("");
+      await Promise.all([cargarPublicacion(), cargarComentarios()]);
+      cargarPublicacion();
+      cargarComentarios();
     }
     catch (error) {
       console.error("Error al publicar:", error);
     }
-    cargarPublicacion();
-    cargarComentarios();
     console.log("Publicar comentario");
   }
 
@@ -271,7 +277,7 @@ export const Comentarios = () => {
           </div>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-              <textarea style={{ width: "45vw", height: "5vh", backgroundColor: "#2c2c2c", color: "white", fontSize: "2vh", borderRadius: "1vh", marginTop:"1vh", resize:"none" }} placeholder="Comenta tu opinión..." maxLength={450} onChange={(e) => setTexto(e.target.value)}></textarea>
+              <textarea style={{ width: "45vw", height: "5vh", backgroundColor: "#2c2c2c", color: "white", fontSize: "2vh", borderRadius: "1vh", marginTop:"1vh", resize:"none" }} placeholder="Comenta tu opinión..." maxLength={450} onChange={(e) => setTexto(e.target.value)} value={texto}></textarea>
               <button type='submit' onClick={handlePublicar} style={{ display: "flex", alignItems: "center", justifyContent: "center", height:"5vh", border: "none", backgroundColor: "#2c2c2c" }}><PaperAirplaneIcon style={{ width: "3vh", height: "3vh", color:"white" }} /></button>
             </div>
             <p style={{ color:colorContador, fontSize: "1.5vh", transition: "color 0.5s" }}> {texto.length}/{maxCaracteres} caracteres </p>
@@ -279,7 +285,7 @@ export const Comentarios = () => {
         </div>
       </div>
       <div style={{paddingBottom: "2vh" }}></div>
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh" }}>
+      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2.01vh" }}>
         {hayComentarios && comentarios.map((comentario) => (
           <div key={comentario.idComentarios} style={{ backgroundColor:"#2c2c2c", width:"50vw", borderRadius:"1vh", marginTop: "2vh" }}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", paddingTop:"1vh", paddingRight: "1vh" }}>
@@ -291,7 +297,7 @@ export const Comentarios = () => {
                   </button>
                 )}
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5vw" }}>
-                  <p style={{fontSize:"1.5vh", paddingLeft:"35vw"}}>0</p>
+                  <p style={{fontSize:"1.5vh"}}>{comentario.meGustaComentario}</p>
                   <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
                 </div>
               </div>
