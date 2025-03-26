@@ -20,16 +20,19 @@ export const Comentarios = () => {
   const maxCaracteres = 450;
   const advertenciaCaracteres = 400;
 
+  // Actualizamos solo al cambiar de publicación
   useEffect(() => {
     if (!idElemento) {
       console.error("No se ha proporcionado un ID de elemento");
       return;
     }
+    // Llamamos a los métodos para obtener todos los datos necesarios en la interfaz.
     cargarUsuarioComentador();
     cargarPublicacion();
     cargarComentarios();
   }, [idElemento]);
 
+  // Funciones para cargar los datos del usuario que va a comentar la publicación
   const cargarUsuarioComentador = async () => {
     try {
       const usuarioComentadorResponse = await axios.get(`http://localhost:3000/api/usuarios/${idUsuario}`);
@@ -39,12 +42,14 @@ export const Comentarios = () => {
         console.error("No se encontró el usuario comentador");
         return;
       }
+      // Actualizamos el estado con los datos del usuario comentador
       setUsuarioComentador(usuarioComentadorData);
     } catch (error) {
       console.error("Error obteniendo usuario comentador:", error);
     }
   }
 
+  // Función para cargar la publicación y todos los datos relacionados con la publicación que hemos seleccionado para ver los comentarios
   const cargarPublicacion = async () => {
     try {
       const publicacionResponse = await axios.get(`http://localhost:3000/api/publicaciones/publicacion/${idElemento}`);
@@ -54,15 +59,20 @@ export const Comentarios = () => {
         console.error("No se encontró la publicación");
         return;
       }
+      // Actualizamos el estado con los datos de la publicación
       setPublicacion(publicacionEncontrada);
+      // Llamamos al método para obtener los datos del usuario que ha subido la publicación
       cargarUsuarioPublicador(publicacionEncontrada.usuario);
+      // Llamamos al método para obtener la cantidad de me gustas de la publicación
       cargarMeGustasPublicacion(publicacionEncontrada.idPublicaciones);
+      // Llamamos al método para obtener la cantidad de comentarios de la publicación
       cargarNumeroComentarios(publicacionEncontrada.idPublicaciones);
     } catch (error) {
       console.error("Error obteniendo publicación:", error);
     }
   }
 
+  // Función para cargar todos los comentarios de una publicación
   const cargarComentarios = async () => {
     try {
       const comentariosResponse = await axios.get(`http://localhost:3000/api/comentarios/publicacion/${idElemento}`);
@@ -100,6 +110,7 @@ export const Comentarios = () => {
     }
   };
 
+  // Funciones para cargar los datos del usuario que ha publicado la publicación
   const cargarUsuarioPublicador = async (idUsuarioPublicador) => {
     try {
       const usuarioPublicadorResponse = await axios.get(`http://localhost:3000/api/usuarios/${idUsuarioPublicador}`);
@@ -115,6 +126,7 @@ export const Comentarios = () => {
     }
   }
 
+  // Método para obtener la cantidad de me gustas de una publicación
   const cargarMeGustasPublicacion = async (idPublicacion) => {
     try {
       const meGustaResponse = await axios.get(`http://localhost:3000/api/meGusta/${idPublicacion}`);
@@ -130,6 +142,7 @@ export const Comentarios = () => {
     }
   }
 
+  // Método para obtener la cantidad de comentarios de una publicación
   const cargarNumeroComentarios = async (idPublicacion) => {
     try {
       const numeroComentariosResponse = await axios.get(`http://localhost:3000/api/comentarios/numero/${idPublicacion}`);
@@ -145,6 +158,7 @@ export const Comentarios = () => {
     }
   }
 
+  // Métodos para navegar a la vista de la que precedemos
   const handleInicio = async (IDUsuario) => {
     switch (previusPath) {
       case 0:
@@ -162,6 +176,7 @@ export const Comentarios = () => {
     console.log("Inicio");
   }
 
+  // Método para dar o eliminar me gusta a una publicación
   const handleMeGusta = async (idPublicacion) => {
     try {
       const meGustasResponse = await axios.get(`http://localhost:3000/api/meGusta`);
@@ -170,6 +185,7 @@ export const Comentarios = () => {
       if (meGustas.some(meGusta => meGusta.idElemento === idPublicacion && meGusta.idUser === idUsuario)) {
         //Eliminar me gusta
         await axios.delete(`http://localhost:3000/api/meGusta/${idUsuario}/${idPublicacion}`);
+        // Recargamos los me gustas de la publicación al eliminar el me gusta
         return cargarMeGustasPublicacion(idPublicacion);
       }
 
@@ -179,12 +195,14 @@ export const Comentarios = () => {
       };
       
       await axios.post("http://localhost:3000/api/meGusta", nuevoMeGusta);
+      // Recargamos los me gustas de la publicación al dar me gusta
       cargarMeGustasPublicacion(idPublicacion);
     } catch (error) {
       console.error("Error al dar me gusta:", error);
     }
   }
 
+  // Método para dar o eliminar me gusta a un comentario
   const handleMeGustaComentario = async (idComentario) => {
     try {
       const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios`);
@@ -193,6 +211,7 @@ export const Comentarios = () => {
       if (meGustasComentario.some(meGustaComantario => meGustaComantario.idComent === idComentario && meGustaComantario.iDusuario === idUsuario)) {
         //Eliminar me gusta de comentario
         await axios.delete(`http://localhost:3000/api/meGustaComentarios/${idUsuario}/${idComentario}`);
+        // Recargamos los me gustas del comentario al eliminar el me gusta
         return cargarComentarios();
       }
 
@@ -202,6 +221,7 @@ export const Comentarios = () => {
       };
 
       await axios.post("http://localhost:3000/api/meGustaComentarios", nuevoMeGusta);
+      // Recargamos los me gustas del comentario al dar me gusta
       cargarComentarios();
     } catch (error) {
       console.error("Error al dar me gusta:", error);
@@ -209,6 +229,7 @@ export const Comentarios = () => {
     console.log("Me gusta comentario", idComentario);
   }
 
+  // Método para navegar al perfil del usuario que ha subido la publicación
   const handleVisualizarPerfil = (idUser) => {
     if (idUser === idUsuario) {
       navigate("/Perfil");
@@ -217,6 +238,7 @@ export const Comentarios = () => {
     }
   }
 
+  // Método para publicar un comentario
   const handlePublicar = async (e) => {
     e.preventDefault();
     if (texto.length === 0) {
@@ -232,6 +254,7 @@ export const Comentarios = () => {
       await axios.post("http://localhost:3000/api/comentarios", nuevoComentario);
       setTexto("");
       await Promise.all([cargarPublicacion(), cargarComentarios()]);
+      // Rrcargamos los datos de la publicación y los comentarios al publicar un nuevo comentario
       cargarPublicacion();
       cargarComentarios();
     }
