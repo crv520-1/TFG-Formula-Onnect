@@ -46,3 +46,15 @@ exports.createMeGustaComentarios = async (meGustaComentarios) => {
     throw error;
   }
 };
+
+// Eliminar un me gusta de comentario
+exports.deleteMeGustaComentarios = async (iDusuario, idComent) => {
+  try {
+    const [result] = await db.query('DELETE FROM MeGustaComentarios WHERE iDusuario = ? AND idComent = ?', [iDusuario, idComent]);
+    return result.affectedRows;
+  }
+  catch (error) {
+    console.error("Error al eliminar el me gusta de comentario:", error);
+    throw error;
+  }
+};

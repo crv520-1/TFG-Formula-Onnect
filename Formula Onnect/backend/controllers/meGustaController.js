@@ -37,3 +37,18 @@ exports.createMeGusta = async (req, res) => {
         res.status(500).json({ error: 'Error al crear el me gusta en la base de datos.' });
     }
 }
+
+// Eliminar un me gusta
+exports.deleteMeGusta = async (req, res) => {
+    const { idUser, idElemento } = req.params;
+    try {
+        const result = await meGustaController.deleteMeGusta(idUser, idElemento);
+        if (result === 0) {
+            return res.status(404).json({ error: 'Me gusta no encontrado' });
+        }
+        return res.json({ message: 'Me gusta eliminado exitosamente.' });
+    } catch (error) {
+        console.error("Error en deleteMeGusta:", error);
+        res.status(500).json({ error: 'Error al eliminar el me gusta en la base de datos.' });
+    }
+}

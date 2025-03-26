@@ -35,3 +35,15 @@ exports.createMeGusta = async (meGusta) => {
     throw error;
   }
 };
+
+// Eliminar un me gusta
+exports.deleteMeGusta = async (idUser, idElemento) => {
+  try {
+    const [result] = await db.query('DELETE FROM MeGusta WHERE idUser = ? AND idElemento = ?', [idUser, idElemento]);
+    return result.affectedRows;
+  }
+  catch (error) {
+    console.error("Error al eliminar el me gusta:", error);
+    throw error;
+  }
+};

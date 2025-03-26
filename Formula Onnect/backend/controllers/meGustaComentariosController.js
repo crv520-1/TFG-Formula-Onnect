@@ -53,3 +53,19 @@ exports.createMeGustaComentarios = async (req, res) => {
         res.status(500).json({ error: 'Error al crear el me gusta de comentario en la base de datos.' });
     }
 }
+
+// Eliminar un me gusta de comentario
+exports.deleteMeGustaComentarios = async (req, res) => {
+    const { iDusuario, idComent } = req.params;
+
+    try {
+        const affectedRows = await meGustaComentariosModel.deleteMeGustaComentarios(iDusuario, idComent);
+        if (affectedRows === 0) {
+            return res.status(404).json({ error: 'Me gusta de comentario no encontrado' });
+        }
+        return res.json({ message: 'Me gusta de comentario eliminado exitosamente.' });
+    } catch (error) {
+        console.error("Error en deleteMeGustaComentarios:", error);
+        res.status(500).json({ error: 'Error al eliminar el me gusta de comentario en la base de datos.' });
+    }
+}
