@@ -57,20 +57,22 @@ const Layout = () => {
 function App() {
   return (
     <UsuarioProvider>
-      <Router>
-        <Routes>
-          {/* Redirigir a / si está en la raíz */}
-          <Route path="/" element={<Navigate to="/IniciarSesion" replace />} />
+      <div style={{ backgroundColor: "#D9D9D9" }}>
+        <Router>
+          <Routes>
+            {/* Redirigir a / si está en la raíz */}
+            <Route path="/" element={<Navigate to="/IniciarSesion" replace />} />
 
-          {/* Rutas sin Dashboard */}
-          <Route path="/IniciarSesion" element={<IniciarSesion />} />
-          <Route path="/Registro1" element={<Registro1 />} />
-          <Route path="/RegistroNext" element={<RegistroNext />} />
+            {/* Rutas sin Dashboard */}
+            <Route path="/IniciarSesion" element={<IniciarSesion />} />
+            <Route path="/Registro1" element={<Registro1 />} />
+            <Route path="/RegistroNext" element={<RegistroNext />} />
 
-          {/* Rutas con Dashboard */}
-          <Route path="/*" element={<Layout />} />
-        </Routes>
-      </Router>
+            {/* Rutas con Dashboard */}
+            <Route path="/*" element={<Layout />} />
+          </Routes>
+        </Router>
+      </div>
     </UsuarioProvider>
   );
 }
