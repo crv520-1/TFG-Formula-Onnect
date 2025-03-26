@@ -168,8 +168,9 @@ export const Comentarios = () => {
       const meGustas = meGustasResponse.data || [];
       
       if (meGustas.some(meGusta => meGusta.idElemento === idPublicacion && meGusta.idUser === idUsuario)) {
-        alert("Ya has dado me gusta a esta publicación");
-        return;
+        //Eliminar me gusta
+        await axios.delete(`http://localhost:3000/api/meGusta/${idUsuario}/${idPublicacion}`);
+        return cargarMeGustasPublicacion(idPublicacion);
       }
 
       const nuevoMeGusta = {
@@ -190,8 +191,9 @@ export const Comentarios = () => {
       const meGustasComentario = meGustasComentarioResponse.data || [];
 
       if (meGustasComentario.some(meGustaComantario => meGustaComantario.idComent === idComentario && meGustaComantario.iDusuario === idUsuario)) {
-        alert("Ya has dado me gusta a este comentario");
-        return;
+        //Eliminar me gusta de comentario
+        await axios.delete(`http://localhost:3000/api/meGustaComentarios/${idUsuario}/${idComentario}`);
+        return cargarComentarios();
       }
 
       const nuevoMeGusta = {

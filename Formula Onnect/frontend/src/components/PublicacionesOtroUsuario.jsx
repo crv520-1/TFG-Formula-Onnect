@@ -123,8 +123,9 @@ export const PublicacionesOtroUsuario = () => {
         
         // Verificar si ya dio me gusta
         if (meGustas.some(meGusta => meGusta.idElemento === idPublicacion && meGusta.idUser === idUsuario)) {
-          alert("Ya has dado me gusta a esta publicación");
-          return;
+          //Elimina el me gusta
+          await axios.delete(`http://localhost:3000/api/meGusta/${idUsuario}/${idPublicacion}`);
+          return cargarDatosPublicaciones();
         }
         
         // Añadir nuevo me gusta
