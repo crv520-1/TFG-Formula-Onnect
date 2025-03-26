@@ -5,7 +5,7 @@ import { UsuarioContext } from "../context/UsuarioContext";
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 
 export const RegistroNext = () => {
-    let logo = "images/logo/logoApp.png";
+    let logo = "images/logo/Posible4NOFondo.png";
     let newUsuario = [];
     const [pilotos, setPilotos] = useState([]);
     const [equipos, setEquipos] = useState([]);
@@ -68,7 +68,7 @@ export const RegistroNext = () => {
 
     return (
         <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", height: "95vh", width: "100vw", paddingTop: "50px", backgroundColor: "#D9D9D9", color: "white" }}>
-            <img src={logo} style={{ width: "15vw", height: "15vh" }} />
+            <img src={logo} style={{ width: "15vw", height: "15vh", objectFit:"contain" }} />
             <div style={{color: "black", paddingTop: "7vh", alignItems: "center", display: "flex", flexDirection: "column"}}>
                 <h1>¡Bienvenido nickName!</h1>
                 <h1>Seleccione a su piloto, equipo y circuito favorito</h1>

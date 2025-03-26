@@ -11,7 +11,7 @@ export const IniciarSesion = () => {
     const [tipo, setTipo] = useState("password");
     const [icono, setIcono] = useState(EyeSlashIcon);
     const navigate = useNavigate();
-    let logo = "images/logo/logoApp.png";
+    let logo = "images/logo/Posible4NOFondo.png";
     const { setUser } = useContext(UsuarioContext);
 
     useEffect(() => {
@@ -62,7 +62,7 @@ export const IniciarSesion = () => {
 
 return (
     <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", height: "95vh", width: "100vw", paddingTop: "50px", backgroundColor: "#D9D9D9", color: "white" }}>
-        <img src={logo} style={{ width: "15vw", height: "15vh" }} />
+        <img src={logo} style={{ width: "15vw", height: "15vh", objectFit:"contain" }} />
         <h1 style={{color: "black", paddingTop: "7vh"}}>¡Bienvenido de vuelta!</h1>
         <form style={{display: 'flex', flexDirection: 'column'}}>
             <div>
