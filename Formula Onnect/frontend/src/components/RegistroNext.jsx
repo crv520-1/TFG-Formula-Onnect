@@ -17,21 +17,23 @@ export const RegistroNext = () => {
     const { nickName, nombreCompleto, email, contraseña } = location.state || {};
     const { setUser } = useContext(UsuarioContext);
     const navigate = useNavigate();
-    console.log(nickName, nombreCompleto, email, contraseña);
     
     useEffect(() => {
         axios.get("http://localhost:3000/api/pilotos").then(response => {
             setPilotos(response.data);
+            setPilotoSeleccionado(response.data[0].idPilotos);
         }).catch(error => {
             console.error("Error al obtener los pilotos:", error);
         });
         axios.get("http://localhost:3000/api/equipos").then(response => {
             setEquipos(response.data);
+            setEquipoSeleccionado(response.data[0].idEquipos);
         }).catch(error => {
             console.error("Error al obtener los equipos:", error);
         });
         axios.get("http://localhost:3000/api/circuitos").then(response => {
             setCircuitos(response.data);
+            setCircuitoSeleccionado(response.data[0].idCircuitos);
         }).catch(error => {
             console.error("Error al obtener los circuitos:", error);
         });
@@ -56,7 +58,6 @@ export const RegistroNext = () => {
             if (response.data && response.data.id) {
                 setUser(response.data.id);
                 navigate("/Inicio");
-                console.log("Cuenta creada");
             } else {
                 console.error("Error al crear la cuenta: respuesta inválida");
             }
