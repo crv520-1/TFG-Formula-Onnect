@@ -190,7 +190,7 @@ export const PublicacionesOtroUsuario = () => {
     } else {
   
     return (
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
+      <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto", overflowX: "hidden" }}>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
           <h1 style={{ fontSize: "4vh", textAlign: "center" }}> {usuario.nickName} </h1>
           <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
@@ -230,7 +230,7 @@ export const PublicacionesOtroUsuario = () => {
             <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", marginLeft: "35vh" }}>Publicaciones</h2>
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh" }}>
+        <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh", overflowX: "hidden" }}>
           {publicaciones.map((publicacion) => (
             <div key={publicacion.idPublicaciones} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor:"#2c2c2c", width:"50vw", height:"auto", borderRadius:"1vh", marginBottom: "2vh" }}>
               <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop:"1vh", width: "95%", paddingLeft: "1vh", paddingRight: "1vh" }}>

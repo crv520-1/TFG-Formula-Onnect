@@ -242,7 +242,7 @@ export const Comentarios = () => {
   const colorContador = texto.length === maxCaracteres ? "red" : texto.length >= advertenciaCaracteres ? "orange" : "white";
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
+    <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto", overflowX: "hidden" }}>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingBottom: "2vh" }} >
         <button type='submit' onClick={() => handleInicio(usuarioPublicador.idUsuario)} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Publicaciones</button>
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", marginLeft:"20vw" }}>Comentarios</h2>
@@ -285,7 +285,7 @@ export const Comentarios = () => {
         </div>
       </div>
       <div style={{paddingBottom: "2vh" }}></div>
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2.01vh" }}>
+      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh", overflowX: "hidden" }}>
         {hayComentarios && comentarios.map((comentario) => (
           <div key={comentario.idComentarios} style={{ backgroundColor:"#2c2c2c", width:"50vw", borderRadius:"1vh", marginTop: "2vh" }}>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", paddingTop:"1vh", paddingRight: "1vh" }}>
