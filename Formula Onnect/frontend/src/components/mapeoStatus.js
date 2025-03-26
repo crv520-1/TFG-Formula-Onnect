@@ -1,4 +1,5 @@
-function getStatusTraducido(status) {
+// Mapeo de los estados de los resultados de los pilotos traducido al español
+export function getStatusTraducido(status) {
     switch (status) {
         case "Finished":
             return "Finalizado";
@@ -100,5 +101,3 @@ function getStatusTraducido(status) {
             return status;
     }
 }
-
-export { getStatusTraducido };

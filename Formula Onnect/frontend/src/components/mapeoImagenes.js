@@ -1,4 +1,6 @@
-function getImagenPiloto(driverId) {
+// Función para obtener la imagen de un piloto
+export function getImagenPiloto(driverId) {
+    // Mapa de las imágenes de los pilotos
     const imagenPiloto = {
         "alesi" : "images/pilotos/Jean Alesi.png",
         "barrichello" : "images/pilotos/Rubens Barrichello.png",
@@ -134,9 +136,9 @@ function getImagenPiloto(driverId) {
     return imagenPiloto[driverId] || 'null';
 }
 
-export { getImagenPiloto };
-
-function getImagenCircuito(circuitId){
+// Función para obtener la imagen de un circuito
+export function getImagenCircuito(circuitId){
+    // Mapa de las imágenes de los circuitos
     const imagenCircuito = {
         "albert_park" : "images/circuits/Albert Park.avif",
         "catalunya" : "images/circuits/Barcelona.avif",
@@ -181,9 +183,9 @@ function getImagenCircuito(circuitId){
     return imagenCircuito[circuitId] || 'null';
 }
 
-export { getImagenCircuito };
-
-function getImagenEquipo(constructorId){
+// Función para obtener la imagen de un equipo
+export function getImagenEquipo(constructorId){
+    // Mapa de las imágenes de los equipos
     const imagenEquipo = {
         "arrows" : "images/escuderias/Arrows.png",
         "bar" : "images/escuderias/BAR.png",
@@ -228,9 +230,9 @@ function getImagenEquipo(constructorId){
     return imagenEquipo[constructorId] || 'null';
 }
 
-export { getImagenEquipo };
-
-function getLivery(constructorId) {
+// Función para obtener la imagen del coche de un equipo
+export function getLivery(constructorId) {
+    // Mapa de las imágenes de los coches de un equipo
     const livery = {
         "arrows" : "images/liverys/Arrow.jpg",
         "bar" : "images/liverys/BAR.jpg",
@@ -273,5 +275,3 @@ function getLivery(constructorId) {
     }
     return livery[constructorId] || 'null';
 }
-
-export { getLivery };
