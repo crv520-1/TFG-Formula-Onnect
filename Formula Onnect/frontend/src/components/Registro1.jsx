@@ -82,9 +82,9 @@ const Registro1 = () => {
     };
 
     return (
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", height: "95vh", width: "100vw", paddingTop: "50px", backgroundColor: "#D9D9D9", color: "white" }}>
+        <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", backgroundColor: "#D9D9D9" }}>
             <img src={logo} style={{ width: "15vw", height: "15vh", objectFit:"contain" }} />
-            <h1 style={{color: "black", paddingTop: "7vh"}}>¡Bienvenido!</h1>
+            <h1 style={{color: "black", paddingTop: "7vh", fontSize:"6vh"}}>¡Bienvenido!</h1>
             <form style={{display: 'flex', flexDirection: 'column'}}>
                 <div>
                     <input style={{width: "50vw", height: "3.5vh", backgroundColor: "white", borderRadius:"1.5vh", borderWidth:0 ,color: "black"}} type="text" placeholder="Nombre Usuario" value={nickName} onChange={(e) => setNickName(e.target.value)}/>
@@ -115,7 +115,7 @@ const Registro1 = () => {
                 <button style={{backgroundColor: "#EA1F22", borderRadius:"1.5vh", borderWidth: 3, borderColor: "White"}} type="submit" onClick={handleContinuarRegistro}>Continuar</button>
             </form>
             <form style={{display: 'flex', flexDirection: 'column', paddingTop: "10vh"}}>
-                <label style={{color: "black", fontSize: "2vh"}}>¿Ya tienes cuenta?</label>
+                <label style={{color: "black", fontSize: "3vh"}}>¿Ya tienes cuenta?</label>
                 <button style={{color: "#EA1F22", backgroundColor: "white", borderRadius:"1.5vh", borderWidth: 3, borderColor: "#EA1F22"}} type="submit" onClick={handleIniciarSesion}>Iniciar Sesión</button>
             </form>
         </div>
