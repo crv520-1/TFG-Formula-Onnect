@@ -1,9 +1,9 @@
-import { ArrowRightEndOnRectangleIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
+import PerfilHeader from './PerfilHeader';
 
 export const Perfil = () => {
   const navigate = useNavigate();
@@ -87,49 +87,13 @@ export const Perfil = () => {
     console.log("Publicaciones");
   }
 
-  const handleEditarPerfil = (e) => {
-    e.preventDefault();
-    navigate("/EditarPerfil");
-    console.log("Editar perfil");
-  }
-
-  const handleCerrarSesion = (e) => {
-    e.preventDefault();
-    navigate("/IniciarSesion");
-    console.log("Cerrar sesión");
-  }
-
   if (cargando) { 
     return <h1>Cargando el perfil del usuario</h1>
   } else {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-      <h1 style={{ fontSize: "4vh", textAlign: "center" }}> {usuario.nickName} </h1>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-        <img src={usuario.fotoPerfil} alt="Foto de perfil" style={{ width: "15vh", height: "15vh", borderRadius: "50%", color:"white", backgroundColor:"white" }} />
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-            <p style={{ fontSize: "3vh", marginLeft: "1vh", margin: "1vh" }}>{usuario.nombreCompleto}</p>
-            <button type='submit' onClick={handleEditarPerfil} style={{ fontSize: "2vh", marginLeft: "1vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#15151E" }}><PencilSquareIcon style={{ width: "2vh", height: "2vh" }} /></button>
-            <button type='submit' onClick={handleCerrarSesion} style={{ fontSize: "2vh", marginLeft: "1vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#15151E" }}><ArrowRightEndOnRectangleIcon style={{ width: "2vh", height: "2vh" }} /></button>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
-              <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Publicaciones </p>
-              <p style={{ fontSize: "1.5vh", margin: "0" }}> {numeroPublicaciones} </p>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
-              <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Seguidores </p>
-              <p style={{ fontSize: "1.5vh", margin: "0" }}> {seguidores} </p>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
-              <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Siguiendo </p>
-              <p style={{ fontSize: "1.5vh", margin: "0" }}> {siguiendo} </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PerfilHeader usuario={usuario} numeroPublicaciones={numeroPublicaciones} seguidores={seguidores} siguiendo={siguiendo} />
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Datos</h2>
         <button type='submit' onClick={handlePublicaciones} style={{ fontSize: "2vh", height:"3vh", marginLeft: "35vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"#15151E" }}>Publicaciones</button>
