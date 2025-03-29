@@ -78,7 +78,7 @@ export const EditarPerfil = () => {
 
     const handleCancelar = (e) => {
         e.preventDefault();
-        navigate("/Perfil");
+        navigate("/Perfil", { state: { idUser: idUsuario } });
         console.log("Cancelar");
     }
 
@@ -118,7 +118,7 @@ export const EditarPerfil = () => {
         } catch (error) {
             console.error(`Error al actualizar el usuario ${usuarioActualizado.nickName}:`, error);
         }
-        navigate("/Perfil");
+        navigate("/Perfil", { state: { idUser: idUsuario } });
     }
 
     if (cargando) { 

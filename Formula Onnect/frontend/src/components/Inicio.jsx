@@ -135,7 +135,7 @@ export const Inicio = () => {
     if (idUser === idUsuario) {
       navigate("/Perfil");
     } else {
-      navigate(`/OtroPerfil`, {state: { idUser }});
+      navigate(`/Perfil`, {state: { idUser }});
     }
   };
 

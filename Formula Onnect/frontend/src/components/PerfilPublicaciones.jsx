@@ -106,7 +106,7 @@ export const PerfilPublicaciones = () => {
 
   const handleDatos = (e) => {
     e.preventDefault();
-    navigate("/Perfil");
+    navigate("/Perfil", { state: { idUser: idUsuario } });
   };
 
   const handleMeGusta = async (idPublicacion) => {

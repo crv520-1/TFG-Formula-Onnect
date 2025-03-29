@@ -1,11 +1,13 @@
 import { BookOpenIcon, FlagIcon, HomeIcon, PlusCircleIcon, TrophyIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { UsuarioContext } from "../context/UsuarioContext";
 
 export const Dashboard = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [prevPath, setPrevPath] = useState("");
+    const { user: idUsuario } = useContext(UsuarioContext);
 
     useEffect(() => {
         if (location.pathname !== "/Comentarios") {
@@ -52,7 +54,7 @@ export const Dashboard = () => {
 
     const handlePerfil = (e) => {
         e.preventDefault();
-        navigate("/Perfil");
+        navigate("/Perfil", { state: { idUser: idUsuario } });
         console.log("Perfil");
     }
 
@@ -85,7 +87,7 @@ export const Dashboard = () => {
             <p style={{ color: "white", fontSize:"2vh" }}>Resultados</p>
         </button>
         <br />
-        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PublicacionesOtroUsuario" || prevPath === "/PerfilPublicaciones")) || location.pathname === "/OtroPerfil" || location.pathname === "/PublicacionesOtroUsuario" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
+        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PublicacionesOtroUsuario" || prevPath === "/PerfilPublicaciones")) || location.pathname === "/PublicacionesOtroUsuario" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
            <UserCircleIcon style={{ color: "white", width:"3vw", height:"3vh" }} />
             <p style={{ color: "white", fontSize:"2vh" }}>Perfil</p>
         </button>

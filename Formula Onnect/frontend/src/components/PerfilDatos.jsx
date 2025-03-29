@@ -1,17 +1,21 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 import PerfilHeader from './PerfilHeader';
 
 export const Perfil = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { idUser } = location.state || {};
   const { user: idUsuario } = useContext(UsuarioContext);
   const [usuario, setUsuario] = useState([]);
   const [seguidores, setSeguidores] = useState([]);
   const [siguiendo, setSiguiendo] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const [sigo, setSigo] = useState(false);
+  const [mismoUsuario, setMismoUsuario] = useState(false);
   const [imagenPiloto, setImagenPiloto] = useState("");
   const [imagenEquipo, setImagenEquipo] = useState("");
   const [imagenCircuito, setImagenCircuito] = useState("");
@@ -24,7 +28,7 @@ export const Perfil = () => {
       try {
         // Obtener usuario
         const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
-        const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUsuario);
+        const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUser);
         if (!usuarioEncontrado) {
           console.error("Usuario no encontrado");
           return;
@@ -47,7 +51,7 @@ export const Perfil = () => {
         if (circuitoFav) setImagenCircuito(getImagenCircuito(circuitoFav.circuitId));
 
         // Obtener número de publicaciones del usuario
-        const numeroPublicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUsuario}`);
+        const numeroPublicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUser}`);
         const numeroPublicacionesUsuario = numeroPublicacionesResponse.data;
         if (!numeroPublicacionesUsuario) {
           console.error("Número de publicaciones no encontrado");
@@ -57,7 +61,7 @@ export const Perfil = () => {
 
         // Obtener seguidores
         try {
-          const seguidoresResponse = await axios.get(`http://localhost:3000/api/seguidores/seguidores/${idUsuario}`);
+          const seguidoresResponse = await axios.get(`http://localhost:3000/api/seguidores/seguidores/${idUser}`);
           setSeguidores(seguidoresResponse.data["COUNT(*)"] || 0);
         } catch (error) {
           console.error("Error obteniendo seguidores:", error);
@@ -66,11 +70,25 @@ export const Perfil = () => {
         
         // Obtener siguiendo
         try {
-          const siguiendoResponse = await axios.get(`http://localhost:3000/api/seguidores/siguiendo/${idUsuario}`);
+          const siguiendoResponse = await axios.get(`http://localhost:3000/api/seguidores/siguiendo/${idUser}`);
           setSiguiendo(siguiendoResponse.data["COUNT(*)"] || 0);
         } catch (error) {
           console.error("Error obteniendo siguiendo:", error);
           setSiguiendo(0);
+        }
+
+        if (idUser !== idUsuario) {
+          setMismoUsuario(false);
+          try {
+            const sigoResponse = await axios.get(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
+            setSigo(sigoResponse.data);
+          } catch (error) {
+            console.error("Error obteniendo si sigo al usuario:", error);
+            setSigo(false);
+          }
+        } else {
+          setMismoUsuario(true);
+          setSigo(false);
         }
         setCargando(false);
       } catch (error) {
@@ -87,13 +105,18 @@ export const Perfil = () => {
     console.log("Publicaciones");
   }
 
+  const handleSeguidoresChange = (nuevoNumeroSeguidores, nuevoEstadoSigo) => {
+    setSeguidores(nuevoNumeroSeguidores);
+    setSigo(nuevoEstadoSigo);
+  };
+
   if (cargando) { 
     return <h1>Cargando el perfil del usuario</h1>
   } else {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-      <PerfilHeader usuario={usuario} numeroPublicaciones={numeroPublicaciones} seguidores={seguidores} siguiendo={siguiendo} />
+      <PerfilHeader usuario={usuario} numeroPublicaciones={numeroPublicaciones} seguidores={seguidores} siguiendo={siguiendo} sigo={sigo} idUser={idUsuario} mismoUsuario={mismoUsuario} onSeguidoresChange={handleSeguidoresChange}/>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Datos</h2>
         <button type='submit' onClick={handlePublicaciones} style={{ fontSize: "2vh", height:"3vh", marginLeft: "35vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"#15151E" }}>Publicaciones</button>

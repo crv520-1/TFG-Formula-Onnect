@@ -261,11 +261,7 @@ export const Comentarios = () => {
 
   // Método para navegar al perfil del usuario que ha subido la publicación
   const handleVisualizarPerfil = (idUser) => {
-    if (idUser === idUsuario) {
-      navigate("/Perfil");
-    } else {
-      navigate(`/OtroPerfil`, {state: { idUser }});
-    }
+    navigate("/Perfil", { state: { idUser } });
   }
 
   // Método para publicar un comentario
