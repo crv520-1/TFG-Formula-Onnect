@@ -13,7 +13,7 @@ exports.getAllMeGustaComentarios = async () => {
 // Obtener los me gusta por el ID del comentario
 exports.getMeGustaComentariosById = async (idComentario) => {
   try {
-    const [rows] = await db.query('SELECT * FROM MeGustaComentarios WHERE idComentario = ?', [idComentario]);
+    const [rows] = await db.query('SELECT * FROM MeGustaComentarios WHERE idComent = ?', [idComentario]);
     return rows;
   } catch (error) {
     console.error("Error en la consulta de me gusta de comentarios:", error);
