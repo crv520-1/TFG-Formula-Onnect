@@ -1,3 +1,4 @@
+import { HandThumbUpIcon as NoMeGustaIcono } from "@heroicons/react/24/outline";
 import { ChatBubbleOvalLeftIcon, HandThumbUpIcon, PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
@@ -16,11 +17,13 @@ export const Comentarios = () => {
   const [usuarioComentador, setUsuarioComentador] = useState({});
   const [meGustasPublicacion, setMeGustasPublicacion] = useState({});
   const [numeroComentarios, setNumeroComentarios] = useState({});
+  const [userLikesComentarios, setUserLikesComentarios] = useState({});
   const [texto, setTexto] = useState("");
   const [hayComentarios, setHayComentarios] = useState(false);
   const { handleMeGusta } = useMeGusta();
   const maxCaracteres = 450;
   const advertenciaCaracteres = 400;
+  const [userLikePublicacion, setUserLikePublicacion] = useState(false);
 
   // Actualizamos solo al cambiar de publicación
   useEffect(() => {
@@ -87,25 +90,45 @@ export const Comentarios = () => {
       
       const usuariosComentadores = await axios.get(`http://localhost:3000/api/usuarios`);
       const usuariosComentadoresData = usuariosComentadores.data || {};
-
+  
       const mapaUsuariosComentadores = {};
       usuariosComentadoresData.forEach(user => {
         mapaUsuariosComentadores[user.idUsuario] = user;
       });
-
+  
+      // Obtener todos los me gustas de comentarios
+      const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios`);
+      const todosLosMeGustas = meGustasComentarioResponse.data || [];
+  
       const promesasComentarios = comentariosEncontrados.map(async comentario => {
         const usuarioComentador = mapaUsuariosComentadores[comentario.user];
         const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios/numero/${comentario.idComentarios}`);
         const meGustasComentario = meGustasComentarioResponse.data || [];
         const contadorMeGustas = meGustasComentario.length > 0 ? meGustasComentario[0].contador : 0;
+        
+        // Verificar si el usuario actual ha dado like
+        const userHasLiked = todosLosMeGustas.some(mg => 
+          mg.idComent === comentario.idComentarios && mg.iDusuario === idUsuario
+        );
+  
         return {
           ...comentario,
           usuarioComentador: usuarioComentador || null,
-          meGustaComentario: contadorMeGustas
+          meGustaComentario: contadorMeGustas,
+          userHasLiked
         };
       });
+  
       const comentariosCompletos = await Promise.all(promesasComentarios);
       setComentarios(comentariosCompletos);
+      
+      // Actualizar el estado de likes
+      const likesTemp = {};
+      comentariosCompletos.forEach(comentario => {
+        likesTemp[comentario.idComentarios] = comentario.userHasLiked;
+      });
+      setUserLikesComentarios(likesTemp);
+      
       setHayComentarios(true);
     } catch (error) {
       console.error("Error obteniendo comentarios:", error);
@@ -133,6 +156,14 @@ export const Comentarios = () => {
     try {
       const meGustaResponse = await axios.get(`http://localhost:3000/api/meGusta/${idPublicacion}`);
       const meGusta = meGustaResponse.data || [];
+      
+      // Obtener todos los me gustas para verificar si el usuario actual dio like
+      const todosLosMeGustasResponse = await axios.get(`http://localhost:3000/api/meGusta/elemento/${idPublicacion}`);
+      const todosLosMeGustas = todosLosMeGustasResponse.data || [];
+      
+      // Verificar si el usuario actual ha dado like
+      const hasLiked = todosLosMeGustas.some(mg => mg.idUser === idUsuario);
+      setUserLikePublicacion(hasLiked);
       
       if (meGusta.length === 0) {
         console.error("No hay me gustas");
@@ -180,7 +211,17 @@ export const Comentarios = () => {
 
   // Método para dar o eliminar me gusta a una publicación
   const handleMeGustaPublicacion = async (idPublicacion) => {
-    handleMeGusta(idUsuario, idPublicacion, () => cargarMeGustasPublicacion(idPublicacion));
+    try {
+      await handleMeGusta(idUsuario, idPublicacion);
+      
+      // Actualizar el estado local inmediatamente
+      setUserLikePublicacion(prev => !prev);
+      
+      // Recargar los me gustas para actualizar el contador
+      await cargarMeGustasPublicacion(idPublicacion);
+    } catch (error) {
+      console.error("Error al dar me gusta a la publicación:", error);
+    }
   }
 
   // Método para dar o eliminar me gusta a un comentario
@@ -188,27 +229,35 @@ export const Comentarios = () => {
     try {
       const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios`);
       const meGustasComentario = meGustasComentarioResponse.data || [];
-
-      if (meGustasComentario.some(meGustaComantario => meGustaComantario.idComent === idComentario && meGustaComantario.iDusuario === idUsuario)) {
-        //Eliminar me gusta de comentario
+  
+      const hasLiked = meGustasComentario.some(
+        meGustaComantario => 
+          meGustaComantario.idComent === idComentario && 
+          meGustaComantario.iDusuario === idUsuario
+      );
+  
+      if (hasLiked) {
         await axios.delete(`http://localhost:3000/api/meGustaComentarios/${idUsuario}/${idComentario}`);
-        // Recargamos los me gustas del comentario al eliminar el me gusta
-        return cargarComentarios();
+      } else {
+        const nuevoMeGusta = {
+          iDusuario: idUsuario,
+          idComent: idComentario
+        };
+        await axios.post("http://localhost:3000/api/meGustaComentarios", nuevoMeGusta);
       }
-
-      const nuevoMeGusta = {
-        iDusuario: idUsuario,
-        idComent: idComentario
-      };
-
-      await axios.post("http://localhost:3000/api/meGustaComentarios", nuevoMeGusta);
-      // Recargamos los me gustas del comentario al dar me gusta
-      cargarComentarios();
+  
+      // Actualizar el estado local inmediatamente
+      setUserLikesComentarios(prev => ({
+        ...prev,
+        [idComentario]: !prev[idComentario]
+      }));
+  
+      // Actualizar los comentarios para refrescar el contador
+      await cargarComentarios();
     } catch (error) {
       console.error("Error al dar me gusta:", error);
     }
-    console.log("Me gusta comentario", idComentario);
-  }
+  };
 
   // Método para navegar al perfil del usuario que ha subido la publicación
   const handleVisualizarPerfil = (idUser) => {
@@ -265,7 +314,7 @@ export const Comentarios = () => {
               {meGustasPublicacion && (
               <div style={{ marginLeft: "27vw", display: "flex", alignItems: "center" }}>
                 <p style={{fontSize:"1.5vh"}}>{meGustasPublicacion[0]?.contador || 0}</p>
-                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
+                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> {userLikePublicacion ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
                 <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{numeroComentarios.contador}</p>
                 <button type='button' style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
@@ -304,7 +353,7 @@ export const Comentarios = () => {
                 )}
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5vw" }}>
                   <p style={{fontSize:"1.5vh"}}>{comentario.meGustaComentario}</p>
-                  <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
+                  <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> {comentario.userHasLiked ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
                 </div>
               </div>
               <p style={{margin:"1vh", fontSize:"1.75vh", backgroundColor:"#2c2c2c", border: "none", textAlign: "left", width: "95%"}}>{comentario.text}</p>

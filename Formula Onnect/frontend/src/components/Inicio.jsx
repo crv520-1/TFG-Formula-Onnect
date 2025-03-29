@@ -1,3 +1,4 @@
+import { HandThumbUpIcon as NoMeGustaIcono } from "@heroicons/react/24/outline";
 import { ChatBubbleOvalLeftIcon, HandThumbUpIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
@@ -8,10 +9,24 @@ import { useMeGusta } from '../hooks/useMeGusta';
 export const Inicio = () => {
   const navigate = useNavigate();
   const { user: idUsuario } = useContext(UsuarioContext);
+  const [userLikes, setUserLikes] = useState({});
   const [publicacionesConUsuarios, setPublicacionesConUsuarios] = useState([]);
   const [meGustasPublicaciones, setMeGustasPublicaciones] = useState([]);
   const [cargando, setCargando] = useState(true);
   const { handleMeGusta } = useMeGusta();
+
+  // Cargar publicaciones al inicio
+  useEffect(() => {
+    cargarPublicaciones();
+  }, [idUsuario]);
+
+  // Cargar me gustas cuando se actualizan las publicaciones
+  useEffect(() => {
+    cargarMeGustas();
+    if (publicacionesConUsuarios.length > 0) {
+      cargarLikesUsuario();
+    }
+  }, [publicacionesConUsuarios]);
 
   // Función para cargar publicaciones y datos de usuarios
   const cargarPublicaciones = async () => {
@@ -21,7 +36,6 @@ export const Inicio = () => {
       const publicacionesEncontradas = publicacionesResponse.data || [];
       
       if (publicacionesEncontradas.length === 0) {
-        console.error("No hay publicaciones");
         setCargando(false);
         return;
       }
@@ -70,27 +84,16 @@ export const Inicio = () => {
 
   // Función para cargar me gustas
   const cargarMeGustas = async () => {
-    if (publicacionesConUsuarios.length === 0) return;
+    if (!publicacionesConUsuarios.length) return;
     
     try {
-      // Crear un array con los IDs de las publicaciones
-      const idsPublicaciones = publicacionesConUsuarios.map(publicacion => publicacion.idPublicaciones);
+      const meGustasPromises = publicacionesConUsuarios.map(publicacion => 
+        axios.get(`http://localhost:3000/api/meGusta/${publicacion.idPublicaciones}`)
+      );
       
-      if (idsPublicaciones.length === 0) return;
+      const responses = await Promise.all(meGustasPromises);
+      const todosLosMeGustas = responses.flatMap(response => response.data || []);
       
-      // Acumular todos los me gustas
-      let todosLosMeGustas = [];
-      
-      // Obtener los me gustas para cada publicación individualmente
-      for (let i = 0; i < idsPublicaciones.length; i++) {
-        const meGustaResponse = await axios.get(`http://localhost:3000/api/meGusta/${idsPublicaciones[i]}`);
-        const meGusta = meGustaResponse.data || [];
-        
-        // Acumular los me gustas en lugar de sobreescribir
-        todosLosMeGustas = [...todosLosMeGustas, ...meGusta];
-      }
-      
-      // Establecer todos los me gustas acumulados
       setMeGustasPublicaciones(todosLosMeGustas);
     } catch (error) {
       console.error("Error obteniendo me gustas:", error);
@@ -98,18 +101,29 @@ export const Inicio = () => {
     }
   };
 
-  // Cargar publicaciones al inicio
-  useEffect(() => {
-    cargarPublicaciones();
-  }, [idUsuario]);
-
-  // Cargar me gustas cuando se actualizan las publicaciones
-  useEffect(() => {
-    cargarMeGustas();
-  }, [publicacionesConUsuarios]);
-
   const handleMeGustaPublicacion = async (idPublicacion) => {
-    handleMeGusta(idUsuario, idPublicacion, cargarMeGustas);
+    await handleMeGusta(idUsuario, idPublicacion);
+    
+    setUserLikes(prevLikes => ({
+      ...prevLikes,
+      [idPublicacion]: !prevLikes[idPublicacion]
+    }));
+  
+    setMeGustasPublicaciones(prevMeGustas => {
+      const currentMeGusta = prevMeGustas.find(mg => mg.idElemento === idPublicacion);
+      if (currentMeGusta) {
+        const newContador = userLikes[idPublicacion] ? currentMeGusta.contador - 1 : currentMeGusta.contador + 1;
+        return prevMeGustas.map(mg => 
+          mg.idElemento === idPublicacion ? {...mg, contador: newContador} : mg
+        );
+      }
+      return [...prevMeGustas, { idElemento: idPublicacion, contador: 1 }];
+    });
+  
+    await Promise.all([
+      cargarMeGustas(),
+      cargarLikesUsuario()
+    ]);
   };
 
   const handleComentarios = (idPublicacion) => {
@@ -129,6 +143,32 @@ export const Inicio = () => {
   const obtenerContadorMeGusta = (idPublicacion) => {
     const meGusta = meGustasPublicaciones.find(mg => mg.idElemento === idPublicacion);
     return meGusta ? meGusta.contador : 0;
+  };
+
+  const cargarLikesUsuario = async () => {
+    try {
+      const likesPromises = publicacionesConUsuarios.map(publicacion =>
+        axios.get(`http://localhost:3000/api/meGusta/elemento/${publicacion.idPublicaciones}`)
+      );
+      
+      const responses = await Promise.all(likesPromises);
+      const likesTemp = {};
+      
+      responses.forEach((response, index) => {
+        const publicacionId = publicacionesConUsuarios[index].idPublicaciones;
+        const meGustas = response.data || [];
+        likesTemp[publicacionId] = meGustas.some(mg => mg.idUser === idUsuario);
+      });
+      
+      setUserLikes(likesTemp);
+    } catch (error) {
+      console.error("Error cargando likes del usuario:", error);
+    }
+  };
+  
+  // Reemplazar la función usuarioHaDadoLike existente
+  const usuarioHaDadoLike = (idPublicacion) => {
+    return userLikes[idPublicacion] || false;
   };
 
   if (cargando) {
@@ -155,7 +195,7 @@ export const Inicio = () => {
               <p style={{marginLeft:"2vw", fontSize:"1.5vh"}}>{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
                 <p style={{fontSize:"1.5vh"}}>{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
+                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
                 <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{publicacion.numeroComentarios}</p>
                 <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
