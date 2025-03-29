@@ -1,12 +1,14 @@
 import { ChatBubbleOvalLeftIcon, HandThumbUpIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
-import PerfilHeader from './PerfilHeader';
+import HeaderPerfil from "./HeaderPerfil";
 
 export const PerfilPublicaciones = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { idUser } = location.state || {};
   const { user: idUsuario } = useContext(UsuarioContext);
   const [usuario, setUsuario] = useState({});
   const [publicaciones, setPublicaciones] = useState([]);
@@ -16,77 +18,108 @@ export const PerfilPublicaciones = () => {
   const [siguiendo, setSiguiendo] = useState(0);
   const [numeroPublicaciones, setNumeroPublicaciones] = useState(0);
   const [cargando, setCargando] = useState(true);
+  const [sigo, setSigo] = useState(false);
+  const [mismoUsuario, setMismoUsuario] = useState(false);
 
   // Función para cargar los datos del usuario y sus publicaciones
   const cargarDatosUsuario = async () => {
+    let usuarioEncontrado = null;
+
+    // Obtener usuario
     try {
-      // Obtener usuario
       const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
-      const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUsuario);
+      usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUser);
       if (!usuarioEncontrado) {
         console.error("Usuario no encontrado");
         setCargando(false);
         return;
       }
       setUsuario(usuarioEncontrado);
+    } catch (error) {
+      console.error("Error obteniendo usuario:", error);
+      setCargando(false);
+      return;
+    }
 
-      // Obtener publicaciones del usuario
-      const publicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/${idUsuario}`);
+    // Obtener publicaciones del usuario
+    try {
+      const publicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/${idUser}`);
       const publicacionesUsuario = publicacionesResponse.data || [];
       setPublicaciones(publicacionesUsuario);
-      
+    } catch (error) {
+      console.error("Error obteniendo publicaciones:", error);
+      setPublicaciones([]);
+    }
 
-      // Obtener número de publicaciones del usuario
-      const numeroPublicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUsuario}`);
+    // Obtener número de publicaciones del usuario
+    try {
+      const numeroPublicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUser}`);
       const numeroPublicacionesUsuario = numeroPublicacionesResponse.data;
       setNumeroPublicaciones(numeroPublicacionesUsuario["COUNT(*)"] || 0);
-
-      // Obtener seguidores
-      try {
-        const seguidoresResponse = await axios.get(`http://localhost:3000/api/seguidores/seguidores/${idUsuario}`);
-        setSeguidores(seguidoresResponse.data["COUNT(*)"] || 0);
-      } catch (error) {
-        console.error("Error obteniendo seguidores:", error);
-        setSeguidores(0);
-      }
-      
-      // Obtener siguiendo
-      try {
-        const siguiendoResponse = await axios.get(`http://localhost:3000/api/seguidores/siguiendo/${idUsuario}`);
-        setSiguiendo(siguiendoResponse.data["COUNT(*)"] || 0);
-      } catch (error) {
-        console.error("Error obteniendo siguiendo:", error);
-        setSiguiendo(0);
-      }
-
-      setCargando(false);
     } catch (error) {
-      console.error("Error obteniendo datos:", error);
-      setCargando(false);
+      console.error("Error obteniendo número de publicaciones:", error);
+      setNumeroPublicaciones(0);
     }
+
+    // Obtener seguidores
+    try {
+      const seguidoresResponse = await axios.get(`http://localhost:3000/api/seguidores/seguidores/${idUser}`);
+      setSeguidores(seguidoresResponse.data["COUNT(*)"] || 0);
+    } catch (error) {
+      console.error("Error obteniendo seguidores:", error);
+      setSeguidores(0);
+    }
+    
+    // Obtener siguiendo
+    try {
+      const siguiendoResponse = await axios.get(`http://localhost:3000/api/seguidores/siguiendo/${idUser}`);
+      setSiguiendo(siguiendoResponse.data["COUNT(*)"] || 0);
+    } catch (error) {
+      console.error("Error obteniendo siguiendo:", error);
+      setSiguiendo(0);
+    }
+
+    // Comprobar si el usuario actual sigue al usuario del perfil
+    if (idUser !== idUsuario) {
+      setMismoUsuario(false);
+      try {
+        const sigoResponse = await axios.get(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
+        setSigo(sigoResponse.data);
+      } catch (error) {
+        console.error("Error obteniendo si sigo al usuario:", error);
+        setSigo(false);
+      }
+    } else {
+      setMismoUsuario(true);
+      setSigo(false);
+    }
+
+    setCargando(false);
   };
 
   const cargarDatosPublicaciones = async () => {
-    if (publicaciones.length === 0) return;
-
     try {
-      const idsPublicaciones = publicaciones.map(publicacion => publicacion.idPublicaciones);
-      
-      const [comentariosResults, meGustasResults] = await Promise.all([
-        Promise.all(idsPublicaciones.map(idPublicacion => 
-            axios.get(`http://localhost:3000/api/comentarios/numero/${idPublicacion}`)
-        )),
-        Promise.all(idsPublicaciones.map(idPublicacion => 
-            axios.get(`http://localhost:3000/api/meGusta/${idPublicacion}`)
-        ))
-      ]);
-      
-      const todosLosComentarios = comentariosResults.flatMap(response => response.data || []);
-      setComentariosPublicaciones(todosLosComentarios);
-      
-      const todosLosMeGustas = meGustasResults.flatMap(response => response.data || []);
-      setMeGustasPublicaciones(todosLosMeGustas);
-      
+      if (publicaciones.length > 0) {
+        const idsPublicaciones = publicaciones.map(publicacion => publicacion.idPublicaciones);
+        
+        const [comentariosResults, meGustasResults] = await Promise.all([
+          Promise.all(idsPublicaciones.map(idPublicacion => 
+              axios.get(`http://localhost:3000/api/comentarios/numero/${idPublicacion}`)
+          )),
+          Promise.all(idsPublicaciones.map(idPublicacion => 
+              axios.get(`http://localhost:3000/api/meGusta/${idPublicacion}`)
+          ))
+        ]);
+        
+        const todosLosComentarios = comentariosResults.flatMap(response => response.data || []);
+        setComentariosPublicaciones(todosLosComentarios);
+        
+        const todosLosMeGustas = meGustasResults.flatMap(response => response.data || []);
+        setMeGustasPublicaciones(todosLosMeGustas);
+      } else {
+        setComentariosPublicaciones([]);
+        setMeGustasPublicaciones([]);
+      }
     } catch (error) {
       console.error("Error obteniendo datos de publicaciones:", error);
       setComentariosPublicaciones([]);
@@ -97,7 +130,7 @@ export const PerfilPublicaciones = () => {
   // Cargar datos iniciales
   useEffect(() => {
     cargarDatosUsuario();
-  }, [idUsuario]);
+  }, [idUsuario, idUser]);
 
   // Cargar me gustas cuando cambian las publicaciones
   useEffect(() => {
@@ -106,7 +139,7 @@ export const PerfilPublicaciones = () => {
 
   const handleDatos = (e) => {
     e.preventDefault();
-    navigate("/Perfil", { state: { idUser: idUsuario } });
+    navigate("/Perfil", { state: { idUser: idUser } });
   };
 
   const handleMeGusta = async (idPublicacion) => {
@@ -156,10 +189,24 @@ export const PerfilPublicaciones = () => {
     return comentarios ? comentarios.contador : 0;
   };
 
+  const handleSeguidoresChange = (nuevoNumeroSeguidores, nuevoEstadoSigo) => {
+    setSeguidores(nuevoNumeroSeguidores);
+    setSigo(nuevoEstadoSigo);
+  };
+
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto", overflowX: "hidden" }}>
+      <HeaderPerfil
+        usuario={usuario}
+        numeroPublicaciones={numeroPublicaciones}
+        seguidores={seguidores}
+        siguiendo={siguiendo}
+        sigo={sigo}
+        idUser={idUsuario}
+        onSeguidoresChange={handleSeguidoresChange}
+        mismoUsuario={mismoUsuario}
+      />
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-        <PerfilHeader usuario={usuario} numeroPublicaciones={numeroPublicaciones} seguidores={seguidores} siguiendo={siguiendo} />
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
           <button type='submit' onClick={handleDatos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Datos</button>
           <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", marginLeft: "35vh" }}>Publicaciones</h2>

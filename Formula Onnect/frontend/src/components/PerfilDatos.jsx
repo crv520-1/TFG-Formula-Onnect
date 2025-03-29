@@ -1,8 +1,8 @@
-import { ArrowRightEndOnRectangleIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import HeaderPerfil from "./HeaderPerfil";
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 
 export const Perfil = () => {
@@ -101,43 +101,14 @@ export const Perfil = () => {
 
   const handlePublicaciones = (e) => {
     e.preventDefault();
-    navigate("/PerfilPublicaciones");
+    navigate("/PerfilPublicaciones", { state: { idUser } });
     console.log("Publicaciones");
   }
 
-  const handleEditarPerfil = () => {
-    navigate("/EditarPerfil");
+  const handleSeguidoresChange = (nuevoNumeroSeguidores, nuevoEstadoSigo) => {
+    setSeguidores(nuevoNumeroSeguidores);
+    setSigo(nuevoEstadoSigo);
   };
-
-  const handleCerrarSesion = () => {
-    navigate("/IniciarSesion");
-  };
-
-  const handleSeguir = async () => {
-    if (!sigo) {
-      // Seguir al usuario que se está visualizando
-      const nuevoSeguimiento = {
-        idSeguidor: idUsuario,
-        idSeguido: idUser
-      };
-      try {
-        await axios.post(`http://localhost:3000/api/seguidores/`, nuevoSeguimiento);
-        setSeguidores(seguidores + 1);
-        setSigo(true);
-      } catch (error) {
-        console.error('Error al seguir:', error);
-      }
-    } else {
-      // Dejar de seguir al usuario que se está visualizando
-      try {
-        await axios.delete(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
-        setSeguidores(seguidores - 1);
-        setSigo(false);
-      } catch (error) {
-        console.error('Error al dejar de seguir:', error);
-      }
-    }
-  }
 
   if (cargando) { 
     return <h1>Cargando el perfil del usuario</h1>
@@ -145,44 +116,16 @@ export const Perfil = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-      <h1 style={{ fontSize: "4vh", textAlign: "center" }}> {usuario.nickName} </h1>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-        <img src={usuario.fotoPerfil} alt="Foto de perfil" style={{ width: "15vh", height: "15vh", borderRadius: "50%", color:"white", backgroundColor:"white" }} />
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-            <p style={{ fontSize: "3vh", marginLeft: "1vh", margin: "1vh" }}>{usuario.nombreCompleto}</p>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-              {mismoUsuario ? (
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                  <button type='submit' onClick={handleEditarPerfil} style={{ fontSize: "2vh", marginLeft: "1vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#15151E" }}><PencilSquareIcon style={{ width: "2vh", height: "2vh" }} /></button>
-                  <button type='submit' onClick={handleCerrarSesion} style={{ fontSize: "2vh", marginLeft: "1vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#15151E" }}><ArrowRightEndOnRectangleIcon style={{ width: "2vh", height: "2vh" }} /></button>
-                </div>
-              ) : null}
-            </div>
-          </div>
-          <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
-              <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Publicaciones </p>
-              <p style={{ fontSize: "1.5vh", margin: "0" }}> {numeroPublicaciones} </p>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
-              <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Seguidores </p>
-              <p style={{ fontSize: "1.5vh", margin: "0" }}> {seguidores} </p>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginLeft: "2vh" }}>
-              <p style={{ fontSize: "1.5vh", margin: "0.3vh 0" }}> Siguiendo </p>
-              <p style={{ fontSize: "1.5vh", margin: "0" }}> {siguiendo} </p>
-            </div>
-          </div>
-          {!mismoUsuario ? (
-            !sigo ? (
-              <button type='submit' onClick={handleSeguir} style={{ fontSize: "2vh", height:"3vh", marginTop: "1vh", marginLeft:"1vw", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"#C40000", width:"15vw" }}> Seguir </button>
-            ) : (
-              <button type='submit' onClick={handleSeguir} style={{ fontSize: "2vh", height:"3vh", marginTop: "1vh", marginLeft:"1vw", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"white", width:"15vw", color:"#C40000" }}> Dejar de seguir </button>
-            )
-          ) : null}
-        </div>
-      </div>
+      <HeaderPerfil
+        usuario={usuario}
+        numeroPublicaciones={numeroPublicaciones}
+        seguidores={seguidores}
+        siguiendo={siguiendo}
+        sigo={sigo}
+        idUser={idUsuario}
+        mismoUsuario={mismoUsuario}
+        onSeguidoresChange={handleSeguidoresChange}
+      />
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Datos</h2>
         <button type='submit' onClick={handlePublicaciones} style={{ fontSize: "2vh", height:"3vh", marginLeft: "35vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"#15151E" }}>Publicaciones</button>
