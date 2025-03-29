@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import { useMeGusta } from '../hooks/useMeGusta';
 
 export const Comentarios = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export const Comentarios = () => {
   const [numeroComentarios, setNumeroComentarios] = useState({});
   const [texto, setTexto] = useState("");
   const [hayComentarios, setHayComentarios] = useState(false);
+  const { handleMeGusta } = useMeGusta();
   const maxCaracteres = 450;
   const advertenciaCaracteres = 400;
 
@@ -177,29 +179,8 @@ export const Comentarios = () => {
   }
 
   // Método para dar o eliminar me gusta a una publicación
-  const handleMeGusta = async (idPublicacion) => {
-    try {
-      const meGustasResponse = await axios.get(`http://localhost:3000/api/meGusta`);
-      const meGustas = meGustasResponse.data || [];
-      
-      if (meGustas.some(meGusta => meGusta.idElemento === idPublicacion && meGusta.idUser === idUsuario)) {
-        //Eliminar me gusta
-        await axios.delete(`http://localhost:3000/api/meGusta/${idUsuario}/${idPublicacion}`);
-        // Recargamos los me gustas de la publicación al eliminar el me gusta
-        return cargarMeGustasPublicacion(idPublicacion);
-      }
-
-      const nuevoMeGusta = {
-        idUser: idUsuario,
-        idElemento: idPublicacion
-      };
-      
-      await axios.post("http://localhost:3000/api/meGusta", nuevoMeGusta);
-      // Recargamos los me gustas de la publicación al dar me gusta
-      cargarMeGustasPublicacion(idPublicacion);
-    } catch (error) {
-      console.error("Error al dar me gusta:", error);
-    }
+  const handleMeGustaPublicacion = async (idPublicacion) => {
+    handleMeGusta(idUsuario, idPublicacion, () => cargarMeGustasPublicacion(idPublicacion));
   }
 
   // Método para dar o eliminar me gusta a un comentario
@@ -284,7 +265,7 @@ export const Comentarios = () => {
               {meGustasPublicacion && (
               <div style={{ marginLeft: "27vw", display: "flex", alignItems: "center" }}>
                 <p style={{fontSize:"1.5vh"}}>{meGustasPublicacion[0]?.contador || 0}</p>
-                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
+                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
                 <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{numeroComentarios.contador}</p>
                 <button type='button' style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>

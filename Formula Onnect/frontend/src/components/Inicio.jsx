@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import { useMeGusta } from '../hooks/useMeGusta';
 
 export const Inicio = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export const Inicio = () => {
   const [publicacionesConUsuarios, setPublicacionesConUsuarios] = useState([]);
   const [meGustasPublicaciones, setMeGustasPublicaciones] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const { handleMeGusta } = useMeGusta();
 
   // Función para cargar publicaciones y datos de usuarios
   const cargarPublicaciones = async () => {
@@ -106,31 +108,8 @@ export const Inicio = () => {
     cargarMeGustas();
   }, [publicacionesConUsuarios]);
 
-  const handleMeGusta = async (idPublicacion) => {
-    try {
-      const meGustasResponse = await axios.get(`http://localhost:3000/api/meGusta`);
-      const meGustas = meGustasResponse.data || [];
-      
-      // Verificar si ya dio me gusta
-      if (meGustas.some(meGusta => meGusta.idElemento === idPublicacion && meGusta.idUser === idUsuario)) {
-        // Eliminar me gusta
-        await axios.delete(`http://localhost:3000/api/meGusta/${idUsuario}/${idPublicacion}`);
-        return cargarMeGustas();
-      }
-      
-      // Añadir nuevo me gusta
-      const nuevoMeGusta = {
-        idUser: idUsuario,
-        idElemento: idPublicacion
-      };
-      
-      await axios.post("http://localhost:3000/api/meGusta", nuevoMeGusta);
-      
-      // Actualizar me gustas sin recargar la página
-      cargarMeGustas();
-    } catch (error) {
-      console.error("Error al dar me gusta:", error);
-    }
+  const handleMeGustaPublicacion = async (idPublicacion) => {
+    handleMeGusta(idUsuario, idPublicacion, cargarMeGustas);
   };
 
   const handleComentarios = (idPublicacion) => {
@@ -176,7 +155,7 @@ export const Inicio = () => {
               <p style={{marginLeft:"2vw", fontSize:"1.5vh"}}>{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
                 <p style={{fontSize:"1.5vh"}}>{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
+                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
                 <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{publicacion.numeroComentarios}</p>
                 <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
