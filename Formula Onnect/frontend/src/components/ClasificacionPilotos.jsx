@@ -51,9 +51,7 @@ export const Clasificacion = () => {
   }
 
   const getEstiloPosicion = (posicion) => {
-    if (posicion === 1) return "bold";
-    if (posicion === 2) return "bold";
-    if (posicion === 3) return "bold";
+    if (posicion <= 3) return "bold";
     return "normal";
   }
 
