@@ -10,6 +10,17 @@ exports.getAllMeGusta = async () => {
   }
 };
 
+// Obtener todos los megusta por idElemento
+exports.getAllMeGustaById = async (idElemento) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM MeGusta WHERE idElemento = ?', [idElemento]);
+    return rows;
+  } catch (error) {
+    console.error("Error en la consulta de me gusta:", error);
+    throw error;
+  }
+};
+
 // Obtener los "me gusta" por idElemento y tipoElemento
 exports.getMeGustaById = async (idElemento) => {
   try {

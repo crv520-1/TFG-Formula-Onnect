@@ -10,6 +10,22 @@ exports.getAllMeGusta = async (req, res) => {
     }
 }
 
+// Obtener todos los megusta por idElemento
+exports.getAllMeGustaById = async (req, res) => {
+    const { idElemento } = req.params;
+
+    try {
+        const meGusta = await meGustaController.getAllMeGustaById(idElemento);
+        if (meGusta.length === 0) {
+            return res.status(404).json({ error: 'No se encontraron me gusta para este elemento' });
+        }
+        return res.json(meGusta);
+    } catch (error) {
+        console.error("Error en la API:", error);
+        return res.status(500).json({ error: 'Error al buscar en la base de datos' });
+    }
+}
+
 // Obtener los "me gusta" por idElemento y tipoElemento
 exports.getMeGustaById = async (req, res) => {
     const { idElemento } = req.params;
