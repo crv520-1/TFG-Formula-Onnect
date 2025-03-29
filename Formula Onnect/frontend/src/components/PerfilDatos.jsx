@@ -114,28 +114,28 @@ export const Perfil = () => {
   };
 
   const handleSeguir = async () => {
-    // Seguir al usuario que se está visualizando
-    const nuevoSeguimiento = {
-      idSeguidor: idUsuario,
-      idSeguido: idUser
-    };
-    try {
-      await axios.post(`http://localhost:3000/api/seguidores/`, nuevoSeguimiento);
-      setSeguidores(seguidores + 1);
-      setSigo(true);
-    } catch (error) {
-      console.error('Error al seguir:', error);
-    }
-  }
-
-  const handleDejarSeguir = async () => {
-    // Dejar de seguir al usuario que se está visualizando
-    try {
-      await axios.delete(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
-      setSeguidores(seguidores - 1);
-      setSigo(false);
-    } catch (error) {
-      console.error('Error al dejar de seguir:', error);
+    if (!sigo) {
+      // Seguir al usuario que se está visualizando
+      const nuevoSeguimiento = {
+        idSeguidor: idUsuario,
+        idSeguido: idUser
+      };
+      try {
+        await axios.post(`http://localhost:3000/api/seguidores/`, nuevoSeguimiento);
+        setSeguidores(seguidores + 1);
+        setSigo(true);
+      } catch (error) {
+        console.error('Error al seguir:', error);
+      }
+    } else {
+      // Dejar de seguir al usuario que se está visualizando
+      try {
+        await axios.delete(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
+        setSeguidores(seguidores - 1);
+        setSigo(false);
+      } catch (error) {
+        console.error('Error al dejar de seguir:', error);
+      }
     }
   }
 
@@ -178,7 +178,7 @@ export const Perfil = () => {
             !sigo ? (
               <button type='submit' onClick={handleSeguir} style={{ fontSize: "2vh", height:"3vh", marginTop: "1vh", marginLeft:"1vw", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"#C40000", width:"15vw" }}> Seguir </button>
             ) : (
-              <button type='submit' onClick={handleDejarSeguir} style={{ fontSize: "2vh", height:"3vh", marginTop: "1vh", marginLeft:"1vw", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"white", width:"15vw", color:"#C40000" }}> Dejar de seguir </button>
+              <button type='submit' onClick={handleSeguir} style={{ fontSize: "2vh", height:"3vh", marginTop: "1vh", marginLeft:"1vw", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"white", width:"15vw", color:"#C40000" }}> Dejar de seguir </button>
             )
           ) : null}
         </div>
