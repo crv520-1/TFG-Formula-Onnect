@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import { carga } from "./animacionCargando.jsx";
 import HeaderPerfil from "./HeaderPerfil";
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 
@@ -21,83 +22,96 @@ export const Perfil = () => {
   const [imagenCircuito, setImagenCircuito] = useState("");
   const [numeroPublicaciones, setNumeroPublicaciones] = useState(0);
 
-  console.log(idUsuario);
-
   useEffect(() => {
-    const fetchData = async () => {
+    const cargarDatos = async () => {
       try {
-        // Obtener usuario
         const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
-        const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUser);
-        if (!usuarioEncontrado) {
-          console.error("Usuario no encontrado");
-          return;
-        }
-        setUsuario(usuarioEncontrado);
-
-        // Obtener piloto favorito
-        const pilotosResponse = await axios.get("http://localhost:3000/api/pilotos");
-        const pilotoFav = pilotosResponse.data.find(p => p.idPilotos === usuarioEncontrado.pilotoFav);
+        const usuario = await cargarUsuario(usuariosResponse, idUser);
+        setUsuario(usuario);
+  
+        const { pilotoFav, equipoFav, circuitoFav } = await cargarFavoritos(usuario);
         if (pilotoFav) setImagenPiloto(getImagenPiloto(pilotoFav.driverId));
-
-        // Obtener equipo favorito
-        const equiposResponse = await axios.get("http://localhost:3000/api/equipos");
-        const equipoFav = equiposResponse.data.find(e => e.idEquipos === usuarioEncontrado.equipoFav);
         if (equipoFav) setImagenEquipo(getImagenEquipo(equipoFav.constructorId));
-
-        // Obtener circuito favorito
-        const circuitosResponse = await axios.get("http://localhost:3000/api/circuitos");
-        const circuitoFav = circuitosResponse.data.find(c => c.idCircuitos === usuarioEncontrado.circuitoFav);
         if (circuitoFav) setImagenCircuito(getImagenCircuito(circuitoFav.circuitId));
-
-        // Obtener número de publicaciones del usuario
-        const numeroPublicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUser}`);
-        const numeroPublicacionesUsuario = numeroPublicacionesResponse.data;
-        if (!numeroPublicacionesUsuario) {
-          console.error("Número de publicaciones no encontrado");
-          return;
-        }
-        setNumeroPublicaciones(numeroPublicacionesUsuario["COUNT(*)"]);
-
-        // Obtener seguidores
-        try {
-          const seguidoresResponse = await axios.get(`http://localhost:3000/api/seguidores/seguidores/${idUser}`);
-          setSeguidores(seguidoresResponse.data["COUNT(*)"] || 0);
-        } catch (error) {
-          console.error("Error obteniendo seguidores:", error);
-          setSeguidores(0);
-        }
-        
-        // Obtener siguiendo
-        try {
-          const siguiendoResponse = await axios.get(`http://localhost:3000/api/seguidores/siguiendo/${idUser}`);
-          setSiguiendo(siguiendoResponse.data["COUNT(*)"] || 0);
-        } catch (error) {
-          console.error("Error obteniendo siguiendo:", error);
-          setSiguiendo(0);
-        }
-
-        if (idUser !== idUsuario) {
-          setMismoUsuario(false);
-          try {
-            const sigoResponse = await axios.get(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
-            setSigo(sigoResponse.data);
-          } catch (error) {
-            console.error("Error obteniendo si sigo al usuario:", error);
-            setSigo(false);
-          }
-        } else {
-          setMismoUsuario(true);
-          setSigo(false);
-        }
-        setCargando(false);
+  
+        const publicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUser}`);
+        setNumeroPublicaciones(publicacionesResponse.data["COUNT(*)"]);
+  
+        const { seguidores, siguiendo } = await cargarSeguidores(idUser);
+        setSeguidores(seguidores);
+        setSiguiendo(siguiendo);
+  
+        const { mismoUsuario, sigo } = await verificarSeguimiento(idUser, idUsuario);
+        setMismoUsuario(mismoUsuario);
+        setSigo(sigo);
+  
+        setTimeout(() => {
+          setCargando(false);
+        }, 500);
       } catch (error) {
         console.error("Error obteniendo datos:", error);
       }
     };
-
-    fetchData();
+  
+    cargarDatos();
   }, [idUser, idUsuario]);
+
+  const cargarUsuario = async (usuariosResponse, idUser) => {
+    const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUser);
+    if (!usuarioEncontrado) {
+      throw new Error("Usuario no encontrado");
+    }
+    return usuarioEncontrado;
+  };
+  
+  const cargarFavoritos = async (usuario) => {
+    const [pilotosResponse, equiposResponse, circuitosResponse] = await Promise.all([
+      axios.get("http://localhost:3000/api/pilotos"),
+      axios.get("http://localhost:3000/api/equipos"),
+      axios.get("http://localhost:3000/api/circuitos")
+    ]);
+  
+    const pilotoFav = pilotosResponse.data.find(p => p.idPilotos === usuario.pilotoFav);
+    const equipoFav = equiposResponse.data.find(e => e.idEquipos === usuario.equipoFav);
+    const circuitoFav = circuitosResponse.data.find(c => c.idCircuitos === usuario.circuitoFav);
+  
+    return {
+      pilotoFav,
+      equipoFav,
+      circuitoFav
+    };
+  };
+  
+  const cargarSeguidores = async (idUser) => {
+    try {
+      const [seguidoresResponse, siguiendoResponse] = await Promise.all([
+        axios.get(`http://localhost:3000/api/seguidores/seguidores/${idUser}`),
+        axios.get(`http://localhost:3000/api/seguidores/siguiendo/${idUser}`)
+      ]);
+  
+      return {
+        seguidores: seguidoresResponse.data["COUNT(*)"] || 0,
+        siguiendo: siguiendoResponse.data["COUNT(*)"] || 0
+      };
+    } catch (error) {
+      console.error("Error obteniendo seguidores/siguiendo:", error);
+      return { seguidores: 0, siguiendo: 0 };
+    }
+  };
+  
+  const verificarSeguimiento = async (idUser, idUsuario) => {
+    if (idUser === idUsuario) {
+      return { mismoUsuario: true, sigo: false };
+    }
+  
+    try {
+      const sigoResponse = await axios.get(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
+      return { mismoUsuario: false, sigo: sigoResponse.data };
+    } catch (error) {
+      console.error("Error obteniendo si sigo al usuario:", error);
+      return { mismoUsuario: false, sigo: false };
+    }
+  };
 
   const handlePublicaciones = (e) => {
     e.preventDefault();
@@ -109,9 +123,7 @@ export const Perfil = () => {
     setSigo(nuevoEstadoSigo);
   };
 
-  if (cargando) { 
-    return <h1>Cargando el perfil del usuario</h1>
-  } else {
+  if (cargando) { return carga(); }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
@@ -142,7 +154,6 @@ export const Perfil = () => {
       </div>
     </div> 
   )
-}
 }
 
 export default Perfil;

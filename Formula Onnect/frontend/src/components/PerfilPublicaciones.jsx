@@ -1,9 +1,11 @@
+import { HandThumbUpIcon as NoMeGustaIcono } from "@heroicons/react/24/outline";
 import { ChatBubbleOvalLeftIcon, HandThumbUpIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import HeaderPerfil from "./HeaderPerfil";
+import { carga } from "./animacionCargando";
 
 export const PerfilPublicaciones = () => {
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ export const PerfilPublicaciones = () => {
   const { idUser } = location.state || {};
   const { user: idUsuario } = useContext(UsuarioContext);
   const [usuario, setUsuario] = useState({});
+  const [userLikes, setUserLikes] = useState({});
   const [publicaciones, setPublicaciones] = useState([]);
   const [meGustasPublicaciones, setMeGustasPublicaciones] = useState([]);
   const [comentariosPublicaciones, setComentariosPublicaciones] = useState([]);
@@ -21,121 +24,119 @@ export const PerfilPublicaciones = () => {
   const [sigo, setSigo] = useState(false);
   const [mismoUsuario, setMismoUsuario] = useState(false);
 
-  // Función para cargar los datos del usuario y sus publicaciones
-  const cargarDatosUsuario = async () => {
-    let usuarioEncontrado = null;
+  // Separar las llamadas API en funciones más pequeñas
+  const fetchUsuario = async (idUser) => {
+    const response = await axios.get("http://localhost:3000/api/usuarios");
+    const usuario = response.data.find(user => user.idUsuario === idUser);
+    if (!usuario) throw new Error("Usuario no encontrado");
+    return usuario;
+  };
 
-    // Obtener usuario
-    try {
-      const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
-      usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUser);
-      if (!usuarioEncontrado) {
-        console.error("Usuario no encontrado");
-        setCargando(false);
-        return;
-      }
-      setUsuario(usuarioEncontrado);
-    } catch (error) {
-      console.error("Error obteniendo usuario:", error);
-      setCargando(false);
-      return;
-    }
+  const fetchPublicaciones = async (idUser) => {
+    const response = await axios.get(`http://localhost:3000/api/publicaciones/${idUser}`);
+    return response.data || [];
+  };
 
-    // Obtener publicaciones del usuario
-    try {
-      const publicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/${idUser}`);
-      const publicacionesUsuario = publicacionesResponse.data || [];
-      setPublicaciones(publicacionesUsuario);
-    } catch (error) {
-      console.error("Error obteniendo publicaciones:", error);
-      setPublicaciones([]);
-    }
+  const fetchEstadisticas = async (idUser) => {
+    const [numeroPublicaciones, seguidores, siguiendo] = await Promise.all([
+      axios.get(`http://localhost:3000/api/publicaciones/count/${idUser}`),
+      axios.get(`http://localhost:3000/api/seguidores/seguidores/${idUser}`),
+      axios.get(`http://localhost:3000/api/seguidores/siguiendo/${idUser}`)
+    ]);
 
-    // Obtener número de publicaciones del usuario
-    try {
-      const numeroPublicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUser}`);
-      const numeroPublicacionesUsuario = numeroPublicacionesResponse.data;
-      setNumeroPublicaciones(numeroPublicacionesUsuario["COUNT(*)"] || 0);
-    } catch (error) {
-      console.error("Error obteniendo número de publicaciones:", error);
-      setNumeroPublicaciones(0);
-    }
+    return {
+      publicaciones: numeroPublicaciones.data["COUNT(*)"] || 0,
+      seguidores: seguidores.data["COUNT(*)"] || 0,
+      siguiendo: siguiendo.data["COUNT(*)"] || 0
+    };
+  };
 
-    // Obtener seguidores
-    try {
-      const seguidoresResponse = await axios.get(`http://localhost:3000/api/seguidores/seguidores/${idUser}`);
-      setSeguidores(seguidoresResponse.data["COUNT(*)"] || 0);
-    } catch (error) {
-      console.error("Error obteniendo seguidores:", error);
-      setSeguidores(0);
-    }
+  const fetchInteracciones = async (publicaciones) => {
+    if (!publicaciones.length) return { comentarios: [], meGustas: [] };
+
+    const idsPublicaciones = publicaciones.map(pub => pub.idPublicaciones);
     
-    // Obtener siguiendo
-    try {
-      const siguiendoResponse = await axios.get(`http://localhost:3000/api/seguidores/siguiendo/${idUser}`);
-      setSiguiendo(siguiendoResponse.data["COUNT(*)"] || 0);
-    } catch (error) {
-      console.error("Error obteniendo siguiendo:", error);
-      setSiguiendo(0);
-    }
+    const [comentariosResults, meGustasResults] = await Promise.all([
+      Promise.all(idsPublicaciones.map(id => 
+        axios.get(`http://localhost:3000/api/comentarios/numero/${id}`)
+      )),
+      Promise.all(idsPublicaciones.map(id => 
+        axios.get(`http://localhost:3000/api/meGusta/${id}`)
+      ))
+    ]);
 
-    // Comprobar si el usuario actual sigue al usuario del perfil
-    if (idUser !== idUsuario) {
-      setMismoUsuario(false);
-      try {
+    return {
+      comentarios: comentariosResults.flatMap(response => response.data || []),
+      meGustas: meGustasResults.flatMap(response => response.data || [])
+    };
+  };
+
+  const fetchUserLikes = async (publicaciones) => {
+    if (!publicaciones.length) return {};
+    
+    try {
+      const response = await axios.get(`http://localhost:3000/api/meGusta`);
+      const meGustas = response.data || [];
+      
+      // Crear un objeto con los me gustas del usuario actual
+      const likes = {};
+      publicaciones.forEach(pub => {
+        likes[pub.idPublicaciones] = meGustas.some(
+          mg => mg.idElemento === pub.idPublicaciones && mg.idUser === idUsuario
+        );
+      });
+      return likes;
+    } catch (error) {
+      console.error("Error obteniendo me gustas del usuario:", error);
+      return {};
+    }
+  };
+
+  // Función para cargar todos los datos
+  const cargarTodo = async () => {
+    setCargando(true);
+    try {
+      const usuario = await fetchUsuario(idUser);
+      setUsuario(usuario);
+
+      const publicaciones = await fetchPublicaciones(idUser);
+      setPublicaciones(publicaciones);
+
+      const estadisticas = await fetchEstadisticas(idUser);
+      setNumeroPublicaciones(estadisticas.publicaciones);
+      setSeguidores(estadisticas.seguidores);
+      setSiguiendo(estadisticas.siguiendo);
+
+      const interacciones = await fetchInteracciones(publicaciones);
+      setComentariosPublicaciones(interacciones.comentarios);
+      setMeGustasPublicaciones(interacciones.meGustas);
+
+      // Cargar los me gustas del usuario actual
+      const likes = await fetchUserLikes(publicaciones);
+      setUserLikes(likes);
+
+      // Comprobar si es el mismo usuario o si lo sigue
+      if (idUser !== idUsuario) {
+        setMismoUsuario(false);
         const sigoResponse = await axios.get(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
         setSigo(sigoResponse.data);
-      } catch (error) {
-        console.error("Error obteniendo si sigo al usuario:", error);
+      } else {
+        setMismoUsuario(true);
         setSigo(false);
       }
-    } else {
-      setMismoUsuario(true);
-      setSigo(false);
-    }
-
-    setCargando(false);
-  };
-
-  const cargarDatosPublicaciones = async () => {
-    try {
-      if (publicaciones.length > 0) {
-        const idsPublicaciones = publicaciones.map(publicacion => publicacion.idPublicaciones);
-        
-        const [comentariosResults, meGustasResults] = await Promise.all([
-          Promise.all(idsPublicaciones.map(idPublicacion => 
-              axios.get(`http://localhost:3000/api/comentarios/numero/${idPublicacion}`)
-          )),
-          Promise.all(idsPublicaciones.map(idPublicacion => 
-              axios.get(`http://localhost:3000/api/meGusta/${idPublicacion}`)
-          ))
-        ]);
-        
-        const todosLosComentarios = comentariosResults.flatMap(response => response.data || []);
-        setComentariosPublicaciones(todosLosComentarios);
-        
-        const todosLosMeGustas = meGustasResults.flatMap(response => response.data || []);
-        setMeGustasPublicaciones(todosLosMeGustas);
-      } else {
-        setComentariosPublicaciones([]);
-        setMeGustasPublicaciones([]);
-      }
     } catch (error) {
-      console.error("Error obteniendo datos de publicaciones:", error);
-      setComentariosPublicaciones([]);
-      setMeGustasPublicaciones([]);
+      console.error("Error cargando datos:", error);
+    } finally {
+      setTimeout(() => {
+        setCargando(false);
+      }, 500);
     }
   };
 
-  // Cargar datos iniciales
+  // Un solo useEffect para manejar toda la carga de datos
   useEffect(() => {
-    cargarDatosUsuario();
+    cargarTodo();
   }, [idUsuario, idUser]);
-
-  // Cargar me gustas cuando cambian las publicaciones
-  useEffect(() => {
-    cargarDatosPublicaciones();
-  }, [publicaciones]);
 
   const handleDatos = (e) => {
     e.preventDefault();
@@ -148,22 +149,30 @@ export const PerfilPublicaciones = () => {
       const meGustas = meGustasResponse.data || [];
       
       // Verificar si ya dio me gusta
-      if (meGustas.some(meGusta => meGusta.idElemento === idPublicacion && meGusta.idUser === idUsuario)) {
-        //Elimina el me gusta
+      const yaDioMeGusta = meGustas.some(
+        meGusta => meGusta.idElemento === idPublicacion && meGusta.idUser === idUsuario
+      );
+      
+      if (yaDioMeGusta) {
         await axios.delete(`http://localhost:3000/api/meGusta/${idUsuario}/${idPublicacion}`);
-        return cargarDatosPublicaciones();
+      } else {
+        const nuevoMeGusta = {
+          idUser: idUsuario,
+          idElemento: idPublicacion
+        };
+        await axios.post("http://localhost:3000/api/meGusta", nuevoMeGusta);
       }
-      
-      // Añadir nuevo me gusta
-      const nuevoMeGusta = {
-        idUser: idUsuario,
-        idElemento: idPublicacion
-      };
-      
-      await axios.post("http://localhost:3000/api/meGusta", nuevoMeGusta);
-      
-      // Actualizar me gustas después de añadir uno nuevo
-      cargarDatosPublicaciones();
+
+      // Actualizar el estado local inmediatamente
+      setUserLikes(prevLikes => ({
+        ...prevLikes,
+        [idPublicacion]: !yaDioMeGusta
+      }));
+
+      // Recargar solo los me gustas y comentarios
+      const interacciones = await fetchInteracciones(publicaciones);
+      setComentariosPublicaciones(interacciones.comentarios);
+      setMeGustasPublicaciones(interacciones.meGustas);
     } catch (error) {
       console.error("Error al dar me gusta:", error);
     }
@@ -174,9 +183,7 @@ export const PerfilPublicaciones = () => {
     navigate(`/Comentarios`, { state: { idElemento: idPublicacion, previusPath: 1 } });
   };
   
-  if (cargando) { 
-    return <h1>Cargando el perfil del usuario</h1>;
-  }
+  if (cargando) { return carga(); }
 
   // Función para obtener el contador de me gustas para una publicación específica
   const obtenerContadorMeGusta = (idPublicacion) => {
@@ -192,6 +199,9 @@ export const PerfilPublicaciones = () => {
   const handleSeguidoresChange = (nuevoNumeroSeguidores, nuevoEstadoSigo) => {
     setSeguidores(nuevoNumeroSeguidores);
     setSigo(nuevoEstadoSigo);
+  };
+  const usuarioHaDadoLike = (idPublicacion) => {
+    return userLikes[idPublicacion] || false;
   };
 
   return (
@@ -221,7 +231,7 @@ export const PerfilPublicaciones = () => {
               <p style={{marginLeft:"2vw", fontSize:"1.5vh"}}>{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
                 <p style={{fontSize:"1.5vh"}}>{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> </button>
+                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
                 <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
                 <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
