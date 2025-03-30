@@ -101,9 +101,11 @@ export const Comentarios = () => {
       const comentariosResponse = await axios.get(`http://localhost:3000/api/comentarios/publicacion/${idElemento}`);
       const comentariosEncontrados = comentariosResponse.data || {};
       
+      // Si no hay comentarios, actualizar el estado y retornar
       if (comentariosEncontrados.length === 0) {
-        console.error("No hay comentarios");
-        return;
+        setComentarios([]);
+        setHayComentarios(false);
+        return [];
       }
       
       const usuariosComentadores = await axios.get(`http://localhost:3000/api/usuarios`);
@@ -124,7 +126,6 @@ export const Comentarios = () => {
         const meGustasComentario = meGustasComentarioResponse.data || [];
         const contadorMeGustas = meGustasComentario.length > 0 ? meGustasComentario[0].contador : 0;
         
-        // Verificar si el usuario actual ha dado like
         const userHasLiked = todosLosMeGustas.some(mg => 
           mg.idComent === comentario.idComentarios && mg.iDusuario === idUsuario
         );
@@ -138,18 +139,21 @@ export const Comentarios = () => {
       });
   
       const comentariosCompletos = await Promise.all(promesasComentarios);
-      setComentarios(comentariosCompletos);
       
       // Actualizar el estado de likes
       const likesTemp = {};
       comentariosCompletos.forEach(comentario => {
         likesTemp[comentario.idComentarios] = comentario.userHasLiked;
       });
-      setUserLikesComentarios(likesTemp);
       
+      setUserLikesComentarios(likesTemp);
+      setComentarios(comentariosCompletos);
       setHayComentarios(true);
+      
+      return comentariosCompletos;
     } catch (error) {
       console.error("Error obteniendo comentarios:", error);
+      return [];
     }
   };
 
@@ -286,24 +290,34 @@ export const Comentarios = () => {
       alert("Tienes que introducir texto para poder publicar");
       return;
     }
-    const nuevoComentario = {
-      text: texto,
-      user: idUsuario,
-      post: idElemento
-    };
+    
     try {
+      setCargando(true);
+      const nuevoComentario = {
+        text: texto,
+        user: idUsuario,
+        post: idElemento
+      };
+      
       await axios.post("http://localhost:3000/api/comentarios", nuevoComentario);
       setTexto("");
-      await Promise.all([cargarPublicacion(), cargarComentarios()]);
-      // Rrcargamos los datos de la publicación y los comentarios al publicar un nuevo comentario
-      cargarPublicacion();
-      cargarComentarios();
-    }
-    catch (error) {
+      
+      // Recargar todos los datos necesarios
+      await Promise.all([
+        cargarPublicacion(),
+        cargarNumeroComentarios(idElemento)
+      ]);
+      
+      // Cargar comentarios después de la publicación
+      await cargarComentarios();
+      
+      setHayComentarios(true);
+    } catch (error) {
       console.error("Error al publicar:", error);
+    } finally {
+      setCargando(false);
     }
-    console.log("Publicar comentario");
-  }
+  };
 
   const colorContador = texto.length === maxCaracteres ? "red" : texto.length >= advertenciaCaracteres ? "orange" : "white";
 
