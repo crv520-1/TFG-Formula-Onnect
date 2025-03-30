@@ -15,7 +15,6 @@ import IniciarSesion from "./components/IniciarSesion";
 import Inicio from "./components/Inicio";
 import PerfilDatos from "./components/PerfilDatos";
 import PerfilPublicaciones from "./components/PerfilPublicaciones";
-import PublicacionesOtroUsuario from "./components/PublicacionesOtroUsuario";
 import Registro1 from "./components/Registro1";
 import RegistroNext from "./components/RegistroNext";
 import Resultados from "./components/Resultados";
@@ -41,7 +40,6 @@ const Layout = () => {
           <Route path="/GuiaCircuitos" element={<GuiaCircuitos />} />
           <Route path="/EditarPerfil" element={<EditarPerfil />} />
           <Route path="/Comentarios" element={<Comentarios />} />
-          <Route path="/PublicacionesOtroUsuario" element={<PublicacionesOtroUsuario />} />
           <Route path="/DatosPiloto" element={<DatosPiloto />} />
           <Route path="/DatosCircuito" element={<DatosCircuito />} />
           <Route path="/DatosEquipo" element={<DatosEquipo/>} />
