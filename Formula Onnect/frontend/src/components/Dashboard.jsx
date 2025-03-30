@@ -87,7 +87,7 @@ export const Dashboard = () => {
             <p style={{ color: "white", fontSize:"2vh" }}>Resultados</p>
         </button>
         <br />
-        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PublicacionesOtroUsuario" || prevPath === "/PerfilPublicaciones")) || location.pathname === "/PublicacionesOtroUsuario" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
+        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PerfilPublicaciones")) ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none" }}>
            <UserCircleIcon style={{ color: "white", width:"3vw", height:"3vh" }} />
             <p style={{ color: "white", fontSize:"2vh" }}>Perfil</p>
         </button>

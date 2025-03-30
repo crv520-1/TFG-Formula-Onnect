@@ -132,11 +132,7 @@ export const Inicio = () => {
   };
 
   const handleVisitarPerfil = (idUser) => {
-    if (idUser === idUsuario) {
-      navigate("/Perfil");
-    } else {
-      navigate(`/Perfil`, {state: { idUser }});
-    }
+    navigate(`/Perfil`, {state: { idUser }});
   };
 
   // Función para obtener el contador de me gustas para una publicación específica

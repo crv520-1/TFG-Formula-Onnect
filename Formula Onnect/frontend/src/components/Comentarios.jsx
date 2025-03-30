@@ -198,10 +198,7 @@ export const Comentarios = () => {
         navigate("/Inicio");
         break;
       case 1:
-        navigate("/PerfilPublicaciones");
-        break;
-      case 2:
-        navigate("/PublicacionesOtroUsuario", {state: { idUser: IDUsuario }});
+        navigate("/PerfilPublicaciones", {state: { idUser: IDUsuario }});
         break;
       default:
         navigate("/Inicio");

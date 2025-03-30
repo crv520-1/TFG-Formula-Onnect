@@ -102,7 +102,6 @@ export const Perfil = () => {
   const handlePublicaciones = (e) => {
     e.preventDefault();
     navigate("/PerfilPublicaciones", { state: { idUser } });
-    console.log("Publicaciones");
   }
 
   const handleSeguidoresChange = (nuevoNumeroSeguidores, nuevoEstadoSigo) => {
