@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito, getImagenEquipo } from './mapeoImagenes.js';
@@ -17,114 +17,102 @@ export const ResultadoCircuito = () => {
   const [sprintDisputada, setSprintDisputada] = useState(true);
   const [cargando, setCargando] = useState(true);
 
-  const temporizadorRef = useRef(null);
-
   useEffect(() => {
-    const fetchData = async () => {
-        try {
-          setCargando(true); // Ensure loading starts
-          const circuitosResponse = await axios.get(`http://localhost:3000/api/circuitos`);
-          const circuito = circuitosResponse.data.find(circuito => circuito.circuitId === circuitId);
-          if (!circuito) {
-            console.error("Circuito no encontrado");
-            setCargando(false);
-            return;
-          }
-          setCircuitos(circuito);
+    const loadData = async () => {
+      try {
+        setCargando(true);
 
-          const resultadosResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/results.json`);
-          const resultadosData = resultadosResponse.data.MRData.RaceTable.Races[0];
-          if (!resultadosData) {
-            setDisputada(false);
-            console.error("No hay resultados");
-          } else {
-            console.log("Resultados", resultadosData);
-            if (Array.isArray(resultadosData.Results)) {
-              const nuevasPosiciones = resultadosData.Results.map(resultado => ({
-                position: resultado.position,
-                driver: resultado.Driver.givenName + " " + resultado.Driver.familyName, //Esto o cambiar por driverId para luego consultar en mi bd por el driverId para obtener los datos de nombre y apellidos del piloto
-                team: resultado.Constructor.name,
-                constructorId: resultado.Constructor.constructorId,
-                puntos: resultado.points,
-                status: getStatusTraducido(resultado.status)
-              }));
-              setPosiciones(nuevasPosiciones);
-              console.log("Posiciones", posiciones);
-            } else {
-              console.error("Resultados no es un array");
-            }
-          }
+        const [circuito, resultados, horarios] = await Promise.all([
+          fetchCircuito(circuitId),
+          fetchCarreraResultados(year, round),
+          fetchHorarios(year, round)
+        ]);
 
-          const horariosGranPremioResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/races.json`);
-          const horariosGranPremioData = horariosGranPremioResponse.data.MRData.RaceTable.Races[0];
-          console.log("Horarios", horariosGranPremioData);
-          const hasSprint = !!horariosGranPremioData.Sprint; //Comprueba que exista la propiedad Sprint y en caso afirmativo lo pone en true mediante el doble signo de exclamación
-          const formatFecha = (fecha) => fecha ? new Date(fecha).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) : "N/A fecha";
-          const formatHora = (hora) => hora ? new Date(`2023-01-01T${hora}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : "N/A hora";
-          const nuevosHorarios = ({
-            diaCarrera: formatFecha(horariosGranPremioData.date),
-            horaCarrera: formatHora(horariosGranPremioData.time),
-            diaClasificacion: formatFecha(horariosGranPremioData.Qualifying?.date),
-            horaClasificacion: formatHora(horariosGranPremioData.Qualifying?.time),
-            diaFP3: formatFecha(horariosGranPremioData.ThirdPractice?.date || (horariosGranPremioData.Sprint?.date)),
-            horaFP3: formatHora(horariosGranPremioData.ThirdPractice?.time || (horariosGranPremioData.Sprint?.time)),
-            diaFP2: formatFecha(horariosGranPremioData.SecondPractice?.date || (horariosGranPremioData.SprintQualifying?.date)),
-            horaFP2: formatHora(horariosGranPremioData.SecondPractice?.time || (horariosGranPremioData.SprintQualifying?.time)),
-            diaFP1: formatFecha(horariosGranPremioData.FirstPractice?.date),
-            horaFP1: formatHora(horariosGranPremioData.FirstPractice?.time),
-            hasSprint: hasSprint
-          });
-          setHorariosGranPremio(nuevosHorarios);
+        setCircuitos(circuito);
+        setHorariosGranPremio(horarios);
+        setDisputada(!!resultados);
+        if (resultados) setPosiciones(resultados);
 
-          if (hasSprint === true) {
-            const sprintResultadosResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/sprint.json`);
-            const sprintResultadosData = sprintResultadosResponse.data.MRData.RaceTable.Races[0];
-            if (!sprintResultadosData) {
-              setSprintDisputada(false);
-              console.error("No hay resultados Sprint");
-            } else {
-              console.log("Resultados Sprint", sprintResultadosData);
-              if (Array.isArray(sprintResultadosData.SprintResults)) {
-                const nuevasPosicionesSprint = sprintResultadosData.SprintResults.map(resultado => ({
-                  position: resultado.position,
-                  driver: resultado.Driver.givenName + " " + resultado.Driver.familyName,
-                  constructorId: resultado.Constructor.constructorId,
-                  puntos: resultado.points,
-                  status: getStatusTraducido(resultado.status)
-                }));
-                setSprintPosiciones(nuevasPosicionesSprint);
-                console.log("Posiciones Sprint", sprintPosiciones);
-              } else {
-                console.error("Resultados Sprint no es un array");
-              }
-            }
-          } else {
-            console.error("No hay Sprint");
-            setSprintDisputada(false);
-          }
-        } 
-        catch (error) {
-            console.error("Error en la API", error);
-        } finally {
-            temporizadorRef.current = setTimeout(() => {
-              setCargando(false);
-            }, 1000);
+        if (horarios.hasSprint) {
+          const sprintResults = await fetchSprintResultados(year, round);
+          setSprintDisputada(!!sprintResults);
+          if (sprintResults) setSprintPosiciones(sprintResults);
+        } else {
+          setSprintDisputada(false);
         }
-    };
 
-    fetchData();
-
-    return () => {
-      if (temporizadorRef.current) {
-        clearTimeout(temporizadorRef.current);
+      } catch (error) {
+        console.error("Error al cargar los datos:", error);
+      } finally {
+        setTimeout(() => setCargando(false), 500);
       }
     };
+
+    loadData();
   }, [circuitId, year, round]);
 
+  const fetchCircuito = async (circuitId) => {
+    const response = await axios.get(`http://localhost:3000/api/circuitos`);
+    const circuito = response.data.find(c => c.circuitId === circuitId);
+    if (!circuito) {
+      throw new Error("Circuito no encontrado");
+    }
+    return circuito;
+  };
+  
+  const fetchCarreraResultados = async (year, round) => {
+    const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/results.json`);
+    const resultadosData = response.data.MRData.RaceTable.Races[0];
+    if (!resultadosData?.Results) return null;
+  
+    return resultadosData.Results.map(resultado => ({
+      position: resultado.position,
+      driver: `${resultado.Driver.givenName} ${resultado.Driver.familyName}`,
+      team: resultado.Constructor.name,
+      constructorId: resultado.Constructor.constructorId,
+      puntos: resultado.points,
+      status: getStatusTraducido(resultado.status)
+    }));
+  };
+  
+  const fetchHorarios = async (year, round) => {
+    const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/races.json`);
+    const data = response.data.MRData.RaceTable.Races[0];
+    
+    const formatFecha = (fecha) => fecha ? new Date(fecha).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) : "N/A fecha";
+    const formatHora = (hora) => hora ? new Date(`2023-01-01T${hora}`).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : "N/A hora";
+    
+    return {
+      diaCarrera: formatFecha(data.date),
+      horaCarrera: formatHora(data.time),
+      diaClasificacion: formatFecha(data.Qualifying?.date),
+      horaClasificacion: formatHora(data.Qualifying?.time),
+      diaFP3: formatFecha(data.ThirdPractice?.date || data.Sprint?.date),
+      horaFP3: formatHora(data.ThirdPractice?.time || data.Sprint?.time),
+      diaFP2: formatFecha(data.SecondPractice?.date || data.SprintQualifying?.date),
+      horaFP2: formatHora(data.SecondPractice?.time || data.SprintQualifying?.time),
+      diaFP1: formatFecha(data.FirstPractice?.date),
+      horaFP1: formatHora(data.FirstPractice?.time),
+      hasSprint: !!data.Sprint
+    };
+  };
+  
+  const fetchSprintResultados = async (year, round) => {
+    const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/sprint.json`);
+    const data = response.data.MRData.RaceTable.Races[0];
+    if (!data?.SprintResults) return null;
+  
+    return data.SprintResults.map(resultado => ({
+      position: resultado.position,
+      driver: `${resultado.Driver.givenName} ${resultado.Driver.familyName}`,
+      constructorId: resultado.Constructor.constructorId,
+      puntos: resultado.points,
+      status: getStatusTraducido(resultado.status)
+    }));
+  };
+
   const handleCalendario = (ano) => {
-    console.log(ano);
     navigate("/Resultados", { state: { ano } });
-    console.log("Calendario");
   }
 
   function mostrarCasoSprint(horario) {
@@ -206,9 +194,7 @@ export const ResultadoCircuito = () => {
     )
   }
 
-  if (cargando) {
-    return ( carga() );
-  }
+  if (cargando) { return ( carga() ); }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>

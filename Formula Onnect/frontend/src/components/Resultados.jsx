@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
+import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito } from './mapeoImagenes.js';
 
 export const Resultados = () => {
@@ -9,10 +10,12 @@ export const Resultados = () => {
   const { ano } = location.state || {};
   const [circuitos, setCircuitos] = useState([]);
   const [year, setYear] = useState(ano || 2025);
+  const [cargando, setCargando] = useState(true);
   let circuitosDatos = [];
 
   useEffect(() => {
     const fetchData = async () => {
+      setCargando(true);
       try {
         const circuitosAnoResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/races.json`)
         const circuitosAno = circuitosAnoResponse.data.MRData.RaceTable.Races;
@@ -46,6 +49,7 @@ export const Resultados = () => {
         // Ordenamos los circuitos por ronda, para tener el calendario en orden
         const sortedCircuitos = Object.values(uniqueCircuitos).sort((a, b) => a.ronda - b.ronda);
         setCircuitos(Object.values(sortedCircuitos));
+        setTimeout(() => { setCargando(false); }, 500);
       } catch (error) {
         console.error("Error en la API", error);
       }
@@ -61,6 +65,8 @@ export const Resultados = () => {
 
   // Se crea un array que comprenda los años entre el 2000 y el 2025
   const years = Array.from({ length: 26 }, (_, i) => 2025 - i);
+
+  if (cargando) { return carga() }
   
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
