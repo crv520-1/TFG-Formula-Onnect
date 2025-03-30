@@ -2,33 +2,44 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getPaisISO } from '../../../backend/scripts/mapeoPaises';
+import { carga } from './animacionCargando';
 import { getImagenEquipo, getLivery } from './mapeoImagenes';
 
 export const ClasificacionEquipos = () => {
   const navigate = useNavigate();
   const [year, setYear] = useState(2025);
   const [clasificacion, setClasificacion] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const cargarDatos = async () => {
+      setCargando(true);
       try {
-        const clasificacionResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/constructorstandings.json`);
-        const clasificacionData = clasificacionResponse.data.MRData.StandingsTable.StandingsLists[0];
-        const standings = clasificacionData.ConstructorStandings.map(equipo => ({
-          position: equipo.position,
-          points: equipo.points,
-          constructorId: equipo.Constructor.constructorId,
-          nombre: equipo.Constructor.name,
-          nacionalidad: getPaisISO(equipo.Constructor.nationality)
-        }));
+        const standings = await obtenerClasificacion(year);
         setClasificacion(standings);
-        console.log(standings);
+        setCargando(false);
       } catch (error) {
         console.error("Error en la API", error);
       }
     };
-    fetchData();
+    cargarDatos();
   }, [year]);
+
+  const obtenerClasificacion = async (year) => {
+    try {
+      const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/constructorstandings.json`);
+      const data = response.data.MRData.StandingsTable.StandingsLists[0];
+      return data.ConstructorStandings.map(equipo => ({
+        position: equipo.position,
+        points: equipo.points,
+        constructorId: equipo.Constructor.constructorId,
+        nombre: equipo.Constructor.name,
+        nacionalidad: getPaisISO(equipo.Constructor.nationality)
+      }));
+    } catch (error) {
+      console.error("Error al obtener la clasificación", error);
+    }
+  };
 
   const handlePilotos = (e) => {
     e.preventDefault();
@@ -50,6 +61,8 @@ export const ClasificacionEquipos = () => {
     if (posicion <= 3) return "bold";
     return "normal";
   }
+
+  if (cargando) { return ( carga() )};
     
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>

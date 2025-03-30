@@ -2,37 +2,48 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getPaisISO } from '../../../backend/scripts/mapeoPaises';
+import { carga } from './animacionCargando';
 import { getImagenEquipo, getImagenPiloto } from './mapeoImagenes';
 
 export const Clasificacion = () => {
   const navigate = useNavigate();
   const [year, setYear] = useState(2025);
   const [clasificacion, setClasificacion] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const cargarDatos = async () => {
+      setCargando(true);
       try {
-        const clasificacionResponse = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/driverstandings.json`);
-        const clasificacionData = clasificacionResponse.data.MRData.StandingsTable.StandingsLists[0];
-        const standings = clasificacionData.DriverStandings.map(piloto => ({
-          position: piloto.position,
-          points: piloto.points,
-          driverId: piloto.Driver.driverId,
-          nombre: piloto.Driver.givenName,
-          apellido: piloto.Driver.familyName,
-          nacionalidad: getPaisISO(piloto.Driver.nationality),
-          numero: piloto.Driver.permanentNumber,
-          constructorName: piloto.Constructors[0].name,
-          constructorId: piloto.Constructors[0].constructorId
-        }));
+        const standings = await cargarClasificacionPilotos(year);
         setClasificacion(standings);
-        console.log(standings);
+        setCargando(false);
       } catch (error) {
         console.error("Error en la API", error);
       }
     };
-    fetchData();
+    cargarDatos();
   }, [year]);
+
+  const cargarClasificacionPilotos = async (year) => {
+    try {
+      const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/driverstandings.json`);
+      const data = response.data.MRData.StandingsTable.StandingsLists[0];
+      return data.DriverStandings.map(piloto => ({
+        position: piloto.position,
+        points: piloto.points,
+        driverId: piloto.Driver.driverId,
+        nombre: piloto.Driver.givenName,
+        apellido: piloto.Driver.familyName,
+        nacionalidad: getPaisISO(piloto.Driver.nationality),
+        numero: piloto.Driver.permanentNumber,
+        constructorName: piloto.Constructors[0].name,
+        constructorId: piloto.Constructors[0].constructorId
+      }));
+    } catch (error) {
+      console.error("Error al obtener la clasificación", error);
+    }
+  };
 
   const handleEquipos = (e) => {
     e.preventDefault();
@@ -54,6 +65,8 @@ export const Clasificacion = () => {
     if (posicion <= 3) return "bold";
     return "normal";
   }
+
+  if (cargando) { return ( carga() )};
 
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
