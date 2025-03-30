@@ -7,16 +7,16 @@ import { getImagenPiloto } from './mapeoImagenes.js';
 export const DatosPiloto = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { idPiloto } = location.state || {};
   const [pilotos, setPilotos] = useState([]);
   const [driverData, setDriverData] = useState(null);
-  const { idPiloto } = location.state || {};
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const cargarDatos = async () => {
+      setCargando(true);
       try {
-        const pilotosResponse = await axios.get("http://localhost:3000/api/pilotos");
-        const piloto = pilotosResponse.data.find(piloto => piloto.idPilotos === idPiloto);
+        const piloto = await cargarDatosPiloto(idPiloto);
         if (!piloto) {
           console.error("Piloto no encontrado");
           return;
@@ -24,40 +24,66 @@ export const DatosPiloto = () => {
         setPilotos(piloto);
 
         // Consultar la wikipedia con la url del piloto para obtener los datos de interés
-        const scraperResponse = await axios.get(`http://localhost:3000/api/scrapingPilotos/driver-data`, {
-          params: { url: piloto.urlPiloto }
-        });
-        setDriverData(scraperResponse.data);
+        const scraperResponse = await cargarDatosScraping(piloto.urlPiloto);
+        if (!scraperResponse) {
+          console.error("Datos de scraping no encontrados");
+          return;
+        }
+        setDriverData(scraperResponse);
         setCargando(false);
       } catch (error) {
         console.error("Error en la API", error);
       }
-      console.log("Pilotos:", pilotos);
     }
-    fetchData();
+    cargarDatos();
   }, [idPiloto]);
+
+  const cargarDatosPiloto = async (idPiloto) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/pilotos/${idPiloto}`);
+      const data = response.data;
+      if (!data) {
+        console.error("Piloto no encontrado");
+        return;
+      }
+      return data;
+    } catch (error) {
+      console.error("Error al obtener el piloto", error);
+    }
+  };
+
+  const cargarDatosScraping = async (url) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/scrapingPilotos/driver-data`, {
+        params: { url }
+      });
+      const data = response.data;
+      if (!data) {
+        console.error("Datos de scraping no encontrados");
+        return;
+      }
+      return data;
+    } catch (error) {
+      console.error("Error al obtener los datos de scraping", error);
+    }
+  };
 
   const handlePilotos = (e) => {
     e.preventDefault();
     navigate("/GuiaPilotos");
-    console.log("Pilotos");
   }
 
   const handleEquipos = (e) => {
     e.preventDefault();
     navigate("/GuiaEquipos");
-    console.log("Equipos");
   }
     
   const handleCircuitos = (e) => {
     e.preventDefault();
     navigate("/GuiaCircuitos");
-    console.log("Circuitos");
   }
 
-  if (cargando) { 
-    return carga(); 
-  }
+  if (cargando) { return carga(); }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", marginTop: "2vh" }}>

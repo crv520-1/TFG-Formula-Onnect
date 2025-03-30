@@ -7,27 +7,29 @@ import { getImagenEquipo, getLivery } from './mapeoImagenes.js';
 export const DatosEquipo = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { idEquipo } = location.state || {};
   const [equipo, setEquipo] = useState({});
   const [equipoData, setEquipoData] = useState({});
-  const { idEquipo } = location.state || {};
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setCargando(true);
       try {
-        const equipoResponse = await axios.get(`http://localhost:3000/api/equipos`);
-        const equipo = equipoResponse.data.find(equipo => equipo.idEquipos === idEquipo);
+        const equipo = await cargarDatosEquipo(idEquipo);
         if (!equipo) {
           console.error("Equipo no encontrado");
-          return
+          return;
         }
         setEquipo(equipo);
 
         // Consultar la wikipedia con la url del equipo para obtener los datos de interés
-        const scraperResponse = await axios.get(`http://localhost:3000/api/scrapingEquipos/equipo-data`, {
-          params: { index: 0, urlEng: equipo.urlEquipo, urlEsp: equipo.urlCastellano }
-        });
-        setEquipoData(scraperResponse.data);
+        const scraperResponse = await cargarDatosScraping(equipo.urlEquipo, equipo.urlCastellano);
+        if (!scraperResponse) {
+          console.error("Datos de scraping no encontrados");
+          return;
+        }
+        setEquipoData(scraperResponse);
         setCargando(false);
       } catch (error) {
         console.error("Error en la API", error);
@@ -36,22 +38,49 @@ export const DatosEquipo = () => {
     fetchData();
   }, [idEquipo]);
 
+  const cargarDatosEquipo = async (idEquipo) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/equipos/${idEquipo}`);
+      const data = response.data;
+      if (!data) {
+        console.error("Equipo no encontrado");
+        return;
+      }
+      return data;
+    } catch (error) {
+      console.error("Error al obtener el equipo", error);
+    }
+  };
+  
+  const cargarDatosScraping = async (urlEquipo, urlCastellano) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/scrapingEquipos/equipo-data`, {
+        params: { index: 0, urlEng: urlEquipo, urlEsp: urlCastellano }
+      });
+      const data = response.data;
+      if (!data) {
+        console.error("Datos de scraping no encontrados");
+        return;
+      }
+      return data;
+    } catch (error) {
+      console.error("Error al obtener los datos de scraping", error);
+    }
+  };
+
   const handlePilotos = (e) => {
     e.preventDefault();
     navigate("/GuiaPilotos");
-    console.log("Pilotos");
   }
 
   const handleEquipos = (e) => {
     e.preventDefault();
     navigate("/GuiaEquipos");
-    console.log("Equipos");
   }
 
   const handleCircuitos = (e) => {
     e.preventDefault();
     navigate("/GuiaCircuitos");
-    console.log("Circuitos");
   }
 
   if (cargando) { 

@@ -7,18 +7,18 @@ import { getImagenCircuito } from './mapeoImagenes.js';
 export const DatosCircuito = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [circuito, setCircuito] = useState({});
   const { idCircuito } = location.state || {};
+  const [circuito, setCircuito] = useState({});
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const cargarDatos = async () => {
+      setCargando(true);
       try {
-        const circuitoResponse = await axios.get(`http://localhost:3000/api/circuitos`);
-        const circuito = circuitoResponse.data.find(circuito => circuito.idCircuitos === idCircuito);
+        const circuito = await cargarDatosCircuito(idCircuito);
         if (!circuito) {
           console.error("Circuito no encontrado");
-          return
+          return;
         }
         setCircuito(circuito);
         setCargando(false);
@@ -26,25 +26,36 @@ export const DatosCircuito = () => {
         console.error("Error en la API", error);
       }
     };
-    fetchData();
+    cargarDatos();
   }, [idCircuito]);
+
+  const cargarDatosCircuito = async (idCircuito) => {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/circuitos/${idCircuito}`);
+      const data = response.data;
+      if (!data) {
+        console.error("Circuito no encontrado");
+        return;
+      }
+      return data;
+    } catch (error) {
+      console.error("Error al obtener el circuito", error);
+    }
+  };
 
   const handlePilotos = (e) => {
     e.preventDefault();
     navigate("/GuiaPilotos");
-    console.log("Pilotos");
   }
 
   const handleEquipos = (e) => {
     e.preventDefault();
     navigate("/GuiaEquipos");
-    console.log("Equipos");
   }
 
   const handleCircuitos = (e) => {
     e.preventDefault();
     navigate("/GuiaCircuitos");
-    console.log("Circuitos");
   }
 
   function getLongitudCarrera(vueltas, longitudCircuito) {
@@ -52,9 +63,7 @@ export const DatosCircuito = () => {
     return (vueltas * longitudCircuito).toFixed(3);
   }
 
-  if (cargando) { 
-    return carga();
-  }
+  if (cargando) { return carga(); }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
