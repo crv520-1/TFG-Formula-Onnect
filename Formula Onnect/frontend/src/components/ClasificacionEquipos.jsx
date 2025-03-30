@@ -17,7 +17,9 @@ export const ClasificacionEquipos = () => {
       try {
         const standings = await obtenerClasificacion(year);
         setClasificacion(standings);
-        setCargando(false);
+        setTimeout(() => {
+          setCargando(false);
+        }, 500);
       } catch (error) {
         console.error("Error en la API", error);
       }
