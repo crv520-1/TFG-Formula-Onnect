@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import { useMeGusta } from '../hooks/useMeGusta';
+import { carga } from './animacionCargando';
 
 export const Comentarios = () => {
   const navigate = useNavigate();
@@ -20,21 +21,38 @@ export const Comentarios = () => {
   const [userLikesComentarios, setUserLikesComentarios] = useState({});
   const [texto, setTexto] = useState("");
   const [hayComentarios, setHayComentarios] = useState(false);
+  const [userLikePublicacion, setUserLikePublicacion] = useState(false);
+  const [cargando, setCargando] = useState(true);
   const { handleMeGusta } = useMeGusta();
   const maxCaracteres = 450;
   const advertenciaCaracteres = 400;
-  const [userLikePublicacion, setUserLikePublicacion] = useState(false);
 
   // Actualizamos solo al cambiar de publicación
   useEffect(() => {
-    if (!idElemento) {
-      console.error("No se ha proporcionado un ID de elemento");
-      return;
-    }
-    // Llamamos a los métodos para obtener todos los datos necesarios en la interfaz.
-    cargarUsuarioComentador();
-    cargarPublicacion();
-    cargarComentarios();
+    const cargarDatos = async () => {
+      setCargando(true);
+      if (!idElemento) {
+        console.error("No se ha proporcionado un ID de elemento");
+        return;
+      }
+      // Llamamos a los métodos para obtener todos los datos necesarios en la interfaz.
+      try {
+        const [usuarioComentadorData, publicacionData, comentariosData] = await Promise.all([
+          cargarUsuarioComentador(),
+          cargarPublicacion(),
+          cargarComentarios()
+        ]);
+        
+        if (usuarioComentadorData) setUsuarioComentador(usuarioComentadorData);
+        if (publicacionData) setPublicacion(publicacionData);
+        if (comentariosData) setComentarios(comentariosData);
+      }
+      catch (error) {
+        console.error("Error al cargar los datos:", error);
+      }
+      setCargando(false);
+    };
+    cargarDatos();
   }, [idElemento]);
 
   // Funciones para cargar los datos del usuario que va a comentar la publicación
@@ -48,7 +66,7 @@ export const Comentarios = () => {
         return;
       }
       // Actualizamos el estado con los datos del usuario comentador
-      setUsuarioComentador(usuarioComentadorData);
+      return usuarioComentadorData;
     } catch (error) {
       console.error("Error obteniendo usuario comentador:", error);
     }
@@ -64,14 +82,14 @@ export const Comentarios = () => {
         console.error("No se encontró la publicación");
         return;
       }
-      // Actualizamos el estado con los datos de la publicación
-      setPublicacion(publicacionEncontrada);
       // Llamamos al método para obtener los datos del usuario que ha subido la publicación
       cargarUsuarioPublicador(publicacionEncontrada.usuario);
       // Llamamos al método para obtener la cantidad de me gustas de la publicación
       cargarMeGustasPublicacion(publicacionEncontrada.idPublicaciones);
       // Llamamos al método para obtener la cantidad de comentarios de la publicación
       cargarNumeroComentarios(publicacionEncontrada.idPublicaciones);
+      // Actualizamos el estado con los datos de la publicación
+      return publicacionEncontrada;
     } catch (error) {
       console.error("Error obteniendo publicación:", error);
     }
@@ -288,6 +306,8 @@ export const Comentarios = () => {
   }
 
   const colorContador = texto.length === maxCaracteres ? "red" : texto.length >= advertenciaCaracteres ? "orange" : "white";
+
+  if (cargando) { return (carga()) }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto", overflowX: "hidden" }}>
