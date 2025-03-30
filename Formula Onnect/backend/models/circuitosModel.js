@@ -11,9 +11,13 @@ exports.getAllCircuitos = async () => {
 };
 
 // Obtener un circuito por su id
-exports.getCircuitosByIdCircuito = (idCircuitos, callback) => {
+exports.getCircuitosByIdCircuito = async (idCircuitos) => {
   const query = 'SELECT * FROM Circuitos WHERE idCircuitos = ?';
-  db.query(query, [idCircuitos], callback);
+  const [rows] = await db.query(query, [idCircuitos]);
+  if (rows.length === 0) {
+    throw new Error('Circuito no encontrado');
+  }
+  return rows[0];
 };
 
 // Verificar si un circuito ya existe

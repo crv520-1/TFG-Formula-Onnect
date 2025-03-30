@@ -11,18 +11,14 @@ exports.getAllCircuitos = async (req, res) => {
 };
 
 // Obtener un circuito por su id
-exports.getCircuitosByIdCircuito = (req, res) => {
+exports.getCircuitosByIdCircuito = async (req, res) => {
     const idCircuitos = req.params.id;
-
-    circuitosController.getCircuitosByIdCircuito(idCircuitos, (err, results) => {
-        if (err) {
-            return res.status(500).json({error: 'Error al buscar en la base de datos'});
-        }
-        if (results.length === 0) {
-            return res.status(404).json({error: 'Circuito no encontrado'});
-        }
-        res.json(results);
-    });
+    try {
+        const circuito = await circuitosController.getCircuitosByIdCircuito(idCircuitos);
+        res.json(circuito);
+    } catch (error) {
+        res.status(404).json({ error: error.message });
+    }
 }
 
 // Almacenar un nuevo circuito
