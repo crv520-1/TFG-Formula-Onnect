@@ -1,41 +1,62 @@
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { carga } from './animacionCargando';
 import { getImagenEquipo, getLivery } from './mapeoImagenes.js';
 
 export const GuiaEquipos = () => {
     const navigate = useNavigate();
     const [equipos, setEquipos] = useState([]);
+    const [cargando, setCargando] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const cargarDatos = async () => {
+            setCargando(true);
             try {
-                const equiposResponse = await axios.get("http://localhost:3000/api/equipos");
-                setEquipos(equiposResponse.data);
+                const equipos = await cargarEquipos();
+                if (!equipos) {
+                    console.error("No se encontraron equipos");
+                    return;
+                }
+                setEquipos(equipos);
             } catch (error) {
                 console.error("Error en la API", error);
             }
+            setCargando(false);
         }
-        fetchData();
+        cargarDatos();
     }, []);
+
+    const cargarEquipos = async () => {
+        try {
+            const equiposResponse = await axios.get("http://localhost:3000/api/equipos");
+            const data = equiposResponse.data;
+            if (!data) {
+                console.error("No se encontraron equipos");
+                return;
+            }
+            return data;
+        } catch (error) {
+            console.error("Error en la API", error);
+        }
+    }
 
     const handlePilotos = (e) => {
         e.preventDefault();
         navigate("/GuiaPilotos");
-        console.log("Pilotos");
     }
     
     const handleCircuitos = (e) => {
         e.preventDefault();
         navigate("/GuiaCircuitos");
-        console.log("Circuitos");
     }
 
     const handleEquipo = (idEquipo) => {
         // Navegar a la vista de un equipo
-        console.log("Equipo", idEquipo);
         navigate(`/DatosEquipo`, { state: { idEquipo } });
     }
+
+    if (cargando) { return carga(); }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>

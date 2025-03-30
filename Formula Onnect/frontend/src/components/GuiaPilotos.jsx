@@ -1,41 +1,63 @@
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { carga } from './animacionCargando';
 import { getImagenPiloto } from './mapeoImagenes.js';
 
 export const GuiaPilotos = () => {
   const navigate = useNavigate();
   const [pilotos, setPilotos] = useState([]);
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const cargarDatos = async () => {
+      setCargando(true);
       try {
-        const pilotosResponse = await axios.get("http://localhost:3000/api/pilotos");
-        setPilotos(pilotosResponse.data);
+        const pilotos = await cargarPilotos();
+        if (!pilotos) {
+          console.error("No se encontraron pilotos");
+          return;
+        }
+        setPilotos(pilotos);
       } catch (error) {
         console.error("Error en la API", error);
       }
+      setCargando(false);
     }
-    fetchData();
+    cargarDatos();
   }, []);
+
+  const cargarPilotos = async () => {
+    setCargando(true);
+    try {
+      const pilotosResponse = await axios.get("http://localhost:3000/api/pilotos");
+      const data = pilotosResponse.data;
+      if (!data) {
+        console.error("No se encontraron pilotos");
+        return;
+      }
+      return data;
+    } catch (error) {
+      console.error("Error en la API", error);
+    }
+  }
 
   const handleEquipos = (e) => {
     e.preventDefault();
     navigate("/GuiaEquipos");
-    console.log("Equipos");
   }
     
   const handleCircuitos = (e) => {
     e.preventDefault();
     navigate("/GuiaCircuitos");
-    console.log("Circuitos");
   }
 
   const handlePiloto = (idPiloto) => {
     // Navegar a la vista de un piloto
-    console.log("Piloto", idPiloto);
     navigate(`/DatosPiloto`, { state: { idPiloto } });
   }
+
+  if (cargando) { return carga(); }
         
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>

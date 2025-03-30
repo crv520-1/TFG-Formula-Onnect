@@ -1,41 +1,62 @@
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { carga } from "./animacionCargando.jsx";
 import { getImagenCircuito } from './mapeoImagenes.js';
 
 export const GuiaCircuitos = () => {
     const navigate = useNavigate();
     const [circuitos, setCircuitos] = useState([]);
+    const [cargando, setCargando] = useState(true);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const cargarDatos = async () => {
+          setCargando(true);
             try {
-                const circuitosResponse = await axios.get("http://localhost:3000/api/circuitos");
-                setCircuitos(circuitosResponse.data);
+                const circuitos = await cargarCircuitos();
+                if (!circuitos) {
+                    console.error("No se encontraron circuitos");
+                    return;
+                }
+                setCircuitos(circuitos);
             } catch (error) {
                 console.error("Error en la API", error);
             }
+            setCargando(false);
         }
-        fetchData();
+        cargarDatos();
     }, []);
+
+    const cargarCircuitos = async () => {
+      try {
+        const circuitosResponse = await axios.get("http://localhost:3000/api/circuitos");
+        const data = circuitosResponse.data;
+        if (!data) {
+          console.error("No se encontraron circuitos");
+          return;
+        }
+        return data;
+      } catch (error) {
+        console.error("Error en la API", error);
+      }
+    }
 
     const handlePilotos = (e) => {
         e.preventDefault();
         navigate("/GuiaPilotos");
-        console.log("Pilotos");
     }
 
     const handleEquipos = (e) => {
         e.preventDefault();
         navigate("/GuiaEquipos");
-        console.log("Equipos");
     }
 
     const handleCircuito = (idCircuito) => {
         // Navegar a la vista de un circuito
-        console.log("Circuito", idCircuito);
         navigate(`/DatosCircuito`, { state: { idCircuito } });
     }
+
+    if (cargando) { return carga(); }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
