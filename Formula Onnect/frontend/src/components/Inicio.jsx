@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import { useMeGusta } from '../hooks/useMeGusta';
+import { carga } from './animacionCargando';
 
 export const Inicio = () => {
   const navigate = useNavigate();
@@ -64,7 +65,9 @@ export const Inicio = () => {
       );
       
       setPublicacionesConUsuarios(publicacionesCompletas);
-      setCargando(false);
+      setTimeout(() => {
+        setCargando(false);
+      }, 1000); // Simular un retraso de 1 segundo
     } catch (error) {
       console.error("Error obteniendo publicaciones:", error);
       setCargando(false);
@@ -167,16 +170,14 @@ export const Inicio = () => {
     return userLikes[idPublicacion] || false;
   };
 
-  if (cargando) {
-    return <div>Cargando publicaciones...</div>;
-  }
+  if (cargando) { return carga(); }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingBottom: "2vh" }} >
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center" }}>Publicaciones</h2>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh" }}>
+      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh", overflowX: "hidden" }}>
         {publicacionesConUsuarios.map((publicacion) => (
           <div key={publicacion.idPublicaciones} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor:"#2c2c2c", width:"50vw", height:"auto", borderRadius:"1vh", marginBottom: "2vh" }}>
             <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", width: "100%", paddingTop:"1vh", paddingLeft: "1vh", paddingRight: "1vh" }}>
