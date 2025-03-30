@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import { carga } from './animacionCargando';
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 import { validarContraseña } from "./validarContraseña.js";
 
@@ -20,51 +21,65 @@ export const EditarPerfil = () => {
     const [nombreCompleto, setNombreCompleto] = useState("");
     const [contraseña, setContraseña] = useState("");
     const [contraseñaRepe, setContraseñaRepe] = useState("");
-    const [cargando, setCargando] = useState(true);
     const [tipo, setTipo] = useState("password");
+    const [cargando, setCargando] = useState(true);
     const [icono, setIcono] = useState(EyeSlashIcon);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const cargarDatos = async () => {
             try {
-                // Obtener usuario
-                const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
-                const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUsuario);
-                if (!usuarioEncontrado) {
-                    console.error("Usuario no encontrado");
-                    return;
-                }
+                // Obtener usuario y datos favoritos en paralelo
+                const [usuarioEncontrado, datosFavoritos] = await Promise.all([
+                    cargarDatosUsuario(idUsuario),
+                    cargarDatosFavoritos()
+                ]);
+
                 setUsuario(usuarioEncontrado);
                 setNickName(usuarioEncontrado.nickName);
                 setNombreCompleto(usuarioEncontrado.nombreCompleto);
                 setContraseña(usuarioEncontrado.contrasena);
                 setContraseñaRepe(usuarioEncontrado.contrasena);
 
-                // Obtener piloto favorito
-                const pilotosResponse = await axios.get("http://localhost:3000/api/pilotos");
-                setPilotos(pilotosResponse.data);
-                const pilFav = pilotosResponse.data.find(p => p.idPilotos === usuarioEncontrado.pilotoFav);
-                setPilotoSeleccionado(pilFav?.idPilotos || "");
+                // Actualizar listas de selección
+                setPilotos(datosFavoritos.pilotos);
+                setEquipos(datosFavoritos.equipos);
+                setCircuitos(datosFavoritos.circuitos);
 
-                // Obtener equipo favorito
-                const equiposResponse = await axios.get("http://localhost:3000/api/equipos");
-                setEquipos(equiposResponse.data);
-                const equiFav = equiposResponse.data.find(e => e.idEquipos === usuarioEncontrado.equipoFav);
-                setEquipoSeleccionado(equiFav?.idEquipos || "");
-
-                // Obtener circuito favorito
-                const circuitosResponse = await axios.get("http://localhost:3000/api/circuitos");
-                setCircuitos(circuitosResponse.data);
-                const circuFav = circuitosResponse.data.find(c => c.idCircuitos === usuarioEncontrado.circuitoFav);
-                setCircuitoSeleccionado(circuFav?.idCircuitos || "");
-
-                setCargando(false);
+                // Establecer selecciones actuales
+                setPilotoSeleccionado(usuarioEncontrado.pilotoFav?.toString() || "");
+                setEquipoSeleccionado(usuarioEncontrado.equipoFav?.toString() || "");
+                setCircuitoSeleccionado(usuarioEncontrado.circuitoFav?.toString() || "");
             } catch (error) {
                 console.error("Error obteniendo datos:", error);
             }
+            setCargando(false);
         };
-        fetchData();
+        cargarDatos();
     }, [idUsuario]);
+
+    const cargarDatosUsuario = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/usuarios/${idUsuario}`);
+            const usuarioData = response.data;
+            return usuarioData;
+        } catch (error) {
+            console.error("Error al cargar los datos del usuario:", error);
+            return null;
+        }
+    };
+
+    const cargarDatosFavoritos = async () => {
+        const [pilotosRes, equiposRes, circuitosRes] = await Promise.all([
+            axios.get("http://localhost:3000/api/pilotos"),
+            axios.get("http://localhost:3000/api/equipos"),
+            axios.get("http://localhost:3000/api/circuitos")
+        ]);
+        return {
+            pilotos: pilotosRes.data,
+            equipos: equiposRes.data,
+            circuitos: circuitosRes.data
+        };
+    };
 
     const handleOcultarMostrar = () => {
         if (tipo==="password"){
@@ -79,7 +94,6 @@ export const EditarPerfil = () => {
     const handleCancelar = (e) => {
         e.preventDefault();
         navigate("/Perfil", { state: { idUser: idUsuario } });
-        console.log("Cancelar");
     }
 
     
@@ -112,7 +126,6 @@ export const EditarPerfil = () => {
             circuitoFav: circuitoSeleccionado,
             fotoPerfil: usuario.fotoPerfil
         };
-        console.log(usuarioActualizado);
         try {
             await axios.put(`http://localhost:3000/api/usuarios/${idUsuario}`, usuarioActualizado);
         } catch (error) {
@@ -121,9 +134,8 @@ export const EditarPerfil = () => {
         navigate("/Perfil", { state: { idUser: idUsuario } });
     }
 
-    if (cargando) { 
-        return <h1>Cargando el perfil del usuario</h1>
-    } else {
+    if (cargando) { return carga()}
+
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", paddingTop:"3vh" }} >
         <input style={{ fontSize: "4vh", textAlign: "center", borderRadius: "1.5vh", border: "2px solid white", backgroundColor: "#2c2c2c", color: "white" }} type="text" placeholder={usuario.nickName} value={nickName} onChange={(e) => setNickName(e.target.value)}/>
@@ -171,7 +183,6 @@ export const EditarPerfil = () => {
       </div>
     </div>
   )
-}
 }
 
 export default EditarPerfil
