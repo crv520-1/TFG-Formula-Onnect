@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 
 export const RegistroNext = () => {
@@ -17,8 +18,10 @@ export const RegistroNext = () => {
     const { nickName, nombreCompleto, email, contraseña } = location.state || {};
     const { setUser } = useContext(UsuarioContext);
     const navigate = useNavigate();
+    const [cargando, setCargando] = useState(true);
     
     useEffect(() => {
+        setCargando(true);
         axios.get("http://localhost:3000/api/pilotos").then(response => {
             setPilotos(response.data);
             setPilotoSeleccionado(response.data[0].idPilotos);
@@ -37,6 +40,9 @@ export const RegistroNext = () => {
         }).catch(error => {
             console.error("Error al obtener los circuitos:", error);
         });
+        setTimeout(() => {
+            setCargando(false);
+        }, 500);
     }, []);
 
     const handleCrearCuenta = async (e) => {
@@ -65,6 +71,8 @@ export const RegistroNext = () => {
             console.error(`Error al almacenar el usuario ${newUsuario.nickName}:`, error);
         }
     };
+
+    if (cargando) { return carga() };
 
     return (
         <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", height: "95vh", width: "100vw", paddingTop: "50px", backgroundColor: "#D9D9D9", color: "white" }}>

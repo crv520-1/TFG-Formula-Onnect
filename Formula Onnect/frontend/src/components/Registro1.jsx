@@ -2,27 +2,31 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { carga } from './animacionCargando';
 import { validarContraseña } from "./validarContraseña";
 import { validarEmail } from "./validarEmail";
 
 const Registro1 = () => {
+    const [cargando, setCargando] = useState(true);
     const [usuarios, setUsuarios] = useState([]);
     const [nickName, setNickName] = useState("");
     const [nombreCompleto, setNombreCompleto] = useState("");
     const [email, setEmail] = useState("");
     const [contraseña, setContraseña] = useState("");
     const [contraseñaRepe, setContraseñaRepe] = useState("");
+    const [tipo, setTipo] = useState("password");
     const navigate = useNavigate();
     let logo = "images/logo/Posible4NOFondo.png";
-    const [tipo, setTipo] = useState("password");
     const [icono, setIcono] = useState(EyeSlashIcon);
 
     useEffect(() => {
+        setCargando(true);
         axios.get("http://localhost:3000/api/usuarios").then(response => {
             setUsuarios(response.data);
         }).catch(error => {
             console.error("Error al obtener los usuarios:", error);
         });
+        setCargando(false);
     }, []);
 
     const handleOcultarMostrar = () => {
@@ -80,6 +84,8 @@ const Registro1 = () => {
         navigate("/IniciarSesion");
         console.log("Iniciar sesión");
     };
+
+    if (cargando) { return carga(); }
 
     return (
         <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", backgroundColor: "#D9D9D9" }}>
