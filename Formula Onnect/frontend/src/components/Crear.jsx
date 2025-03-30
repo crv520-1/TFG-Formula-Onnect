@@ -3,8 +3,10 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import { carga } from "./animacionCargando";
 
 export const Crear = () => {
+  const [cargando, setCargando] = useState(true);
   const [usuario, setUsuario] = useState([]);
   const [texto, setTexto] = useState("");
   const navigate = useNavigate();
@@ -14,22 +16,28 @@ export const Crear = () => {
   
   useEffect(() => {
     const fetchData = async () => {
+      setCargando(true);
       try {
         // Obtener usuario
-        const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
-        const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUsuario);
-        if (!usuarioEncontrado) {
-          console.error("Usuario no encontrado");
-          return;
-        }
+        const usuarioEncontrado = await obtenerDatos();
         setUsuario(usuarioEncontrado);
-        console.log(usuario);
+        setCargando(false);
       } catch (error) {
         console.error("Error obteniendo datos:", error);
       }
     };
     fetchData();
   }, [idUsuario]);
+
+  const obtenerDatos = async () => {
+    const response = await axios.get(`http://localhost:3000/api/usuarios/${idUsuario}`);
+    const data = response.data;
+    if (!data) {
+      console.error("No se encontraron datos");
+      return;
+    }
+    return data;
+  };
 
   const handleCancelar = (e) => {
     e.preventDefault();
@@ -55,11 +63,12 @@ export const Crear = () => {
     catch (error) {
       console.error("Error al publicar:", error);
     }
-    navigate("/PerfilPublicaciones");
-    console.log("Publicar");
+    navigate("/PerfilPublicaciones", { state: { idUser: idUsuario } });
   }
 
   const colorContador = texto.length === maxCaracteres ? "red" : texto.length >= advertenciaCaracteres ? "orange" : "white";
+
+  if (cargando) { return(carga()) }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
