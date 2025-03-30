@@ -25,37 +25,31 @@ export const Dashboard = () => {
     const handleInicio = (e) => {
         e.preventDefault();
         navigate("/Inicio");
-        console.log("Inicio");
     }
 
     const handleGuia = (e) => {
         e.preventDefault();
         navigate("/GuiaPilotos");
-        console.log("Guía");
     }
 
     const handleCrear = (e) => {
         e.preventDefault();
         navigate("/Crear");
-        console.log("Crear");
     }
 
     const handleClasificacion = (e) => {
         e.preventDefault();
         navigate("/Clasificacion");
-        console.log("Clasificación");
     }
 
     const handleResultados = (e) => {
         e.preventDefault();
         navigate("/Resultados");
-        console.log("Resultados");
     }
 
     const handlePerfil = (e) => {
         e.preventDefault();
         navigate("/Perfil", { state: { idUser: idUsuario } });
-        console.log("Perfil");
     }
 
   return (
