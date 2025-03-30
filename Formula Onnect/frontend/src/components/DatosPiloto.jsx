@@ -30,7 +30,7 @@ export const DatosPiloto = () => {
           return;
         }
         setDriverData(scraperResponse);
-        setCargando(false);
+        setTimeout(() => { setCargando(false); }, 500);
       } catch (error) {
         console.error("Error en la API", error);
       }

@@ -30,7 +30,7 @@ export const DatosEquipo = () => {
           return;
         }
         setEquipoData(scraperResponse);
-        setCargando(false);
+        setTimeout(() => { setCargando(false); }, 500);
       } catch (error) {
         console.error("Error en la API", error);
       }

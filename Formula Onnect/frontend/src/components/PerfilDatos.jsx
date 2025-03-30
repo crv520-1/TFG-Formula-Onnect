@@ -45,9 +45,7 @@ export const Perfil = () => {
         setMismoUsuario(mismoUsuario);
         setSigo(sigo);
   
-        setTimeout(() => {
-          setCargando(false);
-        }, 500);
+        setTimeout(() => { setCargando(false); }, 500);
       } catch (error) {
         console.error("Error obteniendo datos:", error);
       }

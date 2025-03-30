@@ -22,7 +22,7 @@ export const GuiaEquipos = () => {
             } catch (error) {
                 console.error("Error en la API", error);
             }
-            setCargando(false);
+            setTimeout(() => { setCargando(false); }, 500);
         }
         cargarDatos();
     }, []);

@@ -65,9 +65,7 @@ export const Inicio = () => {
       );
       
       setPublicacionesConUsuarios(publicacionesCompletas);
-      setTimeout(() => {
-        setCargando(false);
-      }, 1000); // Simular un retraso de 1 segundo
+      setTimeout(() => { setCargando(false); }, 500); // Simular un retraso de 0.5 segundos
     } catch (error) {
       console.error("Error obteniendo publicaciones:", error);
       setCargando(false);

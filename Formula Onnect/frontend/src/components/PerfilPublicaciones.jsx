@@ -127,9 +127,7 @@ export const PerfilPublicaciones = () => {
     } catch (error) {
       console.error("Error cargando datos:", error);
     } finally {
-      setTimeout(() => {
-        setCargando(false);
-      }, 500);
+      setTimeout(() => { setCargando(false); }, 500);
     }
   };
 

@@ -52,7 +52,7 @@ export const EditarPerfil = () => {
             } catch (error) {
                 console.error("Error obteniendo datos:", error);
             }
-            setCargando(false);
+            setTimeout(() => { setCargando(false); }, 500);
         };
         cargarDatos();
     }, [idUsuario]);

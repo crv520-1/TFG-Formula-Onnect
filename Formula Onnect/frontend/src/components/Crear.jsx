@@ -21,7 +21,7 @@ export const Crear = () => {
         // Obtener usuario
         const usuarioEncontrado = await obtenerDatos();
         setUsuario(usuarioEncontrado);
-        setCargando(false);
+        setTimeout(() => { setCargando(false); }, 500);
       } catch (error) {
         console.error("Error obteniendo datos:", error);
       }

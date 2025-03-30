@@ -50,7 +50,7 @@ export const Comentarios = () => {
       catch (error) {
         console.error("Error al cargar los datos:", error);
       }
-      setCargando(false);
+      setTimeout(() => { setCargando(false); }, 500);
     };
     cargarDatos();
   }, [idElemento]);

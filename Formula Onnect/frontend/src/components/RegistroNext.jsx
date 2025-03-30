@@ -40,9 +40,7 @@ export const RegistroNext = () => {
         }).catch(error => {
             console.error("Error al obtener los circuitos:", error);
         });
-        setTimeout(() => {
-            setCargando(false);
-        }, 500);
+        setTimeout(() => { setCargando(false); }, 100);
     }, []);
 
     const handleCrearCuenta = async (e) => {
