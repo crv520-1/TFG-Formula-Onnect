@@ -3,16 +3,18 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import { carga } from "./animacionCargando";
 
 export const IniciarSesion = () => {
+    const [cargando, setCargando] = useState(true);
     const [usuarios, setUsuarios] = useState([]);
     const [nickName, setNickName] = useState("");
     const [contraseña, setContraseña] = useState("");
     const [tipo, setTipo] = useState("password");
     const [icono, setIcono] = useState(EyeSlashIcon);
+    const { setUser } = useContext(UsuarioContext);
     const navigate = useNavigate();
     let logo = "images/logo/Posible4NOFondo.png";
-    const { setUser } = useContext(UsuarioContext);
 
     useEffect(() => {
         axios.get("http://localhost:3000/api/usuarios").then(response => {
@@ -20,6 +22,7 @@ export const IniciarSesion = () => {
         }).catch(error => {
             console.error("Error al obtener los usuarios:", error);
         });
+        setCargando(false);
     }, []);
 
     const handleOcultarMostrar = () => {
@@ -35,7 +38,6 @@ export const IniciarSesion = () => {
     const handleCrearCuenta = (e) => {
         e.preventDefault();
         navigate("/Registro1");
-        console.log("Crear cuenta");
     };
 
     const handleIniciarSesion = async (e) => {
@@ -54,11 +56,11 @@ export const IniciarSesion = () => {
             alert("Contraseña incorrecta");
             return;
         }
-        console.log("Usuario:", usuario);
         setUser(usuario.idUsuario);
         navigate("/Inicio");
-        console.log("Iniciar sesión");
     };
+
+    if (cargando) { return carga() };
 
 return (
     <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", backgroundColor: "#D9D9D9" }}>
