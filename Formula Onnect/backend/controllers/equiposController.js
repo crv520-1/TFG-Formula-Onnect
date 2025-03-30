@@ -11,18 +11,14 @@ exports.getAllEquipos = async (req, res) => {
 };
 
 // Obtener un equipo por su id
-exports.getEquiposByIdEquipo = (req, res) => {
+exports.getEquiposByIdEquipo = async (req, res) => {
     const idEquipos = req.params.id;
-
-    equiposController.getEquiposByIdEquipo(idEquipos, (err, results) => {
-        if (err) {
-            return res.status(500).json({error: 'Error al buscar en la base de datos'});
-        }
-        if (results.length === 0) {
-            return res.status(404).json({error: 'Equipo no encontrado'});
-        }
-        res.json(results);
-    });
+    try {
+        const equipo = await equiposController.getEquiposByIdEquipo(idEquipos);
+        res.json(equipo);
+    } catch (error) {
+        res.status(404).json({ error: 'Equipo no encontrado' });
+    }
 }
 
 // Almacenar un nuevo equipo

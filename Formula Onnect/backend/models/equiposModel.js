@@ -11,9 +11,13 @@ exports.getAllEquipos = async () => {
 };
 
 // Obtener un equipo por su id
-exports.getEquiposByIdEquipo = (idEquipos, callback) => {
+exports.getEquiposByIdEquipo = async (idEquipos) => {
   const query = 'SELECT * FROM Equipos WHERE idEquipos = ?';
-  db.query(query, [idEquipos], callback);
+  const [rows] = await db.query(query, [idEquipos]);
+  if (rows.length === 0) {
+    throw new Error('Equipo no encontrado');
+  }
+  return rows[0];
 };
 
 // Verificar si un equipo ya existe

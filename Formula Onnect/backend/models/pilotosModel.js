@@ -11,9 +11,13 @@ exports.getAllPilotos = async () => {
 };
 
 // Obtener un piloto por su id
-exports.getPilotosByIdPiloto = (idPilotos, callback) => {
+exports.getPilotosByIdPiloto = async (idPilotos) => {
   const query = 'SELECT * FROM Pilotos WHERE idPilotos = ?';
-  db.query(query, [idPilotos], callback);
+  const [rows] = await db.query(query, [idPilotos]);
+  if (rows.length === 0) {
+    throw new Error('Piloto no encontrado');
+  }
+  return rows[0];
 };
 
 // Verificar si un piloto ya existe

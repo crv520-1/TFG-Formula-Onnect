@@ -11,18 +11,14 @@ exports.getAllPilotos = async (req, res) => {
 };
 
 // Obtener un piloto por su id
-exports.getPilotosByIdPiloto = (req, res) => {
+exports.getPilotosByIdPiloto = async (req, res) => {
     const idPilotos = req.params.id;
-
-    pilotosModel.getPilotosByIdPiloto(idPilotos, (err, results) => {
-        if (err) {
-            return res.status(500).json({error: 'Error al buscar en la base de datos'});
-        }
-        if (results.length === 0) {
-            return res.status(404).json({error: 'Piloto no encontrado'});
-        }
-        res.json(results);
-    });
+    try {
+        const piloto = await pilotosModel.getPilotosByIdPiloto(idPilotos);
+        res.json(piloto);
+    } catch (error) {
+        res.status(404).json({ error: 'Piloto no encontrado' });
+    }
 }
 
 // Almacenar un nuevo piloto
