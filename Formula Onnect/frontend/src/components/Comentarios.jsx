@@ -366,7 +366,7 @@ export const Comentarios = () => {
                 )}
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5vw" }}>
                   <p style={{fontSize:"1.5vh"}}>{comentario.meGustaComentario}</p>
-                  <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> {comentario.userHasLiked ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
+                  <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> {userLikesComentarios[comentario.idComentarios] ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
                 </div>
               </div>
               <p style={{margin:"1vh", fontSize:"1.75vh", backgroundColor:"#2c2c2c", border: "none", textAlign: "left", width: "95%"}}>{comentario.text}</p>
