@@ -74,15 +74,12 @@ const Registro1 = () => {
             alert("El email ya está registrado.");
             return;
         }
-    
-        console.log("Registro continuado");
         navigate("/RegistroNext", { state: { nickName, nombreCompleto, email, contraseña } });
     };
 
     const handleIniciarSesion = (e) => {
         e.preventDefault();
         navigate("/IniciarSesion");
-        console.log("Iniciar sesión");
     };
 
     if (cargando) { return carga(); }

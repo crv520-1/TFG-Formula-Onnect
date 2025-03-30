@@ -57,10 +57,8 @@ export const RegistroNext = () => {
             circuitoFav: circuitoSeleccionado,
             fotoPerfil: "images/fotoPerfil/default.png"
         };
-        console.log(newUsuario);
         try {
             const response = await axios.post("http://localhost:3000/api/usuarios", newUsuario);
-            console.log("Response from server:", response);
             if (response.data && response.data.id) {
                 setUser(response.data.id);
                 navigate("/Inicio");

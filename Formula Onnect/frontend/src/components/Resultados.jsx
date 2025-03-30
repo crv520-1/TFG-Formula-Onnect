@@ -59,7 +59,6 @@ export const Resultados = () => {
 
   const handleCircuito = (circuitId, year, round) => {
     // Navegar a la vista de los resultados de un circuito
-    console.log("Datos", circuitId, year, round);
     navigate(`/ResultadoCircuito`, { state: { circuitId, year, round } });
   }
 
