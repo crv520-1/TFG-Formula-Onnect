@@ -97,6 +97,12 @@ export function getStatusTraducido(status) {
             return "Sobrecalentamiento";
         case "Electronics":
             return "Electrónica";
+        case "Withdrew":
+            return "Se retiró";
+        case "Ignition":
+            return "Ignición";
+        case "Out of fuel":
+            return "Sin combustible";
         default:
             return status;
     }
