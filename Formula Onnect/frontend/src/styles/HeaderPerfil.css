@@ -1,0 +1,145 @@
+/* Contenedor principal */
+.perfil-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+/* Título del perfil */
+.perfil-header__nickname {
+  font-size: clamp(2rem, 5vw, 4rem); /* Tamaño dinámico */
+  text-align: center;
+}
+
+/* Contenedor de la imagen y datos */
+.perfil-header__info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+  gap: 1rem;
+}
+
+/* Imagen de perfil */
+.perfil-header__image {
+  width: clamp(8rem, 15vw, 12rem); /* Tamaño dinámico */
+  height: clamp(8rem, 15vw, 12rem);
+  border-radius: 50%;
+  background-color: white;
+}
+
+/* Contenedor de datos del usuario */
+.perfil-header__details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Contenedor de nombre completo y botones */
+.perfil-header__name-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Nombre completo */
+.perfil-header__fullname {
+  font-size: clamp(1.5rem, 3vw, 2.5rem); /* Tamaño dinámico */
+  margin: 0.5rem;
+}
+
+/* Botones de editar perfil y cerrar sesión */
+.perfil-header__button {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(2rem, 3vw, 3rem); /* Tamaño dinámico */
+  border: none;
+  background-color: #15151E;
+  padding: 0.5rem;
+}
+
+.perfil-header__button-icon {
+  width: clamp(1.5rem, 3vw, 2.5rem); /* Tamaño dinámico */
+  height: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Contenedor de estadísticas */
+.perfil-header__stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap; /* Ajuste en pantallas pequeñas */
+}
+
+/* Cada estadística (Publicaciones, Seguidores, Siguiendo) */
+.perfil-header__stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.perfil-header__stat p {
+  font-size: clamp(1rem, 2vw, 1.5rem); /* Tamaño dinámico */
+  margin: 0.2rem 0;
+}
+
+/* Botón de seguir/dejar de seguir */
+.perfil-header__follow-button {
+  font-size: clamp(1rem, 2vw, 1.5rem); /* Tamaño dinámico */
+  height: clamp(2rem, 3vw, 3rem);
+  margin-top: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  width: clamp(8rem, 20vw, 12rem); /* Tamaño dinámico */
+}
+
+.perfil-header__follow-button--seguir {
+  background-color: #C40000;
+  color: white;
+}
+
+.perfil-header__follow-button--dejar-seguir {
+  background-color: white;
+  color: #C40000;
+}
+
+/* Media Queries para ajustes adicionales */
+@media (max-width: 768px) {
+  .perfil-header__info {
+    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+  }
+
+  .perfil-header__stats {
+    gap: 1rem; /* Reduce el espacio entre estadísticas */
+  }
+}
+
+@media (min-width: 1440px) {
+  .perfil-header__nickname {
+    font-size: 4rem; /* Tamaño fijo para pantallas grandes */
+  }
+
+  .perfil-header__image {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  .perfil-header__fullname {
+    font-size: 2.5rem;
+  }
+}
