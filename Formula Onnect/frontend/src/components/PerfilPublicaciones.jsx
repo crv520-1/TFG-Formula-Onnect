@@ -4,6 +4,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import "../styles/PerfilPublicaciones.css";
 import HeaderPerfil from "./HeaderPerfil";
 import { carga } from "./animacionCargando";
 
@@ -203,7 +204,7 @@ export const PerfilPublicaciones = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto", overflowX: "hidden" }}>
+    <div className="principal">
       <HeaderPerfil
         usuario={usuario}
         numeroPublicaciones={numeroPublicaciones}
@@ -214,27 +215,27 @@ export const PerfilPublicaciones = () => {
         onSeguidoresChange={handleSeguidoresChange}
         mismoUsuario={mismoUsuario}
       />
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
-          <button type='submit' onClick={handleDatos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Datos</button>
-          <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", marginLeft: "35vh" }}>Publicaciones</h2>
+      <div className="header">
+        <div className="header_fila">
+          <button type='submit' onClick={handleDatos} className="datos-button">Datos</button>
+          <h2 className="section-title">Publicaciones</h2>
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh", overflowX: "hidden" }}>
+      <div className="publicaciones-container">
         {publicaciones.map((publicacion) => (
-          <div key={publicacion.idPublicaciones} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor:"#2c2c2c", width:"50vw", height:"auto", borderRadius:"1vh", marginBottom: "2vh" }}>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop:"1vh", width: "95%", paddingLeft: "1vh", paddingRight: "1vh" }}>
-              <img src={usuario.fotoPerfil} style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
-              <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{usuario.nickName}</p>
-              <p style={{marginLeft:"2vw", fontSize:"1.5vh"}}>{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
-              <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
-                <p style={{fontSize:"1.5vh"}}>{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
-                <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
+          <div key={publicacion.idPublicaciones} className="publicacion">
+            <div className="publicacion-header">
+              <img src={usuario.fotoPerfil} className="profile-image"/>
+              <p className="nickname">{usuario.nickName}</p>
+              <p className="fecha">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
+              <div className="acciones">
+                <p className="contador">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
+                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="action-button"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icon"/> : <NoMeGustaIcono className="icon"/>} </button>
+                <p className="nickname">{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
+                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="action-button"><ChatBubbleOvalLeftIcon className="icon"/></button>
               </div>
             </div>
-            <button style={{margin:"1vh", fontSize:"2vh", backgroundColor:"#2c2c2c", border: "none", textAlign: "left", width: "100%"}} onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>
+            <button className="publicacion-texto" onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>
           </div>
         ))}
       </div>
