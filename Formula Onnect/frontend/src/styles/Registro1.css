@@ -4,32 +4,6 @@ html, body {
     overflow-x: hidden;
 }
 
-.registro-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #D9D9D9;
-}
-
-.registro-logo {
-    width: 15vw;
-    height: 15vh;
-    object-fit: contain;
-    padding-top: 5vh;
-}
-
-.registro-title {
-    color: black;
-    padding-top: 7vh;
-    font-size: 6vh;
-}
-
-.registro-form {
-    display: flex;
-    flex-direction: column;
-}
-
 .registro-input {
     width: 50vw;
     height: 3.5vh;
@@ -39,82 +13,8 @@ html, body {
     color: black;
 }
 
-.password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.password-toggle {
-    position: absolute;
-    right: 10px;
-    top: 30%;
-    cursor: pointer;
-}
-
-.password-icon {
-    width: 20px;
-    height: 20px;
-    color: black;
-}
-
-.continuar-button {
-    background-color: #EA1F22;
-    border-radius: 1.5vh;
-    border-width: 3px;
-    border-color: White;
-}
-
 .login-section {
     display: flex;
     flex-direction: column;
     padding-top: 10vh;
-}
-
-.login-text {
-    color: black;
-    font-size: 3vh;
-}
-
-.login-button-registro {
-    color: #EA1F22;
-    background-color: white;
-    border-radius: 1.5vh;
-    border-width: 3px;
-    border-color: #EA1F22;
-}
-
-@media (max-width: 1400px) {
-    .registro-logo {
-        width: 25vw;
-        height: 25vh;
-        padding-top: 5vh;
-        object-fit: contain;
-    }
-
-    .registro-title {
-        font-size: 8vh;
-    }
-
-    .registro-input {
-        width: 50vw;
-        height: 6vh;
-    }
-
-    .continuar-button {
-        width: 50vw;
-        height: 6vh;
-        border-radius: 2.5vh;
-    }
-
-    .login-text {
-        font-size: 5vh;
-    }
-
-    .login-button-registro {
-        width: 20vw;
-        height: 6vh;
-        margin-bottom: 5vh;
-        border-radius: 2.5vh;
-    }
 }

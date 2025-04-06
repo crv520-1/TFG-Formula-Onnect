@@ -1,0 +1,106 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #D9D9D9;
+}
+
+.logo {
+    width: 15vw;
+    height: 15vh;
+    object-fit: contain;
+    padding-top: 5vh;
+}
+
+.title {
+    color: black;
+    padding-top: 7vh;
+    font-size: 6vh;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 30%;
+    cursor: pointer;
+}
+
+.password-icon {
+    width: 20px;
+    height: 20px;
+    color: black;
+}
+
+.principal-button {
+    background-color: #EA1F22;
+    border-radius: 1.5vh;
+    border-width: 3px;
+    border-color: White;
+    width: 50vw;
+}
+
+.text-change-view {
+    color: black;
+    font-size: 3vh;
+}
+
+.secondary-button {
+    color: #EA1F22;
+    background-color: white;
+    border-radius: 1.5vh;
+    border-width: 3px;
+    border-color: #EA1F22;
+}
+
+@media (max-width: 1400px) {
+    .registro-logo {
+        width: 25vw;
+        height: 25vh;
+        padding-top: 5vh;
+        object-fit: contain;
+    }
+
+    .registro-title {
+        font-size: 8vh;
+    }
+
+    .registro-input {
+        width: 50vw;
+        height: 6vh;
+    }
+
+    .continuar-button {
+        width: 50vw;
+        height: 6vh;
+        border-radius: 2.5vh;
+    }
+
+    .login-text {
+        font-size: 5vh;
+    }
+
+    .login-button-registro {
+        width: 20vw;
+        height: 6vh;
+        margin-bottom: 5vh;
+        border-radius: 2.5vh;
+    }
+}

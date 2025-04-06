@@ -2,6 +2,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../styles/Iniciar_Registrar.css';
 import '../styles/Registro1.css';
 import { carga } from './animacionCargando';
 import { validarContraseña } from "./validarContraseña";
@@ -86,73 +87,43 @@ const Registro1 = () => {
     if (cargando) { return carga(); }
 
     return (
-        <div className="registro-container">
-            <img src={logo} className="registro-logo" />
-            <h1 className="registro-title">¡Bienvenido!</h1>
-            <form className="registro-form">
+        <div className="container">
+            <img src={logo} className="logo" />
+            <h1 className="title">¡Bienvenido!</h1>
+            <form className="form">
                 <div>
-                    <input 
-                        className="registro-input"
-                        type="text"
-                        placeholder="Nombre Usuario"
-                        value={nickName}
-                        onChange={(e) => setNickName(e.target.value)}
-                    />
+                    <input className="registro-input" type="text" placeholder="Nombre Usuario" value={nickName} onChange={(e) => setNickName(e.target.value)}/>
                 </div>
                 <br />
                 <div>
-                    <input 
-                        className="registro-input"
-                        type="text"
-                        placeholder="Nombre Completo"
-                        value={nombreCompleto}
-                        onChange={(e) => setNombreCompleto(e.target.value)}
-                    />
+                    <input className="registro-input" type="text" placeholder="Nombre Completo" value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
                 </div>
                 <br />
                 <div>
-                    <input 
-                        className="registro-input"
-                        type="text"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                    <input className="registro-input" type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                 </div>
                 <br />
                 <div className="password-container">
-                    <input 
-                        className="registro-input"
-                        type={tipo}
-                        placeholder="Contraseña"
-                        value={contraseña}
-                        onChange={(e) => setContraseña(e.target.value)}
-                    />
+                    <input className="registro-input" type={tipo} placeholder="Contraseña" value={contraseña} onChange={(e) => setContraseña(e.target.value)}/>
                     <span className="password-toggle" onClick={handleOcultarMostrar}>
                         {React.createElement(icono, { className: "password-icon" })}
                     </span>
                 </div>
                 <br />
                 <div className="password-container">
-                    <input 
-                        className="registro-input"
-                        type={tipo}
-                        placeholder="Repetir Contraseña"
-                        value={contraseñaRepe}
-                        onChange={(e) => setContraseñaRepe(e.target.value)}
-                    />
+                    <input className="registro-input" type={tipo} placeholder="Repetir Contraseña" value={contraseñaRepe} onChange={(e) => setContraseñaRepe(e.target.value)}/>
                     <span className="password-toggle" onClick={handleOcultarMostrar}>
                         {React.createElement(icono, { className: "password-icon" })}
                     </span>
                 </div>
                 <br />
-                <button className="continuar-button" type="submit" onClick={handleContinuarRegistro}>
+                <button className="principal-button" type="submit" onClick={handleContinuarRegistro}>
                     Continuar
                 </button>
             </form>
             <form className="login-section">
-                <label className="login-text">¿Ya tienes cuenta?</label>
-                <button className="login-button-registro" type="submit" onClick={handleIniciarSesion}>
+                <label className="text-change-view">¿Ya tienes cuenta?</label>
+                <button className="secondary-button" type="submit" onClick={handleIniciarSesion}>
                     Iniciar Sesión
                 </button>
             </form>

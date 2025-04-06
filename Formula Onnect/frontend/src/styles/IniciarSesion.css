@@ -4,32 +4,6 @@ html, body {
     overflow-x: hidden;
 }
 
-.login-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #D9D9D9;
-}
-
-.login-logo {
-    width: 15vw;
-    height: 15vh;
-    object-fit: contain;
-    padding-top: 5vh;
-}
-
-.login-title {
-    color: black;
-    padding-top: 7vh;
-    font-size: 6vh;
-}
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-}
-
 .login-input {
     width: 50vw;
     height: 4vh;
@@ -39,83 +13,8 @@ html, body {
     color: black;
 }
 
-.password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.password-toggle {
-    position: absolute;
-    right: 10px;
-    top: 30%;
-    cursor: pointer;
-}
-
-.password-icon {
-    width: 20px;
-    height: 20px;
-    color: black;
-}
-
-.login-button {
-    background-color: #EA1F22;
-    border-radius: 1.5vh;
-    border-width: 3px;
-    border-color: White;
-}
-
 .register-form {
     display: flex;
     flex-direction: column;
     padding-top: 15vh;
-}
-
-.register-text {
-    color: black;
-    font-size: 3vh;
-}
-
-.register-button {
-    color: #EA1F22;
-    background-color: white;
-    border-radius: 1.5vh;
-    border-width: 3px;
-    border-color: #EA1F22;
-}
-
-@media screen and (max-width: 1420px) {
-    .login-logo {
-        width: 25vw;
-        height: 25vh;
-        padding-top: 5vh;
-        object-fit: contain;
-    }
-
-    .login-title {
-        font-size: 8vh;
-    }
-
-    .login-input {
-        width: 50vw;
-        height: 6vh;
-    }
-
-    .login-button {
-        width: 50vw;
-        height: 6vh;
-        border-radius: 2.5vh;
-    }
-
-    .register-text {
-        font-size: 5vh;
-    }
-
-    .register-button {
-        width: 20vw;
-        height: 6vh;
-        margin-bottom: 5vh;
-        border-radius: 2.5vh;
-    }
-    
 }

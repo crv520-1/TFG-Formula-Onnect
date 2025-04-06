@@ -4,21 +4,6 @@ html, body {
     overflow-x: hidden;
 }
 
-.registro-next-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #D9D9D9;
-}
-
-.registro-next-logo {
-    width: 15vw;
-    height: 15vh;
-    object-fit: contain;
-    padding-top: 5vh;
-}
-
 .header-container {
     color: black;
     padding-top: 7vh;
@@ -72,14 +57,6 @@ html, body {
     height: 20vh;
     padding-top: 2vh;
     object-fit: contain;
-}
-
-.crear-cuenta-button {
-    width: 50vw;
-    background-color: #EA1F22;
-    border-radius: 1.5vh;
-    border-width: 3px;
-    border-color: White;
 }
 
 @media (max-width: 1400px) {

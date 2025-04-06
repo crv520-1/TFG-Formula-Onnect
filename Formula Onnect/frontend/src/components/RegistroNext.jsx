@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import '../styles/Iniciar_Registrar.css';
 import '../styles/RegistroNext.css';
 import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
@@ -72,8 +73,8 @@ export const RegistroNext = () => {
     if (cargando) { return carga() };
 
     return (
-        <div className="registro-next-container">
-            <img src={logo} className="registro-next-logo" />
+        <div className="container">
+            <img src={logo} className="logo" />
             <div className="header-container">
                 <h1>¡Bienvenido {nickName}!</h1>
                 <h2>Seleccione a su piloto, equipo y circuito favorito</h2>
@@ -117,7 +118,7 @@ export const RegistroNext = () => {
                 </div>
             </form>
             <br />
-            <button className="crear-cuenta-button" type="submit" onClick={handleCrearCuenta}>
+            <button className="principal-button" type="submit" onClick={handleCrearCuenta}>
                 Crear Cuenta
             </button>
         </div>

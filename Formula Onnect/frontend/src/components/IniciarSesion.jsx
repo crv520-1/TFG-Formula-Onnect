@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import '../styles/Iniciar_Registrar.css';
 import '../styles/IniciarSesion.css';
 import { carga } from "./animacionCargando";
 
@@ -64,10 +65,10 @@ export const IniciarSesion = () => {
     if (cargando) { return carga() };
 
     return (
-        <div className="login-container">
-            <img src={logo} className="login-logo" />
-            <h1 className="login-title">¡Bienvenido de vuelta!</h1>
-            <form className="login-form">
+        <div className="container">
+            <img src={logo} className="logo" />
+            <h1 className="title">¡Bienvenido de vuelta!</h1>
+            <form className="form">
                 <div>
                     <input 
                         className="login-input"
@@ -85,13 +86,13 @@ export const IniciarSesion = () => {
                     </span>
                 </div>
                 <br />
-                <button className="login-button" type="submit" onClick={handleIniciarSesion}>
+                <button className="principal-button" type="submit" onClick={handleIniciarSesion}>
                     Iniciar Sesión
                 </button>
             </form>
             <form className="register-form">
-                <label className="register-text">¿No tienes cuenta?</label>
-                <button className="register-button" type="submit" onClick={handleCrearCuenta}>
+                <label className="text-change-view">¿No tienes cuenta?</label>
+                <button className="secondary-button" type="submit" onClick={handleCrearCuenta}>
                     Crear Cuenta
                 </button>
             </form>
