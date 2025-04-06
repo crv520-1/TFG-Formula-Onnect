@@ -76,7 +76,7 @@ export const RegistroNext = () => {
             <img src={logo} className="registro-next-logo" />
             <div className="header-container">
                 <h1>¡Bienvenido {nickName}!</h1>
-                <h1>Seleccione a su piloto, equipo y circuito favorito</h1>
+                <h2>Seleccione a su piloto, equipo y circuito favorito</h2>
             </div>
             <form className="seleccion-form">
                 <div className="selector-container">

@@ -1,19 +1,22 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 .registro-next-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 95vh;
-    width: 100vw;
-    padding-top: 50px;
     background-color: #D9D9D9;
-    color: white;
 }
 
 .registro-next-logo {
     width: 15vw;
     height: 15vh;
     object-fit: contain;
+    padding-top: 5vh;
 }
 
 .header-container {
@@ -77,4 +80,56 @@
     border-radius: 1.5vh;
     border-width: 3px;
     border-color: White;
+}
+
+@media (max-width: 1400px) {
+    .registro-next-logo {
+        width: 25vw;
+        height: 25vh;
+        padding-top: 5vh;
+        object-fit: contain;
+    }
+
+    .selector-container {
+        width: 27vw;
+        height: 40vh;
+    }
+
+    .selector {
+        width: 27vw;
+    }
+
+    .piloto-imagen {
+        width: 27vw;
+        height: 34vh;
+    }
+
+    .equipo-imagen {
+        width: 27vw;
+        height: 34vh;
+    }
+
+    .circuito-imagen {
+        width: 27vw;
+        height: 34vh;
+    }
+
+    .crear-cuenta-button {
+        width: 50vw;
+        height: 6vh;
+        border-radius: 2.5vh;
+        margin-bottom: 5vh;
+    }
+
+    .header-container {
+        padding-top: 5vh;
+    }
+
+    .header-container h1 {
+        font-size: 8vh;
+    }
+
+    .header-container h2 {
+        font-size: 4vh;
+    }
 }
