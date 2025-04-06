@@ -1,3 +1,9 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 .registro-container {
     display: flex;
     flex-direction: column;
@@ -76,4 +82,39 @@
     border-radius: 1.5vh;
     border-width: 3px;
     border-color: #EA1F22;
+}
+
+@media (max-width: 1400px) {
+    .registro-logo {
+        width: 25vw;
+        height: 25vh;
+        padding-top: 5vh;
+        object-fit: contain;
+    }
+
+    .registro-title {
+        font-size: 8vh;
+    }
+
+    .registro-input {
+        width: 50vw;
+        height: 6vh;
+    }
+
+    .continuar-button {
+        width: 50vw;
+        height: 6vh;
+        border-radius: 2.5vh;
+    }
+
+    .login-text {
+        font-size: 5vh;
+    }
+
+    .login-button-registro {
+        width: 20vw;
+        height: 6vh;
+        margin-bottom: 5vh;
+        border-radius: 2.5vh;
+    }
 }
