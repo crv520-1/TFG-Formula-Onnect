@@ -1,3 +1,9 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 .login-container {
     display: flex;
     flex-direction: column;
@@ -76,4 +82,40 @@
     border-radius: 1.5vh;
     border-width: 3px;
     border-color: #EA1F22;
+}
+
+@media screen and (max-width: 1420px) {
+    .login-logo {
+        width: 25vw;
+        height: 25vh;
+        padding-top: 5vh;
+        object-fit: contain;
+    }
+
+    .login-title {
+        font-size: 8vh;
+    }
+
+    .login-input {
+        width: 50vw;
+        height: 6vh;
+    }
+
+    .login-button {
+        width: 50vw;
+        height: 6vh;
+        border-radius: 2.5vh;
+    }
+
+    .register-text {
+        font-size: 5vh;
+    }
+
+    .register-button {
+        width: 20vw;
+        height: 6vh;
+        margin-bottom: 5vh;
+        border-radius: 2.5vh;
+    }
+    
 }
