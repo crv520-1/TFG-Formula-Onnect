@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import '../styles/IniciarSesion.css';
 import { carga } from "./animacionCargando";
 
 export const IniciarSesion = () => {
@@ -62,30 +63,40 @@ export const IniciarSesion = () => {
 
     if (cargando) { return carga() };
 
-return (
-    <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", backgroundColor: "#D9D9D9" }}>
-        <img src={logo} style={{ width: "15vw", height: "15vh", objectFit:"contain", paddingTop:"5vh" }} />
-        <h1 style={{color: "black", paddingTop: "7vh", fontSize:"6vh"}}>¡Bienvenido de vuelta!</h1>
-        <form style={{display: 'flex', flexDirection: 'column'}}>
-            <div>
-                <input style={{width: "50vw", height: "4vh", backgroundColor: "white", borderRadius:"1.5vh", borderWidth:0 ,color: "black"}} type="text" placeholder="Nombre Usuario" value={nickName} onChange={(e) => setNickName(e.target.value)}/>
-            </div>
-            <br />
-            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-                <input style={{width: "50vw", height: "4vh", backgroundColor: "white", borderRadius:"1.5vh", borderWidth:0 ,color: "black"}} type={tipo} placeholder="Contraseña" value={contraseña} onChange={(e) => setContraseña(e.target.value)}/>
-                <span style={{ position: "absolute", right: "10px", top:"30%", cursor: "pointer" }} onClick={handleOcultarMostrar}>
-                    {React.createElement(icono, { style: { width: "20px", height: "20px", color: "black" } })}
-                </span>
-            </div>
-            <br />
-            <button style={{backgroundColor: "#EA1F22", borderRadius:"1.5vh", borderWidth: 3, borderColor: "White"}} type="submit" onClick={handleIniciarSesion}>Iniciar Sesión</button>
-        </form>
-        <form style={{display: 'flex', flexDirection: 'column', paddingTop: "15vh"}}>
-            <label style={{color: "black", fontSize: "3vh"}}>¿No tienes cuenta?</label>
-            <button style={{color: "#EA1F22", backgroundColor: "white", borderRadius:"1.5vh", borderWidth: 3, borderColor: "#EA1F22"}} type="submit" onClick={handleCrearCuenta}>Crear Cuenta</button>
-        </form>
-    </div>
-)
+    return (
+        <div className="login-container">
+            <img src={logo} className="login-logo" />
+            <h1 className="login-title">¡Bienvenido de vuelta!</h1>
+            <form className="login-form">
+                <div>
+                    <input 
+                        className="login-input"
+                        type="text"
+                        placeholder="Nombre Usuario"
+                        value={nickName}
+                        onChange={(e) => setNickName(e.target.value)}
+                    />
+                </div>
+                <br />
+                <div className="password-container">
+                    <input className="login-input" type={tipo} placeholder="Contraseña" value={contraseña} onChange={(e) => setContraseña(e.target.value)}/>
+                    <span className="password-toggle" onClick={handleOcultarMostrar}>
+                        {React.createElement(icono, { className: "password-icon" })}
+                    </span>
+                </div>
+                <br />
+                <button className="login-button" type="submit" onClick={handleIniciarSesion}>
+                    Iniciar Sesión
+                </button>
+            </form>
+            <form className="register-form">
+                <label className="register-text">¿No tienes cuenta?</label>
+                <button className="register-button" type="submit" onClick={handleCrearCuenta}>
+                    Crear Cuenta
+                </button>
+            </form>
+        </div>
+    )
 }
 
 export default IniciarSesion;
