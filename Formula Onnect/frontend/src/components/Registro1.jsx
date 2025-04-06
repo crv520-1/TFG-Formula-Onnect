@@ -2,6 +2,7 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../styles/Registro1.css';
 import { carga } from './animacionCargando';
 import { validarContraseña } from "./validarContraseña";
 import { validarEmail } from "./validarEmail";
@@ -85,41 +86,75 @@ const Registro1 = () => {
     if (cargando) { return carga(); }
 
     return (
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", backgroundColor: "#D9D9D9" }}>
-            <img src={logo} style={{ width: "15vw", height: "15vh", objectFit:"contain" }} />
-            <h1 style={{color: "black", paddingTop: "7vh", fontSize:"6vh"}}>¡Bienvenido!</h1>
-            <form style={{display: 'flex', flexDirection: 'column'}}>
+        <div className="registro-container">
+            <img src={logo} className="registro-logo" />
+            <h1 className="registro-title">¡Bienvenido!</h1>
+            <form className="registro-form">
                 <div>
-                    <input style={{width: "50vw", height: "3.5vh", backgroundColor: "white", borderRadius:"1.5vh", borderWidth:0 ,color: "black"}} type="text" placeholder="Nombre Usuario" value={nickName} onChange={(e) => setNickName(e.target.value)}/>
+                    <input 
+                        className="registro-input"
+                        type="text"
+                        placeholder="Nombre Usuario"
+                        value={nickName}
+                        onChange={(e) => setNickName(e.target.value)}
+                    />
                 </div>
                 <br />
                 <div>
-                    <input style={{width: "50vw", height: "3.5vh", backgroundColor: "white", borderRadius:"1.5vh", borderWidth:0 ,color: "black"}} type="text" placeholder="Nombre Completo" value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
+                    <input 
+                        className="registro-input"
+                        type="text"
+                        placeholder="Nombre Completo"
+                        value={nombreCompleto}
+                        onChange={(e) => setNombreCompleto(e.target.value)}
+                    />
                 </div>
                 <br />
                 <div>
-                    <input style={{width: "50vw", height: "3.5vh", backgroundColor: "white", borderRadius:"1.5vh", borderWidth:0 ,color: "black"}} type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input 
+                        className="registro-input"
+                        type="text"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
                 </div>
                 <br />
-                <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-                    <input style={{width: "50vw", height: "3.5vh", backgroundColor: "white", borderRadius:"1.5vh", borderWidth:0 ,color: "black"}} type={tipo} placeholder="Contraseña" value={contraseña} onChange={(e) => setContraseña(e.target.value)}/>
-                    <span style={{ position: "absolute", right: "10px", top:"30%", cursor: "pointer" }} onClick={handleOcultarMostrar}>
-                        {React.createElement(icono, { style: { width: "20px", height: "20px", color: "black" } })}
+                <div className="password-container">
+                    <input 
+                        className="registro-input"
+                        type={tipo}
+                        placeholder="Contraseña"
+                        value={contraseña}
+                        onChange={(e) => setContraseña(e.target.value)}
+                    />
+                    <span className="password-toggle" onClick={handleOcultarMostrar}>
+                        {React.createElement(icono, { className: "password-icon" })}
                     </span>
                 </div>
                 <br />
-                <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-                    <input style={{width: "50vw", height: "3.5vh", backgroundColor: "white", borderRadius:"1.5vh", borderWidth:0 ,color: "black"}} type={tipo} placeholder="Repetir Contraseña" value={contraseñaRepe} onChange={(e) => setContraseñaRepe(e.target.value)}/>
-                    <span style={{ position: "absolute", right: "10px", top:"30%", cursor: "pointer" }} onClick={handleOcultarMostrar}>
-                        {React.createElement(icono, { style: { width: "20px", height: "20px", color: "black" } })}
+                <div className="password-container">
+                    <input 
+                        className="registro-input"
+                        type={tipo}
+                        placeholder="Repetir Contraseña"
+                        value={contraseñaRepe}
+                        onChange={(e) => setContraseñaRepe(e.target.value)}
+                    />
+                    <span className="password-toggle" onClick={handleOcultarMostrar}>
+                        {React.createElement(icono, { className: "password-icon" })}
                     </span>
                 </div>
                 <br />
-                <button style={{backgroundColor: "#EA1F22", borderRadius:"1.5vh", borderWidth: 3, borderColor: "White"}} type="submit" onClick={handleContinuarRegistro}>Continuar</button>
+                <button className="continuar-button" type="submit" onClick={handleContinuarRegistro}>
+                    Continuar
+                </button>
             </form>
-            <form style={{display: 'flex', flexDirection: 'column', paddingTop: "10vh"}}>
-                <label style={{color: "black", fontSize: "3vh"}}>¿Ya tienes cuenta?</label>
-                <button style={{color: "#EA1F22", backgroundColor: "white", borderRadius:"1.5vh", borderWidth: 3, borderColor: "#EA1F22"}} type="submit" onClick={handleIniciarSesion}>Iniciar Sesión</button>
+            <form className="login-section">
+                <label className="login-text">¿Ya tienes cuenta?</label>
+                <button className="login-button-registro" type="submit" onClick={handleIniciarSesion}>
+                    Iniciar Sesión
+                </button>
             </form>
         </div>
     );
