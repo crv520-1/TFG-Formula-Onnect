@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import '../styles/RegistroNext.css';
 import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 
@@ -71,34 +72,54 @@ export const RegistroNext = () => {
     if (cargando) { return carga() };
 
     return (
-        <div style={{display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", height: "95vh", width: "100vw", paddingTop: "50px", backgroundColor: "#D9D9D9", color: "white" }}>
-            <img src={logo} style={{ width: "15vw", height: "15vh", objectFit:"contain" }} />
-            <div style={{color: "black", paddingTop: "7vh", alignItems: "center", display: "flex", flexDirection: "column"}}>
-                <h1>¡Bienvenido nickName!</h1>
+        <div className="registro-next-container">
+            <img src={logo} className="registro-next-logo" />
+            <div className="header-container">
+                <h1>¡Bienvenido {nickName}!</h1>
                 <h1>Seleccione a su piloto, equipo y circuito favorito</h1>
             </div>
-            <form style={{display: 'flex', flexDirection: 'row'}}>
-                <div style={{width: "25vw", height: "25vh", borderRadius: "1.5vh", background: "white", color: "black", marginRight: "5vw", alignItems: "center", display: "flex", flexDirection: "column"}}>
-                    <select style={{width: "25vw", background: "white", color: "black", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={pilotoSeleccionado} onChange={(e) => setPilotoSeleccionado(e.target.value)} >
-                        {pilotos.map((piloto) => ( <option key={piloto.idPilotos} value={piloto.idPilotos}> {piloto.nombrePiloto} {piloto.apellidoPiloto} </option> ))}
+            <form className="seleccion-form">
+                <div className="selector-container">
+                    <select className="selector" value={pilotoSeleccionado} onChange={(e) => setPilotoSeleccionado(e.target.value)}>
+                        {pilotos.map((piloto) => (
+                            <option key={piloto.idPilotos} value={piloto.idPilotos}>
+                                {piloto.nombrePiloto} {piloto.apellidoPiloto}
+                            </option>
+                        ))}
                     </select>
-                    {pilotoSeleccionado && (<img src={getImagenPiloto(pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado))?.driverId)} alt="Piloto" style={{ width: "10vw", height: "20vh", paddingTop: "2vh", objectFit:"contain" }} />)}
+                    {pilotoSeleccionado && (
+                        <img src={getImagenPiloto(pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado))?.driverId)} alt="Piloto" className="piloto-imagen"/>
+                    )}
                 </div>
-                <div style={{width: "25vw", height: "25vh", borderRadius: "1.5vh", background: "white", color: "black", marginRight: "5vw", alignItems: "center", display: "flex", flexDirection: "column"}}>
-                    <select style={{width: "25vw", background: "white", color: "black", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={equipoSeleccionado} onChange={(e) => setEquipoSeleccionado(e.target.value)} >
-                        {equipos.map((equipo) => ( <option key={equipo.idEquipos} value={equipo.idEquipos}> {equipo.nombreEquipo} </option> ))}
+                <div className="selector-container">
+                    <select className="selector" value={equipoSeleccionado} onChange={(e) => setEquipoSeleccionado(e.target.value)}>
+                        {equipos.map((equipo) => (
+                            <option key={equipo.idEquipos} value={equipo.idEquipos}>
+                                {equipo.nombreEquipo}
+                            </option>
+                        ))}
                     </select>
-                    {equipoSeleccionado && (<img src={getImagenEquipo(equipos.find(p => p.idEquipos === Number(equipoSeleccionado))?.constructorId)} alt="Equipo" style={{ width: "20vw", height: "20vh", paddingTop: "2vh", objectFit:"contain" }} />)}
+                    {equipoSeleccionado && (
+                        <img src={getImagenEquipo(equipos.find(p => p.idEquipos === Number(equipoSeleccionado))?.constructorId)} alt="Equipo" className="equipo-imagen"/>
+                    )}
                 </div>
-                <div style={{width: "25vw", height: "25vh", borderRadius: "1.5vh", background: "white", color: "black", marginRight: "5vw", alignItems: "center", display: "flex", flexDirection: "column"}}>
-                    <select style={{width: "25vw", background: "white", color: "black", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={circuitoSeleccionado} onChange={(e) => setCircuitoSeleccionado(e.target.value)} >
-                        {circuitos.map((circuito) => ( <option key={circuito.idCircuitos} value={circuito.idCircuitos}> {circuito.nombreCircuito} </option> ))}
+                <div className="selector-container">
+                    <select className="selector" value={circuitoSeleccionado} onChange={(e) => setCircuitoSeleccionado(e.target.value)}>
+                        {circuitos.map((circuito) => (
+                            <option key={circuito.idCircuitos} value={circuito.idCircuitos}>
+                                {circuito.nombreCircuito}
+                            </option>
+                        ))}
                     </select>
-                    {circuitoSeleccionado && (<img src={getImagenCircuito(circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado))?.circuitId)} alt="Circuito" style={{ width: "20vw", height: "20vh", paddingTop: "2vh", objectFit:"contain" }} />)}
+                    {circuitoSeleccionado && (
+                        <img src={getImagenCircuito(circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado))?.circuitId)} alt="Circuito" className="circuito-imagen"/>
+                    )}
                 </div>
             </form>
             <br />
-            <button style={{width: "50vw", backgroundColor: "#EA1F22", borderRadius:"1.5vh", borderWidth: 3, borderColor: "White"}} type="submit" onClick={handleCrearCuenta}>Crear Cuenta</button>
+            <button className="crear-cuenta-button" type="submit" onClick={handleCrearCuenta}>
+                Crear Cuenta
+            </button>
         </div>
     );
 };

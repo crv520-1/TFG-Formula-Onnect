@@ -1,0 +1,80 @@
+.registro-next-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 95vh;
+    width: 100vw;
+    padding-top: 50px;
+    background-color: #D9D9D9;
+    color: white;
+}
+
+.registro-next-logo {
+    width: 15vw;
+    height: 15vh;
+    object-fit: contain;
+}
+
+.header-container {
+    color: black;
+    padding-top: 7vh;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.seleccion-form {
+    display: flex;
+    flex-direction: row;
+}
+
+.selector-container {
+    width: 25vw;
+    height: 25vh;
+    border-radius: 1.5vh;
+    background: white;
+    color: black;
+    margin-right: 5vw;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.selector {
+    width: 25vw;
+    background: white;
+    color: black;
+    border: 0;
+    padding-top: 0.5vh;
+    border-radius: 1.5vh;
+}
+
+.piloto-imagen {
+    width: 10vw;
+    height: 20vh;
+    padding-top: 2vh;
+    object-fit: contain;
+}
+
+.equipo-imagen {
+    width: 20vw;
+    height: 20vh;
+    padding-top: 2vh;
+    object-fit: contain;
+}
+
+.circuito-imagen {
+    width: 20vw;
+    height: 20vh;
+    padding-top: 2vh;
+    object-fit: contain;
+}
+
+.crear-cuenta-button {
+    width: 50vw;
+    background-color: #EA1F22;
+    border-radius: 1.5vh;
+    border-width: 3px;
+    border-color: White;
+}
