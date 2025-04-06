@@ -40,50 +40,43 @@ const PerfilHeader = ({ usuario, numeroPublicaciones, seguidores, siguiendo, sig
   }
 
   return (
-    <div className="perfil-header">
-        <h1 className="perfil-header__nickname">{usuario.nickName}</h1>
-        <div className="perfil-header__info">
-            <img src={usuario.fotoPerfil} alt="Foto de perfil" className="perfil-header__image" />
-            <div className="perfil-header__details">
-                <div className="perfil-header__name-buttons">
-                    <p className="perfil-header__fullname">{usuario.nombreCompleto}</p>
-                    {mismoUsuario && (
-                        <div className="perfil-header__name-buttons">
-                            <button className="perfil-header__button" onClick={handleEditarPerfil}>
-                                <PencilSquareIcon className="perfil-header__button-icon" />
-                            </button>
-                            <button className="perfil-header__button" onClick={handleCerrarSesion}>
-                                <ArrowRightEndOnRectangleIcon className="perfil-header__button-icon" />
-                            </button>
-                        </div>
-                    )}
-                </div>
-                <div className="perfil-header__stats">
-                    <div className="perfil-header__stat">
-                        <p>Publicaciones</p>
-                        <p>{numeroPublicaciones}</p>
-                    </div>
-                    <div className="perfil-header__stat">
-                        <p>Seguidores</p>
-                        <p>{seguidores}</p>
-                    </div>
-                    <div className="perfil-header__stat">
-                        <p>Siguiendo</p>
-                        <p>{siguiendo}</p>
-                    </div>
-                </div>
-                {!mismoUsuario && (
-                    <button
-                        className={`perfil-header__follow-button ${
-                            sigo ? 'perfil-header__follow-button--dejar-seguir' : 'perfil-header__follow-button--seguir'
-                        }`}
-                        onClick={handleSeguir}
-                    >
-                        {sigo ? 'Dejar de seguir' : 'Seguir'}
-                    </button>
-                )}
+    <div className="principal_columna">
+      <h1 className="nombreUsuario"> {usuario.nickName} </h1>
+      <div className="principal_fila">
+        <img src={usuario.fotoPerfil} alt="Foto de perfil" className="foto"/>
+        <div className="principal_columna">
+          <div className="principal_fila">
+            <p className="texto">{usuario.nombreCompleto}</p>
+            {mismoUsuario ? (
+              <div className="principal_fila">
+                <button type='submit' onClick={handleEditarPerfil} className="boton"><PencilSquareIcon className="icono" /></button>
+                <button type='submit' onClick={handleCerrarSesion} className="boton"><ArrowRightEndOnRectangleIcon className="icono" /></button>
+              </div>
+            ) : null}
+          </div>
+          <div className="principal_fila">
+            <div className="principal_columna">
+              <p className="texto_auxiliar"> Publicaciones </p>
+              <p className="texto_datos"> {numeroPublicaciones} </p>
             </div>
+            <div className="principal">
+              <p className="texto_auxiliar"> Seguidores </p>
+              <p className="texto_datos"> {seguidores} </p>
+            </div>
+            <div className="principal">
+              <p className="texto_auxiliar"> Siguiendo </p>
+              <p className="texto_datos"> {siguiendo} </p>
+            </div>
+          </div>
+          {!mismoUsuario ? (
+            !sigo ? (
+              <button type='submit' onClick={handleSeguir} className=".seguir"> Seguir </button>
+            ) : (
+              <button type='submit' onClick={handleSeguir} className="dejar_seguir"> Dejar de seguir </button>
+            )
+          ) : null}
         </div>
+      </div>
     </div>
   )
 };

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import "../styles/PerfilDatos.css";
 import { carga } from "./animacionCargando.jsx";
 import HeaderPerfil from "./HeaderPerfil";
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
@@ -124,7 +125,7 @@ export const Perfil = () => {
   if (cargando) { return carga(); }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+    <div className="principal_columna">
       <HeaderPerfil
         usuario={usuario}
         numeroPublicaciones={numeroPublicaciones}
@@ -135,19 +136,19 @@ export const Perfil = () => {
         mismoUsuario={mismoUsuario}
         onSeguidoresChange={handleSeguidoresChange}
       />
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-        <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Datos</h2>
-        <button type='submit' onClick={handlePublicaciones} style={{ fontSize: "2vh", height:"3vh", marginLeft: "35vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border: "none", backgroundColor:"#15151E" }}>Publicaciones</button>
+      <div className="principal_fila">
+        <h2 className="textoDireccion">Datos</h2>
+        <button type='submit' onClick={handlePublicaciones} className="botonDireccion">Publicaciones</button>
       </div>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop: "5vh" }}>
-        <div style={{ width: "15vw", height: "25vh", borderRadius: "25px", backgroundColor:"#2c2c2c", display: "flex", justifyContent: "center", alignItems: "center" }} >
-          <img src={imagenPiloto} alt="Piloto" style={{ width: "90%", height: "100%", objectFit:"contain" }} />
+      <div className="contenedor">
+        <div className="espacioPiloto">
+          <img src={imagenPiloto} alt="Piloto" className="imagen"/>
         </div>
-        <div style={{ width: "40vh", height: "20vh", paddingLeft: "15vh", display: "flex", justifyContent: "center", alignItems: "center" }} >
-          <img src={imagenEquipo} alt="Equipo" style={{ width: "90%", height: "100%", backgroundColor:"#2c2c2c", borderRadius: "25px", objectFit:"contain" }} />
+        <div className="espacioCircuito">
+          <img src={imagenCircuito} alt="Circuito" className="imagenCircuito"/>
         </div>
-        <div style={{ width: "40vh", height: "25vh", paddingLeft: "15vh", display: "flex", justifyContent: "center", alignItems: "center" }} >
-          <img src={imagenCircuito} alt="Circuito" style={{ width: "100%", height: "100%", backgroundColor:"#2c2c2c", borderRadius: "25px", objectFit:"contain" }} />
+        <div className="espacioEquipo">
+          <img src={imagenEquipo} alt="Equipo" className="imagenEquipo"/>
         </div>
       </div>
     </div> 
