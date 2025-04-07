@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
+import '../styles/Containers.css';
 import { carga } from './animacionCargando.jsx';
 import { getImagenPiloto } from './mapeoImagenes.js';
 
@@ -86,89 +87,89 @@ export const DatosPiloto = () => {
   if (cargando) { return carga(); }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", marginTop: "2vh" }}>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
+    <div className='container_columna_marginTop'>
+      <div className='container_fila'>
         <button type='submit' onClick={handlePilotos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#C40000", width:"15vh" }}>Pilotos</button>
         <button type='submit' onClick={handleEquipos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Equipos</button>
         <button type='submit' onClick={handleCircuitos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Circuitos</button>
       </div>
       <br />
-      <div style={{ display: "flex", flexDirection: "column", height:"auto", width:"100%", backgroundColor:"#2c2c2c", borderRadius:"1vh", padding:"2vh", alignItems: "center" }}>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", width:"50vw", height:"auto", borderRadius:"1vh", marginBottom: "2vh" }}>
+      <div className='container_columna_2c_v4'>
+        <div className='container_fila_2c'>
           <p style={{ fontSize: "3vh", textAlign: "center", color: "white" }}>{pilotos.nombrePiloto}</p>
           <p style={{ fontSize: "3vh", textAlign: "center", color: "white", paddingLeft:"0.5vw" }}>{pilotos.apellidoPiloto}</p>
         </div>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius:"1vh", marginBottom: "2vh" }}>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderRadius:"1vh", marginBottom: "2vh" }}>
+        <div className='container_fila_marginBottom'>
+          <div className='container_columna_marginBottom_v2'>
             <img src={getImagenPiloto(pilotos.driverId)} alt="Imagen del piloto" style={{ width: "30vh", height: "30vh", objectFit:"contain"}} />
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius:"1vh", marginBottom: "2vh" }}>
+            <div className='container_columna_marginBottom_v2'>
               <img src={`https://flagcdn.com/w160/${pilotos.isoNacPil}.png`} alt={pilotos.isoNacPil} style={{ width: "6vh", height: "4vh" }} />
               <p style={{ fontSize: "2vh", textAlign: "center", color: "white", paddingLeft:"0.5vw" }}>{pilotos.nacionalidadPiloto}</p>
             </div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginBottom: "2vh", paddingLeft:"5vw" }}>
+          <div className='container_columna_paddingLeft_v2'>
             {driverData && (
-              <div style={{ color: "white", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", marginBottom: "2vh" }}>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+              <div className='container_columna_blanca'>
+                <div className='container_fila_paddingBottom'>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Fecha de nacimiento:</p>
                     <p style={{ textAlign: "center" }}>{driverData.birthDate}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Lugar de nacimiento:</p>
                     <p style={{ textAlign: "center" }}>{driverData.birthPlace}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Fecha de fallecimiento:</p>
                     <p style={{ textAlign: "center" }}>{driverData.deathDate}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Lugar de fallecimiento:</p>
                     <p style={{ textAlign: "center" }}>{driverData.deathPlace}</p>
                   </div>
                 </div>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", marginBottom: "2vh" }}>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                <div className='container_fila_paddingBottom'>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Primera carrera:</p>
                     <p style={{ textAlign: "center" }}>{driverData.firstRace}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Primera Victoria:</p>
                     <p style={{ textAlign: "center" }}>{driverData.firstWin}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Última carrera:</p>
                     <p style={{ textAlign: "center" }}>{driverData.lastRace}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Carreras terminadas:</p>
                     <p style={{ textAlign: "center" }}>{driverData.racesFinished}</p>
                   </div>
                 </div>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", marginBottom: "2vh" }}>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                <div className='container_fila_paddingBottom'>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Victorias:</p>
                     <p style={{ textAlign: "center" }}>{driverData.wins}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Poles:</p>
                     <p style={{ textAlign: "center" }}>{driverData.poles}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Vueltas rápidas:</p>
                     <p style={{ textAlign: "center" }}>{driverData.fastestLaps}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Podios:</p>
                     <p style={{ textAlign: "center" }}>{driverData.podiums}</p>
                   </div>
                 </div>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", marginBottom: "2vh" }}>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                <div className='container_fila_paddingBottom'>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Mundiales:</p>
                     <p style={{ textAlign: "center" }}>{driverData.championships}</p>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#3e3e3e", borderRadius: "1vh", margin: "1vh", width: "7vw", height: "10vh" }}>
+                  <div className='container_columna_datos_v2'>
                     <p style={{ textAlign: "center" }}>Puntos totales:</p>
                     <p style={{ textAlign: "center" }}>{driverData.points}</p>
                   </div>

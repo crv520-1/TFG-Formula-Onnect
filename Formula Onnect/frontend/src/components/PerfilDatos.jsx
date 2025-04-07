@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import "../styles/Containers.css";
 import "../styles/PerfilDatos.css";
 import { carga } from "./animacionCargando.jsx";
 import HeaderPerfil from "./HeaderPerfil";
@@ -125,7 +126,7 @@ export const Perfil = () => {
   if (cargando) { return carga(); }
 
   return (
-    <div className="principal_columna">
+    <div className="container_columna">
       <HeaderPerfil
         usuario={usuario}
         numeroPublicaciones={numeroPublicaciones}
@@ -136,11 +137,11 @@ export const Perfil = () => {
         mismoUsuario={mismoUsuario}
         onSeguidoresChange={handleSeguidoresChange}
       />
-      <div className="principal_fila">
+      <div className="container_fila">
         <h2 className="textoDireccion">Datos</h2>
         <button type='submit' onClick={handlePublicaciones} className="botonDireccion">Publicaciones</button>
       </div>
-      <div className="contenedor">
+      <div className="container_fila_paddingTop">
         <div className="espacioPiloto">
           <img src={imagenPiloto} alt="Piloto" className="imagen"/>
         </div>

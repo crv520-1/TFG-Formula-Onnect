@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import "../styles/Containers.css";
 import { carga } from "./animacionCargando";
 
 export const Crear = () => {
@@ -71,13 +72,13 @@ export const Crear = () => {
   if (cargando) { return(carga()) }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} >
+    <div className="container_columna">
       <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center" }}>Publicaciones</h2>
       <br />
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", width: "75vh", height: "50vh", backgroundColor: "#2c2c2c", borderRadius: "1vh", paddingTop: "2vh" }}>
-        <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "70vh", backgroundColor: "#2c2c2c", borderRadius: "1vh" }}>
+      <div className="container_columna_completo_v2">
+        <div className="container_fila_spaceBetween">
           <button type='submit' onClick={handleCancelar} style={{ display: "flex", alignItems: "center", justifyContent: "center", height:"5vh", border: "none", backgroundColor: "#2c2c2c" }}><XCircleIcon style={{ width: "3vh", height: "3vh", color:"white" }} /></button>
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div className="container_flexCenter">
             <img src={usuario.fotoPerfil} style={{ width: "5vh", height: "5vh", borderRadius: "50%", backgroundColor:"white" }} />
             <p style={{ color:"white", marginLeft:"2vw", fontSize:"2vh" }}> {usuario.nickName} </p>
           </div>

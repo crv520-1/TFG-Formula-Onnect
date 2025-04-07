@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import "../styles/Containers.css";
 import { carga } from './animacionCargando';
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 import { validarContraseña } from "./validarContraseña.js";
@@ -137,19 +138,19 @@ export const EditarPerfil = () => {
     if (cargando) { return carga()}
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", paddingTop:"3vh" }} >
-        <input style={{ fontSize: "4vh", textAlign: "center", borderRadius: "1.5vh", border: "2px solid white", backgroundColor: "#2c2c2c", color: "white" }} type="text" placeholder={usuario.nickName} value={nickName} onChange={(e) => setNickName(e.target.value)}/>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop:"3vh" }}>
+    <div className="container_columna_paddingTop">
+      <input style={{ fontSize: "4vh", textAlign: "center", borderRadius: "1.5vh", border: "2px solid white", backgroundColor: "#2c2c2c", color: "white" }} type="text" placeholder={usuario.nickName} value={nickName} onChange={(e) => setNickName(e.target.value)}/>
+      <div className="container_fila_paddingTop">
         <img src={usuario.fotoPerfil} alt="Foto de perfil" style={{ width: "15vh", height: "15vh", borderRadius: "50%", color:"white", backgroundColor:"white" }} />
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <div className="container_columna">
             <input style={{ fontSize: "3vh", textAlign: "center", borderRadius: "1.5vh", border: "2px solid white", backgroundColor: "#2c2c2c", color: "white", marginLeft: "1vh", margin: "1vh" }} type="text" placeholder={usuario.nombreCompleto} value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
-            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+            <div className="container_relative">
                 <input style={{ fontSize: "3vh", borderRadius: "1.5vh", border: "2px solid white", backgroundColor: "#2c2c2c", color: "white", marginLeft: "1vh", margin: "1vh" }} type={tipo} placeholder="Contraseña" value={contraseña} onChange={(e) => setContraseña(e.target.value)}/>
                 <span style={{ position: "absolute", right: "2vh", top:"40%", cursor: "pointer" }} onClick={handleOcultarMostrar}>
                     {React.createElement(icono, { style: { width: "20px", height: "20px", color: "white" } })}
                 </span>
             </div>
-            <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+            <div className="container_relative">
                 <input style={{ fontSize: "3vh", borderRadius: "1.5vh", border: "2px solid white", backgroundColor: "#2c2c2c", color: "white", marginLeft: "1vh", margin: "1vh" }} type={tipo} placeholder="Contraseña Repetida" value={contraseñaRepe} onChange={(e) => setContraseñaRepe(e.target.value)}/>
                 <span style={{ position: "absolute", right: "2vh", top:"40%", cursor: "pointer" }} onClick={handleOcultarMostrar}>
                     {React.createElement(icono, { style: { width: "20px", height: "20px", color: "white" } })}
@@ -157,27 +158,27 @@ export const EditarPerfil = () => {
             </div>
         </div>
       </div>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop: "5vh" }}>
-        <div style={{width: "20vw", height: "25vh", borderRadius: "1.5vh", backgroundColor:"#2c2c2c", color: "black", marginRight: "5vw", alignItems: "center", display: "flex", flexDirection: "column"}}>
+      <div className="container_fila_paddingTop_v2">
+        <div className="container_columna_completo">
             <select style={{width: "20vw", background: "#2c2c2c", color: "white", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={pilotoSeleccionado} onChange={(e) => setPilotoSeleccionado(e.target.value)} >
                 {pilotos.map((piloto) => ( <option key={piloto.idPilotos} value={piloto.idPilotos}> {piloto.nombrePiloto} {piloto.apellidoPiloto} </option> ))}
             </select>
             {pilotoSeleccionado && (<img src={getImagenPiloto(pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado))?.driverId)} alt="Piloto" style={{ width: "10vw", height: "25vh", paddingTop: "2vh", objectFit:"contain" }} />)}
         </div>
-        <div style={{width: "20vw", height: "25vh", borderRadius: "1.5vh", background: "#2c2c2c", color: "white", marginRight: "5vw", alignItems: "center", display: "flex", flexDirection: "column"}}>
-            <select style={{width: "20vw", background: "#2c2c2c", color: "white", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={equipoSeleccionado} onChange={(e) => setEquipoSeleccionado(e.target.value)} >
-                {equipos.map((equipo) => ( <option key={equipo.idEquipos} value={equipo.idEquipos}> {equipo.nombreEquipo} </option> ))}
-            </select>
-            {equipoSeleccionado && (<img src={getImagenEquipo(equipos.find(p => p.idEquipos === Number(equipoSeleccionado))?.constructorId)} alt="Equipo" style={{ width: "19vw", height: "20vh", paddingTop: "2vh", objectFit:"contain" }} />)}
-        </div>
-        <div style={{width: "20vw", height: "25vh", borderRadius: "1.5vh", background: "#2c2c2c", color: "white", marginRight: "5vw", alignItems: "center", display: "flex", flexDirection: "column"}}>
+        <div className="container_columna_completo">
             <select style={{width: "20vw", background: "#2c2c2c", color: "white", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={circuitoSeleccionado} onChange={(e) => setCircuitoSeleccionado(e.target.value)} >
                 {circuitos.map((circuito) => ( <option key={circuito.idCircuitos} value={circuito.idCircuitos}> {circuito.nombreCircuito} </option> ))}
             </select>
             {circuitoSeleccionado && (<img src={getImagenCircuito(circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado))?.circuitId)} alt="Circuito" style={{ width: "20vw", height: "20vh", paddingTop: "2vh", objectFit:"contain" }} />)}
         </div>
+        <div className="container_columna_completo">
+            <select style={{width: "20vw", background: "#2c2c2c", color: "white", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={equipoSeleccionado} onChange={(e) => setEquipoSeleccionado(e.target.value)} >
+                {equipos.map((equipo) => ( <option key={equipo.idEquipos} value={equipo.idEquipos}> {equipo.nombreEquipo} </option> ))}
+            </select>
+            {equipoSeleccionado && (<img src={getImagenEquipo(equipos.find(p => p.idEquipos === Number(equipoSeleccionado))?.constructorId)} alt="Equipo" style={{ width: "19vw", height: "20vh", paddingTop: "2vh", objectFit:"contain" }} />)}
+        </div>
       </div>
-      <div style={{ paddingTop: "5vh" }}>
+      <div className="container_paddingTop">
         <button style={{color: "#EA1F22", backgroundColor: "white", borderRadius:"1.5vh", borderWidth: 3, borderColor: "#EA1F22", marginRight:"10vw" }} type="submit" onClick={handleCancelar}> Cancelar </button>
         <button style={{backgroundColor: "#EA1F22", borderRadius:"1.5vh", borderWidth: 3, borderColor: "White"}} type="submit" onClick={handleGuardar}> Guardar </button>
       </div>

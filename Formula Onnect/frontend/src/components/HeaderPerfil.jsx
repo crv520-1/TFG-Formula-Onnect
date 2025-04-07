@@ -2,6 +2,7 @@ import { ArrowRightEndOnRectangleIcon, PencilSquareIcon } from "@heroicons/react
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
+import '../styles/Containers.css';
 import '../styles/HeaderPerfil.css';
 
 const PerfilHeader = ({ usuario, numeroPublicaciones, seguidores, siguiendo, sigo, idUser, mismoUsuario, onSeguidoresChange }) => {
@@ -40,22 +41,22 @@ const PerfilHeader = ({ usuario, numeroPublicaciones, seguidores, siguiendo, sig
   }
 
   return (
-    <div className="principal_columna">
+    <div className="container_columna">
       <h1 className="nombreUsuario"> {usuario.nickName} </h1>
-      <div className="principal_fila">
+      <div className="container_fila">
         <img src={usuario.fotoPerfil} alt="Foto de perfil" className="foto"/>
-        <div className="principal_columna">
-          <div className="principal_fila">
+        <div className="container_columna">
+          <div className="container_fila">
             <p className="texto">{usuario.nombreCompleto}</p>
             {mismoUsuario ? (
-              <div className="principal_fila">
+              <div className="container_fila">
                 <button type='submit' onClick={handleEditarPerfil} className="boton"><PencilSquareIcon className="icono" /></button>
                 <button type='submit' onClick={handleCerrarSesion} className="boton"><ArrowRightEndOnRectangleIcon className="icono" /></button>
               </div>
             ) : null}
           </div>
-          <div className="principal_fila">
-            <div className="principal_columna">
+          <div className="container_fila">
+            <div className="container_columna">
               <p className="texto_auxiliar"> Publicaciones </p>
               <p className="texto_datos"> {numeroPublicaciones} </p>
             </div>

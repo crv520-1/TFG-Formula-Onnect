@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import { useMeGusta } from '../hooks/useMeGusta';
+import "../styles/Containers.css";
 import { carga } from './animacionCargando';
 
 export const Inicio = () => {
@@ -171,16 +172,16 @@ export const Inicio = () => {
   if (cargando) { return carga(); }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingBottom: "2vh" }} >
+    <div className="container_overflow">
+      <div className="container_fila_paddingBottom">
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center" }}>Publicaciones</h2>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh", overflowX: "hidden" }}>
+      <div className="container_overflow_padding">
         {publicacionesConUsuarios.map((publicacion) => (
-          <div key={publicacion.idPublicaciones} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor:"#2c2c2c", width:"50vw", height:"auto", borderRadius:"1vh", marginBottom: "2vh" }}>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", width: "100%", paddingTop:"1vh", paddingLeft: "1vh", paddingRight: "1vh" }}>
+          <div key={publicacion.idPublicaciones} className="container_columna_2c_v3">
+            <div className="container_fila_padding">
               {publicacion.usuarioPublicador && (
-                <div style={{ marginLeft: "1vw", display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <div className="container_fila_noJustify">
                   <button style={{ border:"none", backgroundColor:"#2c2c2c", display: "flex", flexDirection: "row", alignItems: "center" }} onClick={() => handleVisitarPerfil(publicacion.usuarioPublicador.idUsuario)}>
                     <img src={publicacion.usuarioPublicador.fotoPerfil} alt="Perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
                     <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{publicacion.usuarioPublicador.nickName}</p>
@@ -188,7 +189,7 @@ export const Inicio = () => {
                 </div>
               )}
               <p style={{marginLeft:"2vw", fontSize:"1.5vh"}}>{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
-              <div style={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
+              <div className="container_auto">
                 <p style={{fontSize:"1.5vh"}}>{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
                 <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
                 <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{publicacion.numeroComentarios}</p>

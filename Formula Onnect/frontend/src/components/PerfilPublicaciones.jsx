@@ -4,6 +4,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import "../styles/Containers.css";
 import "../styles/PerfilPublicaciones.css";
 import HeaderPerfil from "./HeaderPerfil";
 import { carga } from "./animacionCargando";
@@ -204,7 +205,7 @@ export const PerfilPublicaciones = () => {
   };
 
   return (
-    <div className="principal">
+    <div className="container_overflow">
       <HeaderPerfil
         usuario={usuario}
         numeroPublicaciones={numeroPublicaciones}
@@ -215,13 +216,13 @@ export const PerfilPublicaciones = () => {
         onSeguidoresChange={handleSeguidoresChange}
         mismoUsuario={mismoUsuario}
       />
-      <div className="header">
-        <div className="header_fila">
+      <div className="container_columna">
+        <div className="container_fila">
           <button type='submit' onClick={handleDatos} className="datos-button">Datos</button>
           <h2 className="section-title">Publicaciones</h2>
         </div>
       </div>
-      <div className="publicaciones-container">
+      <div className="container_overflow_padding">
         {publicaciones.map((publicacion) => (
           <div key={publicacion.idPublicaciones} className="publicacion">
             <div className="publicacion-header">

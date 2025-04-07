@@ -1,27 +1,3 @@
-/* Main container */
-.principal {
-  display: flex;
-  flex-direction: column;
-  max-height: 98vh;
-  overflow: auto;
-  overflow-x: hidden;
-}
-
-/* Header section */
-.header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.header_fila {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
 /* Buttons and titles */
 .datos-button {
   font-size: 2vh;
@@ -44,15 +20,6 @@
 }
 
 /* Publications container */
-.publicaciones-container {
-  display: flex;
-  flex-direction: column;
-  max-height: 100%;
-  overflow: auto;
-  padding-right: 2vh;
-  overflow-x: hidden;
-}
-
 .publicacion {
   display: flex;
   flex-direction: column;

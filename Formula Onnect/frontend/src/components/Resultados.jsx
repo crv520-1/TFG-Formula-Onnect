@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
+import '../styles/Containers.css';
 import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito } from './mapeoImagenes.js';
 
@@ -68,24 +69,24 @@ export const Resultados = () => {
   if (cargando) { return carga() }
   
   return (
-    <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
+    <div className='container_overflow'>
+      <div className='container_fila'>
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center" }}>Calendario</h2>
       </div>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+      <div className='container_fila'>
         {/* Seleccionable para elegir el año */}
         <select style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C", color:"white", fontSize:"1.25vh" }} onChange={(e) => setYear(e.target.value)} value={year}>
           {years.map(year => ( <option key={year} value={year}>{year}</option> ))}
         </select>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", padding:"2vh" }}>
+      <div className='container_overflow_padding'>
         {circuitos.map((circuito) => (
           <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.circuitId, year, circuito.ronda)} style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C" }}>
-            <div key={circuito.idCircuitos} style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+            <div key={circuito.idCircuitos} className='container_fila'>
               <img src={getImagenCircuito(circuito.circuitId)} alt={circuito.circuitId} style={{ width: "45vh", height: "25vh" }} />
-              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", paddingLeft: "5vw" }}>
+              <div className='container_columna_paddingLeft'>
                 <h3 style={{ fontSize: "2.5vh", textAlign: "center" }}>{circuito.nombreCircuito}</h3>
-                <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                <div className='container_fila'>
                   <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} style={{ width: "6vh", height: "4vh" }} />
                   <p style={{ fontSize: "1.5vh", textAlign: "center", paddingLeft:"0.5vw" }}>{circuito.ciudad}, {circuito.pais}</p>
                 </div>

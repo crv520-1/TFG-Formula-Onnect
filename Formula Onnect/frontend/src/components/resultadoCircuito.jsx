@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
+import '../styles/Containers.css';
 import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito, getImagenEquipo } from './mapeoImagenes.js';
 import { getStatusTraducido } from './mapeoStatus.js';
@@ -141,7 +142,7 @@ export const ResultadoCircuito = () => {
         )
       } else {
         return (
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh" }}>
+          <div className='container_columna_2c'>
             <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>Resultados carrera</p>
             {frontendResultados(posiciones)}
           </div>
@@ -154,7 +155,7 @@ export const ResultadoCircuito = () => {
         )
       } else if (sprintDisputada && !disputada) {
         return (
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh" }}>
+          <div className='container_columna_2c'>
             <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>Resultados Sprint</p>
             {frontendResultados(sprintPosiciones)}
             <p style={{ fontSize: "2vh", color: "white", textAlign: "center", paddingTop:"3vh" }}>No se ha disputado aún la carrera</p>
@@ -162,7 +163,7 @@ export const ResultadoCircuito = () => {
         )
       } else if (sprintDisputada && disputada) {
         return (
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh" }}>
+          <div className='container_columna_2c'>
             <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>Resultados Sprint</p>
             {frontendResultados(sprintPosiciones)}
             <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>Resultados carrera</p>
@@ -175,7 +176,7 @@ export const ResultadoCircuito = () => {
 
   function frontendResultados(posiciones) {
     return (
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", width: "100%" }}>
+      <div className='container_grid'>
         {posiciones.map((posicion, index) => {
           const isEven = index % 2 !== 0;
           return (
@@ -197,17 +198,17 @@ export const ResultadoCircuito = () => {
   if (cargando) { return ( carga() ); }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingBottom: "2vh", paddingTop:"2vh" }} >
+    <div className='container_overflow'>
+      <div className='container_fila_paddingBottomTop'>
         <button type='submit' onClick={() => handleCalendario(year)} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#C40000", width:"15vh" }}>Calendario</button>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto", paddingRight:"2vh" }}>
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh", width: "100%", paddingBottom: "2vh" }}>
+      <div className='container_overflow_padding'>
+      <div className='container_columna_2c_v2'>
         <p style={{ fontSize: "2vh", color: "white" }}>{circuitos.nombreCircuito}</p>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh", margin: "2vh" }}>
+        <div className='container_fila_2c_margin'>
           <img src={getImagenCircuito(circuitos.circuitId)} alt={circuitos.circuitId} style={{ width: "50vh", height: "35vh", objectFit:"contain" }}/>
-          <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh", margin: "2vh" }}>
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", backgroundColor: "#2C2C2C", borderRadius: "0.5vh", margin: "2vh" }}>
+          <div className='container_columna_2c_margin'>
+            <div className='container_fila_2c_margin'>
               <img src={`https://flagcdn.com/w160/${circuitos.isoPais}.png`} alt={circuitos.isoPais} style={{ width: "6vh", height: "4vh", objectFit:"contain" }} />
               <p style={{ fontSize: "1.5vh", color: "white", textAlign: "center", paddingLeft:"0.5vw" }}>{circuitos.ciudad}, {circuitos.pais}</p>
             </div>

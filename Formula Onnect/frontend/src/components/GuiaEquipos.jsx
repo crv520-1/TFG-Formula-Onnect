@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import "../styles/Containers.css";
 import { carga } from './animacionCargando';
 import { getImagenEquipo, getLivery } from './mapeoImagenes.js';
 
@@ -59,25 +60,25 @@ export const GuiaEquipos = () => {
     if (cargando) { return carga(); }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", maxHeight: "98vh", overflow: "auto" }}>
-        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
+    <div className="container_overflow">
+        <div className="container_fila">
             <button type='submit' onClick={handlePilotos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Pilotos</button>
             <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", marginLeft: "20vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Equipos</h2>
             <button type='submit' onClick={handleCircuitos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Circuitos</button>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", maxHeight: "100%", overflow: "auto" }}>
+        <div className="container_overflow_padding">
             {equipos.reduce((rows, equipo, index) => {
                 if (index % 4 === 0) rows.push([]);
                 rows[rows.length - 1].push(equipo);
                 return rows;
             }, []).map((row, rowIndex) => (
-                <div key={rowIndex} style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+                <div key={rowIndex} className="container_fila">
                     {row.map((equipo) => (
                         <button key={equipo.idEquipos} onClick={() => handleEquipo(equipo.idEquipos)} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "1vh", backgroundColor:"#2c2c2c", borderRadius:"1vh", width: "25vh", height: "25vh", border:"none" }}>
-                            <img src={getLivery(equipo.constructorId)} alt="Foto del equipo" style={{ width: "25vh", height: "25vh", borderRadius:"1vh", objectFit:"contain" }} />
-                            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center", paddingTop:"0.5vh" }}>
+                            <img src={getLivery(equipo.constructorId)} alt="Foto del equipo" style={{ width: "22vh", height: "25vh", borderRadius:"1vh", objectFit:"contain" }} />
+                            <div className="container_fila_paddingTop">
                                 <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{equipo.nombreEquipo}</p>
-                                <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+                                <div className="container_columna">
                                     <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} style={{ width: "5vh", height: "3vh", paddingLeft:"2vw", objectFit:"contain" }} />
                                     <img src={getImagenEquipo(equipo.constructorId)} alt="Foto del equipo" style={{ width: "5vh", height: "3vh", paddingLeft:"2vw", paddingTop:"0.25vh", objectFit:"contain" }} />
                                 </div>
