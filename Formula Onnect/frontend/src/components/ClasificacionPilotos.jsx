@@ -83,7 +83,7 @@ export const Clasificacion = () => {
     <div className='container_overflow'>
       <div className='container_fila'>
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center" }}>Pilotos</h2>
-        <button type='submit' onClick={handleEquipos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "35vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor:"#15151E", border: "none" }}>Equipos</button>
+        <button type='submit' onClick={handleEquipos} className='boton_fondo_15_v2'>Equipos</button>
       </div>
       <div className='container_fila'>
         {/* Seleccionable para elegir el año */}

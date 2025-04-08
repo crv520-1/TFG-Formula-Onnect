@@ -70,7 +70,7 @@ export const ClasificacionEquipos = () => {
   return (
     <div className='container_overflow'>
       <div className='container_fila'>
-        <button type='submit' onClick={handlePilotos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor:"#15151E", border: "none" }}>Pilotos</button>
+        <button type='submit' onClick={handlePilotos} className='boton_fondo_15_v3'>Pilotos</button>
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", marginLeft: "35vh" }}>Equipos</h2>
       </div> 
       <div className='container_fila'>

@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import { useMeGusta } from '../hooks/useMeGusta';
+import "../styles/Botones.css";
 import "../styles/Containers.css";
 import { carga } from './animacionCargando';
 
@@ -182,7 +183,7 @@ export const Inicio = () => {
             <div className="container_fila_padding">
               {publicacion.usuarioPublicador && (
                 <div className="container_fila_noJustify">
-                  <button style={{ border:"none", backgroundColor:"#2c2c2c", display: "flex", flexDirection: "row", alignItems: "center" }} onClick={() => handleVisitarPerfil(publicacion.usuarioPublicador.idUsuario)}>
+                  <button className="boton_fondo_2c_v2" onClick={() => handleVisitarPerfil(publicacion.usuarioPublicador.idUsuario)}>
                     <img src={publicacion.usuarioPublicador.fotoPerfil} alt="Perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
                     <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{publicacion.usuarioPublicador.nickName}</p>
                   </button>
@@ -191,12 +192,12 @@ export const Inicio = () => {
               <p style={{marginLeft:"2vw", fontSize:"1.5vh"}}>{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div className="container_auto">
                 <p style={{fontSize:"1.5vh"}}>{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
+                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} className="boton_fondo_2c"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
                 <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{publicacion.numeroComentarios}</p>
-                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} style={{ fontSize: "2vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", height:"3vh", border: "none", backgroundColor:"#2c2c2c" }}><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
+                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c"><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
             </div>
-            <button style={{margin:"1vh", fontSize:"2vh", backgroundColor:"#2c2c2c", border: "none", textAlign: "left", width: "100%"}} onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>
+            <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>
           </div>
         ))}
       </div>

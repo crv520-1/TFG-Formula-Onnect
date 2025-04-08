@@ -28,7 +28,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 3vh;
     border: none;
     background-color: #15151E;
 }
@@ -42,7 +41,24 @@
     height: 3vh;
     border: none;
     background-color: #2c2c2c;
-  }
+    margin-top: 1vh;
+}
+
+.boton_fondo_2c_v2 {
+    display: flex;
+    align-items: center;
+    justify-content: row;
+    border: none;
+    background-color: #2c2c2c;
+}
+
+.boton_fondo_2c_v3 {
+    font-size: 2vh;
+    text-align: left;
+    width: 100%;
+    border: none;
+    background-color: #2c2c2c;
+}
 
 .boton_seguir {
     font-size: 2vh;
