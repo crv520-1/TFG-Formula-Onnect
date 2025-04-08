@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
+import "../styles/Botones.css";
 import "../styles/Containers.css";
 import "../styles/PerfilDatos.css";
 import { carga } from "./animacionCargando.jsx";
@@ -139,16 +140,16 @@ export const Perfil = () => {
       />
       <div className="container_fila">
         <h2 className="textoDireccion">Datos</h2>
-        <button type='submit' onClick={handlePublicaciones} className="botonDireccion">Publicaciones</button>
+        <button type='submit' onClick={handlePublicaciones} className="boton_fondo_15_v2">Publicaciones</button>
       </div>
       <div className="container_fila_paddingTop">
-        <div className="espacioPiloto">
+        <div className="container_espacioPiloto">
           <img src={imagenPiloto} alt="Piloto" className="imagen"/>
         </div>
-        <div className="espacioCircuito">
+        <div className="container_espacioCircuito">
           <img src={imagenCircuito} alt="Circuito" className="imagenCircuito"/>
         </div>
-        <div className="espacioEquipo">
+        <div className="container_espacioEquipo">
           <img src={imagenEquipo} alt="Equipo" className="imagenEquipo"/>
         </div>
       </div>

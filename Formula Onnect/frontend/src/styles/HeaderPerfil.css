@@ -16,17 +16,6 @@
   margin: 0;
 }
 
-.boton {
-  margin-left: 1vh;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 3vh;
-  border: none;
-  background-color: #15151E;
-}
-
 .icono {
   width: 3vh;
   height: 3vh;
@@ -43,33 +32,4 @@
   align-items: center;
   font-size: 1.75vh;
   margin: 0;
-}
-
-.seguir {
-  font-size: 2vh;
-  height: 3vh;
-  margin-top: 1vh;
-  margin-left: 1vw;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  width: 15vw;
-  background-color: #C40000;
-}
-
-.dejar_seguir {
-  font-size: 2vh;
-  height: 3vh;
-  margin-top: 1vh;
-  margin-left: 1vw;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  width: 15vw;
-  background-color: white;
-  color: #C40000;
 }

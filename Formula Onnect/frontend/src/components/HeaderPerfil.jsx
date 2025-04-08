@@ -2,6 +2,7 @@ import { ArrowRightEndOnRectangleIcon, PencilSquareIcon } from "@heroicons/react
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
+import '../styles/Botones.css';
 import '../styles/Containers.css';
 import '../styles/HeaderPerfil.css';
 
@@ -50,8 +51,8 @@ const PerfilHeader = ({ usuario, numeroPublicaciones, seguidores, siguiendo, sig
             <p className="texto">{usuario.nombreCompleto}</p>
             {mismoUsuario ? (
               <div className="container_fila">
-                <button type='submit' onClick={handleEditarPerfil} className="boton"><PencilSquareIcon className="icono" /></button>
-                <button type='submit' onClick={handleCerrarSesion} className="boton"><ArrowRightEndOnRectangleIcon className="icono" /></button>
+                <button type='submit' onClick={handleEditarPerfil} className="boton_fondo_15"><PencilSquareIcon className="icono" /></button>
+                <button type='submit' onClick={handleCerrarSesion} className="boton_fondo_15"><ArrowRightEndOnRectangleIcon className="icono" /></button>
               </div>
             ) : null}
           </div>
@@ -71,9 +72,9 @@ const PerfilHeader = ({ usuario, numeroPublicaciones, seguidores, siguiendo, sig
           </div>
           {!mismoUsuario ? (
             !sigo ? (
-              <button type='submit' onClick={handleSeguir} className=".seguir"> Seguir </button>
+              <button type='submit' onClick={handleSeguir} className="boton_seguir"> Seguir </button>
             ) : (
-              <button type='submit' onClick={handleSeguir} className="dejar_seguir"> Dejar de seguir </button>
+              <button type='submit' onClick={handleSeguir} className="boton_dejar_seguir"> Dejar de seguir </button>
             )
           ) : null}
         </div>

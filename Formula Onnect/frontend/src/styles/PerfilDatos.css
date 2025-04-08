@@ -7,50 +7,6 @@
     cursor: pointer;
 }
 
-.botonDireccion {
-    font-size: 2vh;
-    margin-left: 35vh;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 3vh;
-    border: none;
-    background-color: #15151E;
-}
-
-.espacioPiloto {
-    width: 15vw;
-    height: 25vh;
-    border-radius: 25px;
-    background-color: #2c2c2c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.espacioEquipo {
-    width: 40vh;
-    height: 20vh;
-    margin-left: 15vh;
-    border-radius: 25px;
-    background-color: #2c2c2c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.espacioCircuito {
-    width: 50vh;
-    height: 35vh;
-    margin-left: 15vh;
-    border-radius: 25px;
-    background-color: #2c2c2c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .imagen {
     width: 100%;
     height: 100%;
