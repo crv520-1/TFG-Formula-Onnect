@@ -32,6 +32,31 @@
     background-color: #15151E;
 }
 
+.boton_fondo_15_v4 {
+    font-size: 2vh;
+    margin-left: 20vh;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+    border: none;
+    background-color: #15151E;
+}
+
+.boton_fondo_c4 {
+    font-size: 2vh;
+    margin-left: 20vh;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+    border: none;
+    background-color: #C40000;
+    width: 15vh;
+}
+
 .boton_fondo_2c {
     font-size: 2vh;
     text-align: center;

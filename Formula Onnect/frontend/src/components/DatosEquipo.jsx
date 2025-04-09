@@ -90,7 +90,7 @@ export const DatosEquipo = () => {
 
   return (
     <div className='container_overflow'>
-      <div className='container_fila'>
+      <div className='container_fila_paddingTop_v5'>
         <button type='submit' onClick={handlePilotos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Pilotos</button>
         <button type='submit' onClick={handleEquipos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#C40000", width:"15vh" }}>Equipos</button>
         <button type='submit' onClick={handleCircuitos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Circuitos</button>
@@ -101,7 +101,7 @@ export const DatosEquipo = () => {
           <img src={getImagenEquipo(equipo.constructorId)} alt="Foto del equipo" style={{ width: "8vh", height: "5vh", objectFit:"contain" }} />
           <p style={{ fontSize: "3vh", textAlign: "center", color: "white", paddingLeft:"1vw" }}>{equipo.nombreEquipo}</p>
         </div>
-        <div className='container_fila_marginBottom'>
+        <div className='container_columna_marginBottom_v2'>
           <img src={getLivery(equipo.constructorId)} alt="Imagen del equipo" style={{ width: "50vh", height: "30vh", objectFit:"contain"}} />
           <div className='container_fila_marginBottom'>
             <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} style={{ width: "6vh", height: "4vh" }} />
