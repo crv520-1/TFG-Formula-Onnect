@@ -225,16 +225,16 @@ export const PerfilPublicaciones = () => {
       </div>
       <div className="container_overflow_padding">
         {publicaciones.map((publicacion) => (
-          <div key={publicacion.idPublicaciones} className="publicacion">
-            <div className="publicacion-header">
+          <div key={publicacion.idPublicaciones} className="container_columna_2c_v3">
+            <div className="container_fila_padding_v2">
               <img src={usuario.fotoPerfil} className="profile-image"/>
               <p className="nickname">{usuario.nickName}</p>
               <p className="fecha">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
-              <div className="acciones">
+              <div className="container_auto_centro">
                 <p className="contador">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="boton_fondo_2c"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icon"/> : <NoMeGustaIcono className="icon"/>} </button>
+                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icon"/> : <NoMeGustaIcono className="icon"/>} </button>
                 <p className="nickname">{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c"><ChatBubbleOvalLeftIcon className="icon"/></button>
+                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"><ChatBubbleOvalLeftIcon className="icon"/></button>
               </div>
             </div>
             <button className="publicacion-texto" onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>

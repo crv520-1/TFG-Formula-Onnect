@@ -357,6 +357,17 @@
     width: 100%;
 }
 
+.container_fila_padding_v2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-left: 1vh;
+    padding-top: 1vh;
+    padding-right: 1vh;
+    width: 95%;
+}
+
 .container_fila_marginLeft {
     display: flex;
     flex-direction: row;
@@ -437,6 +448,12 @@
 .container_auto {
     display: flex;
     width: auto;
+    margin-left: auto;
+}
+
+.container_auto_centro {
+    display: flex;
+    align-items: center;
     margin-left: auto;
 }
 
