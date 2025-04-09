@@ -89,9 +89,9 @@ export const DatosPiloto = () => {
   return (
     <div className='container_columna_marginTop'>
       <div className='container_fila'>
-        <button type='submit' onClick={handlePilotos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#C40000", width:"15vh" }}>Pilotos</button>
-        <button type='submit' onClick={handleEquipos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Equipos</button>
-        <button type='submit' onClick={handleCircuitos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Circuitos</button>
+        <button type='submit' onClick={handlePilotos} className='boton_fondo_c4_v2'>Pilotos</button>
+        <button type='submit' onClick={handleEquipos} className='boton_fondo_15_v4'>Equipos</button>
+        <button type='submit' onClick={handleCircuitos} className='boton_fondo_15_v4'>Circuitos</button>
       </div>
       <br />
       <div className='container_columna_2c_v4'>

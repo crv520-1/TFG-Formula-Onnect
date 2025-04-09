@@ -57,6 +57,18 @@
     width: 15vh;
 }
 
+.boton_fondo_c4_v2 {
+    font-size: 2vh;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3vh;
+    border: none;
+    background-color: #C40000;
+    width: 15vh;
+}
+
 .boton_fondo_2c {
     font-size: 2vh;
     text-align: center;
