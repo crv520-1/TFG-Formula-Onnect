@@ -81,7 +81,7 @@ export const Resultados = () => {
       </div>
       <div className='container_overflow_padding'>
         {circuitos.map((circuito) => (
-          <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.circuitId, year, circuito.ronda)} style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C" }}>
+          <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.circuitId, year, circuito.ronda)} className='boton_fondo_2c_v10'>
             <div key={circuito.idCircuitos} className='container_fila'>
               <img src={getImagenCircuito(circuito.circuitId)} alt={circuito.circuitId} style={{ width: "45vh", height: "25vh" }} />
               <div className='container_columna_paddingLeft'>

@@ -200,7 +200,7 @@ export const ResultadoCircuito = () => {
   return (
     <div className='container_overflow'>
       <div className='container_fila_paddingBottomTop'>
-        <button type='submit' onClick={() => handleCalendario(year)} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#C40000", width:"15vh" }}>Calendario</button>
+        <button type='submit' onClick={() => handleCalendario(year)} className='boton_fondo_c4_v2'>Calendario</button>
       </div>
       <div className='container_overflow_padding'>
       <div className='container_columna_2c_v2'>
