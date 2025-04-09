@@ -66,7 +66,7 @@ export const IniciarSesion = () => {
 
     return (
         <div className="container">
-            <img src={logo} className="logo" />
+            <img src={logo} className="registro-logo" />
             <h1 className="title">¡Bienvenido de vuelta!</h1>
             <form className="form">
                 <div>

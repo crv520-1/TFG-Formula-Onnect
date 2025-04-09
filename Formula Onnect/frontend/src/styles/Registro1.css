@@ -18,3 +18,9 @@ html, body {
     flex-direction: column;
     padding-top: 10vh;
 }
+
+@media (max-width: 1400px) {
+    .registro-input {
+        height: 6vh;
+    }
+}

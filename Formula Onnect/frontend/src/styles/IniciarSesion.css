@@ -18,3 +18,9 @@ html, body {
     flex-direction: column;
     padding-top: 15vh;
 }
+
+@media (max-width: 1400px) {
+    .login-input {
+        height: 6vh;
+    }
+}
