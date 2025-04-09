@@ -64,8 +64,8 @@ export const GuiaPilotos = () => {
     <div className="container_overflow">
       <div className="container_fila">
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Pilotos</h2>
-        <button type='submit' onClick={handleEquipos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Equipos</button>
-        <button type='submit' onClick={handleCircuitos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Circuitos</button>
+        <button type='submit' onClick={handleEquipos} className="boton_fondo_15_v4">Equipos</button>
+        <button type='submit' onClick={handleCircuitos} className="boton_fondo_15_v4">Circuitos</button>
       </div>
       <div className="container_overflow_padding">
         {pilotos.reduce((rows, piloto, index) => {
@@ -75,7 +75,7 @@ export const GuiaPilotos = () => {
         }, []).map((row, rowIndex) => (
           <div key={rowIndex} className="container_fila">
             {row.map((piloto) => (
-              <button key={piloto.idPilotos} onClick={() => handlePiloto(piloto.idPilotos)} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "1vh", backgroundColor:"#2c2c2c", borderRadius:"1vh", width: "23vh", height: "23vh", border:"none" }}>
+              <button key={piloto.idPilotos} onClick={() => handlePiloto(piloto.idPilotos)} className="boton_fondo_2c_v9">
                 <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" style={{ width: "15vh", height: "15vh", objectFit:"contain" }} />
                 <div className="container_fila">
                   <div className="container_columna_izquierda">

@@ -62,8 +62,8 @@ export const GuiaCircuitos = () => {
   return (
     <div className="container_overflow">
       <div className="container_fila">
-        <button type='submit' onClick={handlePilotos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Pilotos</button>
-        <button type='submit' onClick={handleEquipos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Equipos</button>
+        <button type='submit' onClick={handlePilotos} className="boton_fondo_15_v3">Pilotos</button>
+        <button type='submit' onClick={handleEquipos} className="boton_fondo_15_v4">Equipos</button>
         <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", marginLeft: "20vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Circuitos</h2>
       </div>
       <div className="container_overflow_padding">

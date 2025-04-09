@@ -62,9 +62,9 @@ export const GuiaEquipos = () => {
   return (
     <div className="container_overflow">
         <div className="container_fila">
-            <button type='submit' onClick={handlePilotos} style={{ fontSize: "2vh", height:"3vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Pilotos</button>
+            <button type='submit' onClick={handlePilotos} className="boton_fondo_15_v3">Pilotos</button>
             <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", marginLeft: "20vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Equipos</h2>
-            <button type='submit' onClick={handleCircuitos} style={{ fontSize: "2vh", height:"3vh", marginLeft: "20vh", textAlign: "center", display: "flex", alignItems: "center", justifyContent: "center", border:"none", backgroundColor:"#15151E" }}>Circuitos</button>
+            <button type='submit' onClick={handleCircuitos} className="boton_fondo_15_v4">Circuitos</button>
         </div>
         <div className="container_overflow_padding">
             {equipos.reduce((rows, equipo, index) => {
@@ -74,7 +74,7 @@ export const GuiaEquipos = () => {
             }, []).map((row, rowIndex) => (
                 <div key={rowIndex} className="container_fila">
                     {row.map((equipo) => (
-                        <button key={equipo.idEquipos} onClick={() => handleEquipo(equipo.idEquipos)} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "1vh", backgroundColor:"#2c2c2c", borderRadius:"1vh", width: "25vh", height: "25vh", border:"none" }}>
+                        <button key={equipo.idEquipos} onClick={() => handleEquipo(equipo.idEquipos)} className="boton_fondo_2c_v8">
                             <img src={getLivery(equipo.constructorId)} alt="Foto del equipo" style={{ width: "22vh", height: "25vh", borderRadius:"1vh", objectFit:"contain" }} />
                             <div className="container_fila_paddingTop">
                                 <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{equipo.nombreEquipo}</p>
