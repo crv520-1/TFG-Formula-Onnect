@@ -140,7 +140,7 @@ export const EditarPerfil = () => {
   return (
     <div className="container_columna_paddingTop">
       <input style={{ fontSize: "4vh", textAlign: "center", borderRadius: "1.5vh", border: "2px solid white", backgroundColor: "#2c2c2c", color: "white" }} type="text" placeholder={usuario.nickName} value={nickName} onChange={(e) => setNickName(e.target.value)}/>
-      <div className="container_fila_paddingTop">
+      <div className="container_fila_paddingTop_v3">
         <img src={usuario.fotoPerfil} alt="Foto de perfil" style={{ width: "15vh", height: "15vh", borderRadius: "50%", color:"white", backgroundColor:"white" }} />
         <div className="container_columna">
             <input style={{ fontSize: "3vh", textAlign: "center", borderRadius: "1.5vh", border: "2px solid white", backgroundColor: "#2c2c2c", color: "white", marginLeft: "1vh", margin: "1vh" }} type="text" placeholder={usuario.nombreCompleto} value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
@@ -158,20 +158,23 @@ export const EditarPerfil = () => {
             </div>
         </div>
       </div>
-      <div className="container_fila_paddingTop_v2">
+      <div className="container_fila_paddingTop_v4">
         <div className="container_columna_completo">
+            <p style={{color: "white", fontSize: "2.5vh", textAlign: "center", margin: "0"}}> Piloto Favorito </p>
             <select style={{width: "20vw", background: "#2c2c2c", color: "white", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={pilotoSeleccionado} onChange={(e) => setPilotoSeleccionado(e.target.value)} >
                 {pilotos.map((piloto) => ( <option key={piloto.idPilotos} value={piloto.idPilotos}> {piloto.nombrePiloto} {piloto.apellidoPiloto} </option> ))}
             </select>
-            {pilotoSeleccionado && (<img src={getImagenPiloto(pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado))?.driverId)} alt="Piloto" style={{ width: "10vw", height: "25vh", paddingTop: "2vh", objectFit:"contain" }} />)}
+            {pilotoSeleccionado && (<img src={getImagenPiloto(pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado))?.driverId)} alt="Piloto" style={{ width: "100%", height: "75%", marginTop:"1vh", objectFit:"contain" }} />)}
         </div>
-        <div className="container_columna_completo">
-            <select style={{width: "20vw", background: "#2c2c2c", color: "white", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={circuitoSeleccionado} onChange={(e) => setCircuitoSeleccionado(e.target.value)} >
+        <div className="container_columna_completo_v3">
+            <p style={{color: "white", fontSize: "2.5vh", textAlign: "center", margin: "0"}}> Circuito Favorito </p>
+            <select style={{width: "100%", background: "#2c2c2c", color: "white", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={circuitoSeleccionado} onChange={(e) => setCircuitoSeleccionado(e.target.value)} >
                 {circuitos.map((circuito) => ( <option key={circuito.idCircuitos} value={circuito.idCircuitos}> {circuito.nombreCircuito} </option> ))}
             </select>
-            {circuitoSeleccionado && (<img src={getImagenCircuito(circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado))?.circuitId)} alt="Circuito" style={{ width: "20vw", height: "20vh", paddingTop: "2vh", objectFit:"contain" }} />)}
+            {circuitoSeleccionado && (<img src={getImagenCircuito(circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado))?.circuitId)} alt="Circuito" style={{ width: "110%", height: "100%", marginTop: "1vh", objectFit:"contain" }} />)}
         </div>
         <div className="container_columna_completo">
+            <p style={{color: "white", fontSize: "2.5vh", textAlign: "center", margin: "0"}}> Equipo Favorito </p>
             <select style={{width: "20vw", background: "#2c2c2c", color: "white", border: 0, paddingTop: "0.5vh", borderRadius: "1.5vh"}} value={equipoSeleccionado} onChange={(e) => setEquipoSeleccionado(e.target.value)} >
                 {equipos.map((equipo) => ( <option key={equipo.idEquipos} value={equipo.idEquipos}> {equipo.nombreEquipo} </option> ))}
             </select>

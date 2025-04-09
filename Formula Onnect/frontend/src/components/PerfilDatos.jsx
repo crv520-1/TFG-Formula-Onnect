@@ -143,13 +143,16 @@ export const Perfil = () => {
         <button type='submit' onClick={handlePublicaciones} className="boton_fondo_15_v2">Publicaciones</button>
       </div>
       <div className="container_fila_paddingTop">
-        <div className="container_espacioPiloto">
+        <div className="container_columna_completo">
+          <p style={{color: "white", fontSize: "2.5vh", textAlign: "center", margin: "0"}}> Piloto Favorito </p>
           <img src={imagenPiloto} alt="Piloto" className="imagen"/>
         </div>
-        <div className="container_espacioCircuito">
+        <div className="container_columna_completo_v3">
+          <p style={{color: "white", fontSize: "2.5vh", textAlign: "center", margin: "0"}}> Circuito Favorito </p>
           <img src={imagenCircuito} alt="Circuito" className="imagenCircuito"/>
         </div>
-        <div className="container_espacioEquipo">
+        <div className="container_columna_completo">
+          <p style={{color: "white", fontSize: "2.5vh", textAlign: "center", margin: "0"}}> Equipo Favorito </p>
           <img src={imagenEquipo} alt="Equipo" className="imagenEquipo"/>
         </div>
       </div>
