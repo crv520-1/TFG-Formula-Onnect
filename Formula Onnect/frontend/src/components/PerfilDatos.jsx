@@ -5,6 +5,7 @@ import { UsuarioContext } from "../context/UsuarioContext";
 import "../styles/Botones.css";
 import "../styles/Containers.css";
 import "../styles/PerfilDatos.css";
+import "../styles/Textos.css";
 import { carga } from "./animacionCargando.jsx";
 import HeaderPerfil from "./HeaderPerfil";
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
@@ -139,20 +140,20 @@ export const Perfil = () => {
         onSeguidoresChange={handleSeguidoresChange}
       />
       <div className="container_fila">
-        <h2 className="textoDireccion">Datos</h2>
+        <h2 className="titulo_c4_v2">Datos</h2>
         <button type='submit' onClick={handlePublicaciones} className="boton_fondo_15_v2">Publicaciones</button>
       </div>
       <div className="container_fila_paddingTop">
         <div className="container_columna_completo">
-          <p style={{color: "white", fontSize: "2.5vh", textAlign: "center", margin: "0"}}> Piloto Favorito </p>
+          <p className="datos_informativos"> Piloto Favorito </p>
           <img src={imagenPiloto} alt="Piloto" className="imagen"/>
         </div>
         <div className="container_columna_completo_v3">
-          <p style={{color: "white", fontSize: "2.5vh", textAlign: "center", margin: "0"}}> Circuito Favorito </p>
+          <p className="datos_informativos"> Circuito Favorito </p>
           <img src={imagenCircuito} alt="Circuito" className="imagenCircuito"/>
         </div>
         <div className="container_columna_completo">
-          <p style={{color: "white", fontSize: "2.5vh", textAlign: "center", margin: "0"}}> Equipo Favorito </p>
+          <p className="datos_informativos"> Equipo Favorito </p>
           <img src={imagenEquipo} alt="Equipo" className="imagenEquipo"/>
         </div>
       </div>

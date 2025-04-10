@@ -7,6 +7,7 @@ import { UsuarioContext } from "../context/UsuarioContext";
 import "../styles/Botones.css";
 import "../styles/Containers.css";
 import "../styles/PerfilPublicaciones.css";
+import "../styles/Textos.css";
 import HeaderPerfil from "./HeaderPerfil";
 import { carga } from "./animacionCargando";
 
@@ -220,7 +221,7 @@ export const PerfilPublicaciones = () => {
       <div className="container_columna">
         <div className="container_fila">
           <button type='submit' onClick={handleDatos} className="boton_fondo_15_v3">Datos</button>
-          <h2 className="section-title">Publicaciones</h2>
+          <h2 className="titulo_c4">Publicaciones</h2>
         </div>
       </div>
       <div className="container_overflow_padding">
@@ -228,16 +229,16 @@ export const PerfilPublicaciones = () => {
           <div key={publicacion.idPublicaciones} className="container_columna_2c_v3">
             <div className="container_fila_padding_v2">
               <img src={usuario.fotoPerfil} className="profile-image"/>
-              <p className="nickname">{usuario.nickName}</p>
-              <p className="fecha">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
+              <p className="datos">{usuario.nickName}</p>
+              <p className="datos">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div className="container_auto_centro">
-                <p className="contador">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
+                <p className="datos">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
                 <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icon"/> : <NoMeGustaIcono className="icon"/>} </button>
-                <p className="nickname">{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
+                <p className="datos">{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
                 <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"><ChatBubbleOvalLeftIcon className="icon"/></button>
               </div>
             </div>
-            <button className="publicacion-texto" onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>
+            <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>
           </div>
         ))}
       </div>
