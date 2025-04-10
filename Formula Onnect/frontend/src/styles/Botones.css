@@ -173,6 +173,23 @@
     background-color: #2c2c2c;
 }
 
+.boton_texto_ea {
+    border-radius: 1.5vh;
+    border-width: 3px;
+    margin-right: 10vw;
+    border-color: #EA1F22;
+    color: #EA1F22;
+    background-color: white;
+}
+
+.boton_fondo_ea {
+    border-radius: 1.5vh;
+    border-width: 3px;
+    border-color: white;
+    color: white;
+    background-color: #EA1F22;
+}
+
 .boton_seguir {
     font-size: 2vh;
     height: 3vh;
