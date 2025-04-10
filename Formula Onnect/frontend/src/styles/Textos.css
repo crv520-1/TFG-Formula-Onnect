@@ -28,3 +28,56 @@
     text-align: center;
     margin: 0;
 }
+
+/*SELECTS*/
+.select {
+    background-color: #2c2c2c;
+    border-radius: 2vh;
+    margin: 1vh;
+    padding: 1vh;
+    border: none;
+    color: white;
+    font-size: 1.5vh;
+    margin-bottom: 2vh;
+}
+
+/*SPAN*/
+.span {
+    color: white;
+    font-size: 3vh;
+    text-align: center;
+}
+
+.span_v1 {
+    color: white;
+    font-size: 2vh;
+    text-align: center;
+}
+
+.span_v2 {
+    color: white;
+    font-size: 2vh;
+    text-align: center;
+    padding-left: 0.25vw;
+    padding-top: 0.5vh;
+}
+
+.span_v3 {
+    color: white;
+    font-size: 1.75vh;
+    text-align: center;
+}
+
+.span_v3_bold {
+    color: white;
+    font-size: 1.75vh;
+    text-align: center;
+    font-weight: bold;
+}
+
+.span_v4 {
+    color: #aaa;
+    font-size: 1.5vh;
+    text-align: center;
+    padding-top: 1vh;
+}
