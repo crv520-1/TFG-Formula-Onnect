@@ -63,7 +63,7 @@ export const GuiaEquipos = () => {
     <div className="container_overflow">
         <div className="container_fila">
             <button type='submit' onClick={handlePilotos} className="boton_fondo_15_v3">Pilotos</button>
-            <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", marginLeft: "20vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Equipos</h2>
+            <h2 className="titulo_c4_v3">Equipos</h2>
             <button type='submit' onClick={handleCircuitos} className="boton_fondo_15_v4">Circuitos</button>
         </div>
         <div className="container_overflow_padding">
@@ -77,7 +77,7 @@ export const GuiaEquipos = () => {
                         <button key={equipo.idEquipos} onClick={() => handleEquipo(equipo.idEquipos)} className="boton_fondo_2c_v8">
                             <img src={getLivery(equipo.constructorId)} alt="Foto del equipo" style={{ width: "22vh", height: "25vh", borderRadius:"1vh", objectFit:"contain" }} />
                             <div className="container_fila_paddingTop">
-                                <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{equipo.nombreEquipo}</p>
+                                <p className="datos_v8">{equipo.nombreEquipo}</p>
                                 <div className="container_columna">
                                     <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} style={{ width: "5vh", height: "3vh", paddingLeft:"2vw", objectFit:"contain" }} />
                                     <img src={getImagenEquipo(equipo.constructorId)} alt="Foto del equipo" style={{ width: "5vh", height: "3vh", paddingLeft:"2vw", paddingTop:"0.25vh", objectFit:"contain" }} />

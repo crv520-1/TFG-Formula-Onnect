@@ -64,7 +64,7 @@ export const GuiaCircuitos = () => {
       <div className="container_fila">
         <button type='submit' onClick={handlePilotos} className="boton_fondo_15_v3">Pilotos</button>
         <button type='submit' onClick={handleEquipos} className="boton_fondo_15_v4">Equipos</button>
-        <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", marginLeft: "20vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Circuitos</h2>
+        <h2 className="titulo_c4_v3">Circuitos</h2>
       </div>
       <div className="container_overflow_padding">
         {circuitos.reduce((rows, circuito, index) => {
@@ -75,13 +75,11 @@ export const GuiaCircuitos = () => {
           <div key={rowIndex} className="container_fila">
             {row.map((circuito) => (
               <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.idCircuitos)} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "1vh", backgroundColor:"#2c2c2c", borderRadius:"1vh", width: "35vh", height: "30vh", border:"none" }}>
-                <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{circuito.nombreCircuito}</p>
+                <p className="datos_v8">{circuito.nombreCircuito}</p>
                 <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del circuito" style={{ width: "30vh", height: "25vh", paddingTop:"0.5vh", objectFit:"contain" }} />
                 <div className="container_fila_paddingTop">
                     <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} style={{ width: "5vh", height: "3vh", objectFit:"contain" }} />
-                    <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh", paddingLeft:"0.5vw" }}>{circuito.ciudad}</p>
-                    <p style={{ fontSize: "2vh", margin: "0vh" }}>,</p>
-                    <p style={{ fontSize: "2vh", margin: "0vh", paddingLeft:"0.25vw" }}>{circuito.pais}</p>
+                    <p className="datos_v9">{circuito.ciudad}, {circuito.pais}</p>
                 </div>
               </button>
             ))}

@@ -18,6 +18,16 @@
     cursor: pointer;
 }
 
+.titulo_c4_v3 {
+    background-color: #C40000;
+    border-radius: 0.5vh;
+    width: 15vh;
+    font-size: 2vh;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 20vh;
+}
+
 .titulo_f {
     color: #FFFFFF;
     margin-left: 1vw;
@@ -63,6 +73,17 @@
     font-size: 3vh;
     text-align: center;
     color: white;
+}
+
+.datos_v8 {
+    font-size: 2vh;
+    margin: 0;
+}
+
+.datos_v9 {
+    font-size: 2vh;
+    margin: 0;
+    padding-left: 0.5vw;
 }
 
 .datos_centrados {

@@ -63,7 +63,7 @@ export const GuiaPilotos = () => {
   return (
     <div className="container_overflow">
       <div className="container_fila">
-        <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", cursor:"pointer" }}>Pilotos</h2>
+        <h2 className="titulo_c4_v2">Pilotos</h2>
         <button type='submit' onClick={handleEquipos} className="boton_fondo_15_v4">Equipos</button>
         <button type='submit' onClick={handleCircuitos} className="boton_fondo_15_v4">Circuitos</button>
       </div>
@@ -79,8 +79,8 @@ export const GuiaPilotos = () => {
                 <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" style={{ width: "15vh", height: "15vh", objectFit:"contain" }} />
                 <div className="container_fila">
                   <div className="container_columna_izquierda">
-                    <p style={{ fontSize: "2vh", margin: "0vh", marginTop:"0vh" }}>{piloto.nombrePiloto}</p>
-                    <p style={{ fontSize: "2vh", margin: "0vh" }}>{piloto.apellidoPiloto}</p>
+                    <p className="datos_v8">{piloto.nombrePiloto}</p>
+                    <p className="datos_v8">{piloto.apellidoPiloto}</p>
                   </div>
                   <img src={`https://flagcdn.com/w160/${piloto.isoNacPil}.png`} alt={piloto.isoNacPil} style={{ width: "6vh", height: "4vh", objectFit:"contain" }} />
                 </div>
