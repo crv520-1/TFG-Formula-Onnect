@@ -71,11 +71,11 @@ export const Resultados = () => {
   return (
     <div className='container_overflow'>
       <div className='container_fila'>
-        <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center" }}>Calendario</h2>
+        <h2 className='titulo_c4_v2'>Calendario</h2>
       </div>
       <div className='container_fila'>
         {/* Seleccionable para elegir el año */}
-        <select style={{ borderRadius: "2vh", margin: "1vh", padding: "1vh", border:"none", backgroundColor:"#2C2C2C", color:"white", fontSize:"1.25vh" }} onChange={(e) => setYear(e.target.value)} value={year}>
+        <select className='select' onChange={(e) => setYear(e.target.value)} value={year}>
           {years.map(year => ( <option key={year} value={year}>{year}</option> ))}
         </select>
       </div>
@@ -85,12 +85,12 @@ export const Resultados = () => {
             <div key={circuito.idCircuitos} className='container_fila'>
               <img src={getImagenCircuito(circuito.circuitId)} alt={circuito.circuitId} style={{ width: "45vh", height: "25vh" }} />
               <div className='container_columna_paddingLeft'>
-                <h3 style={{ fontSize: "2.5vh", textAlign: "center" }}>{circuito.nombreCircuito}</h3>
+                <h3 className='datos_v7'>{circuito.nombreCircuito}</h3>
                 <div className='container_fila'>
                   <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} style={{ width: "6vh", height: "4vh" }} />
-                  <p style={{ fontSize: "1.5vh", textAlign: "center", paddingLeft:"0.5vw" }}>{circuito.ciudad}, {circuito.pais}</p>
+                  <p className='datos_v6'>{circuito.ciudad}, {circuito.pais}</p>
                 </div>
-                <p style={{ fontSize: "1.5vh", textAlign: "center", paddingLeft:"0.5vw" }}>{circuito.fechaInicioFinDeSemana} - {circuito.fechaCarrera}</p>
+                <p className='datos_v6'>{circuito.fechaInicioFinDeSemana} - {circuito.fechaCarrera}</p>
               </div>
             </div>
           </button>

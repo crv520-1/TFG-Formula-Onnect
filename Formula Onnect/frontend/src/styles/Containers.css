@@ -446,6 +446,14 @@
     padding: 2px;
 }
 
+.container_minWidth_v2 {
+    text-align: center;
+    min-width: 25px;
+    background-color: #C40000;
+    border-radius: 50%;
+    padding: 2px;
+}
+
 .container_auto {
     display: flex;
     width: auto;

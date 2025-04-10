@@ -175,7 +175,7 @@ export const Inicio = () => {
   return (
     <div className="container_overflow">
       <div className="container_fila_paddingBottom">
-        <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center" }}>Publicaciones</h2>
+        <h2 className="titulo_c4_v2">Publicaciones</h2>
       </div>
       <div className="container_overflow_padding">
         {publicacionesConUsuarios.map((publicacion) => (
@@ -185,15 +185,15 @@ export const Inicio = () => {
                 <div className="container_fila_noJustify">
                   <button className="boton_fondo_2c_v2" onClick={() => handleVisitarPerfil(publicacion.usuarioPublicador.idUsuario)}>
                     <img src={publicacion.usuarioPublicador.fotoPerfil} alt="Perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
-                    <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{publicacion.usuarioPublicador.nickName}</p>
+                    <p className="datos">{publicacion.usuarioPublicador.nickName}</p>
                   </button>
                 </div>
               )}
-              <p style={{marginLeft:"2vw", fontSize:"1.5vh"}}>{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
+              <p className="datos_v2">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div className="container_auto">
-                <p style={{fontSize:"1.5vh"}}>{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
+                <p className="datos">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
                 <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} className="boton_fondo_2c"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
-                <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{publicacion.numeroComentarios}</p>
+                <p className="datos">{publicacion.numeroComentarios}</p>
                 <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c"><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
             </div>

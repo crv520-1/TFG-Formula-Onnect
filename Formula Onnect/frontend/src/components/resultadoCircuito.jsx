@@ -120,15 +120,15 @@ export const ResultadoCircuito = () => {
     if (horario.hasSprint) {
       return (
         <div>
-          <p style={{ fontSize: "1.5vh", color: "white", textAlign: "center" }}>Clasificación Sprint: {horario.diaFP2}, {horario.horaFP2}</p>
-          <p style={{ fontSize: "1.5vh", color: "white", textAlign: "center" }}>Carrera Sprint: {horario.diaFP3}, {horario.horaFP3}</p>
+          <p className='datos_v10'>Clasificación Sprint: {horario.diaFP2}, {horario.horaFP2}</p>
+          <p className='datos_v10'>Carrera Sprint: {horario.diaFP3}, {horario.horaFP3}</p>
         </div>
       );
     } else {
       return (
         <div>
-          <p style={{ fontSize: "1.5vh", color: "white", textAlign: "center" }}>FP2: {horario.diaFP2}, {horario.horaFP2}</p>
-          <p style={{ fontSize: "1.5vh", color: "white", textAlign: "center" }}>FP3: {horario.diaFP3}, {horario.horaFP3}</p>
+          <p className='datos_v10'>FP2: {horario.diaFP2}, {horario.horaFP2}</p>
+          <p className='datos_v10'>FP3: {horario.diaFP3}, {horario.horaFP3}</p>
         </div>
       )
     }
@@ -138,12 +138,12 @@ export const ResultadoCircuito = () => {
     if (horariosGranPremio.hasSprint === false) {
       if (!disputada) {
         return (
-          <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>No se ha disputado aún la carrera</p>
+          <p className='datos_v11'>No se ha disputado aún la carrera</p>
         )
       } else {
         return (
           <div className='container_columna_2c'>
-            <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>Resultados carrera</p>
+            <p className='datos_v11'>Resultados carrera</p>
             {frontendResultados(posiciones)}
           </div>
         )
@@ -151,22 +151,22 @@ export const ResultadoCircuito = () => {
     } else {
       if (!sprintDisputada && !disputada) {
         return (
-          <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>No se ha disputado aún el Gran Premio</p>
+          <p className='datos_v11'>No se ha disputado aún el Gran Premio</p>
         )
       } else if (sprintDisputada && !disputada) {
         return (
           <div className='container_columna_2c'>
-            <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>Resultados Sprint</p>
+            <p className='datos_v11'>Resultados Sprint</p>
             {frontendResultados(sprintPosiciones)}
-            <p style={{ fontSize: "2vh", color: "white", textAlign: "center", paddingTop:"3vh" }}>No se ha disputado aún la carrera</p>
+            <p className='datos_v12'>No se ha disputado aún la carrera</p>
           </div>
         )
       } else if (sprintDisputada && disputada) {
         return (
           <div className='container_columna_2c'>
-            <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>Resultados Sprint</p>
+            <p className='datos_v11'>Resultados Sprint</p>
             {frontendResultados(sprintPosiciones)}
-            <p style={{ fontSize: "2vh", color: "white", textAlign: "center" }}>Resultados carrera</p>
+            <p className='datos_v11'>Resultados carrera</p>
             {frontendResultados(posiciones)}
           </div>
         )
@@ -181,13 +181,13 @@ export const ResultadoCircuito = () => {
           const isEven = index % 2 !== 0;
           return (
             <div key={index} style={{ display: "flex", flexDirection: "row", alignItems: "center", backgroundColor: "#1a1a1a", padding: "5px 10px", borderRadius: "0.5vh", marginBottom: "1vh", paddingLeft: "0.5vh", transform: isEven ? "translateY(1.5vh)" : "none" }}>
-              <div style={{ minWidth: "25px", textAlign: "center", backgroundColor: "#C40000", borderRadius: "50%", padding: "2px" }}>
-                <span style={{ fontSize: "1.5vh", color: "white", fontWeight: "bold" }}>{posicion.position}</span>
+              <div className='container_minWidth_v2'>
+                <span className='span_v3_bold_v2'>{posicion.position}</span>
               </div>
-              <span style={{ fontSize: "1.5vh", color: "white", margin: "0 10px" }}>{posicion.driver}</span>
+              <span className='span_v5'>{posicion.driver}</span>
               <img src={getImagenEquipo(posicion.constructorId)} alt={posicion.constructorId} style={{ width: "5vh", height: "5vh", objectFit:"contain" }}/>
-              <span style={{ fontSize: "1.4vh", color: "#aaa", marginLeft: "10px" }}>{posicion.status}</span>
-              <span style={{ fontSize: "1.4vh", color: "#ffcc00", marginLeft: "10px" }}>{`+${posicion.puntos}`}</span>
+              <span className='span_v6'>{posicion.status}</span>
+              <span className='span_v7'>{`+${posicion.puntos}`}</span>
             </div>
           );
         })}
@@ -204,20 +204,20 @@ export const ResultadoCircuito = () => {
       </div>
       <div className='container_overflow_padding'>
       <div className='container_columna_2c_v2'>
-        <p style={{ fontSize: "2vh", color: "white" }}>{circuitos.nombreCircuito}</p>
+        <p className='datos_v7'>{circuitos.nombreCircuito}</p>
         <div className='container_fila_2c_margin'>
           <img src={getImagenCircuito(circuitos.circuitId)} alt={circuitos.circuitId} style={{ width: "50vh", height: "35vh", objectFit:"contain" }}/>
           <div className='container_columna_2c_margin'>
             <div className='container_fila_2c_margin'>
               <img src={`https://flagcdn.com/w160/${circuitos.isoPais}.png`} alt={circuitos.isoPais} style={{ width: "6vh", height: "4vh", objectFit:"contain" }} />
-              <p style={{ fontSize: "1.5vh", color: "white", textAlign: "center", paddingLeft:"0.5vw" }}>{circuitos.ciudad}, {circuitos.pais}</p>
+              <p className='datos_v6'>{circuitos.ciudad}, {circuitos.pais}</p>
             </div>
             {horariosGranPremio && (
               <div>
-                <p style={{ fontSize: "1.5vh", color: "white", textAlign: "center" }}>FP1: {horariosGranPremio.diaFP1}, {horariosGranPremio.horaFP1}</p>
+                <p className='datos_v10'>FP1: {horariosGranPremio.diaFP1}, {horariosGranPremio.horaFP1}</p>
                 {mostrarCasoSprint(horariosGranPremio)}
-                <p style={{ fontSize: "1.5vh", color: "white", textAlign: "center" }}>Clasificación: {horariosGranPremio.diaClasificacion}, {horariosGranPremio.horaClasificacion}</p>
-                <p style={{ fontSize: "1.5vh", color: "white", textAlign: "center" }}>Carrera: {horariosGranPremio.diaCarrera}, {horariosGranPremio.horaCarrera}</p>
+                <p className='datos_v10'>Clasificación: {horariosGranPremio.diaClasificacion}, {horariosGranPremio.horaClasificacion}</p>
+                <p className='datos_v10'>Carrera: {horariosGranPremio.diaCarrera}, {horariosGranPremio.horaCarrera}</p>
               </div>
             )}
           </div>  
