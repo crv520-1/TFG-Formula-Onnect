@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import { useMeGusta } from '../hooks/useMeGusta';
 import "../styles/Containers.css";
+import "../styles/Textos.css";
 import { carga } from './animacionCargando';
 
 export const Comentarios = () => {
@@ -328,7 +329,7 @@ export const Comentarios = () => {
     <div className="container_overflow">
       <div className="container_fila_paddingBottom">
         <button type='submit' onClick={() => handleInicio(usuarioPublicador.idUsuario)} className="boton_fondo_15_v3">Publicaciones</button>
-        <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center", marginLeft:"20vw" }}>Comentarios</h2>
+        <h2 className="titulo_c4">Comentarios</h2>
       </div>
       <div className="container_columna_2c_v5">
         <div className="container_fila_padding">
@@ -336,31 +337,31 @@ export const Comentarios = () => {
             <div className="container_fila_noJustify_v2">
               <button onClick={() => {handleVisualizarPerfil(usuarioPublicador.idUsuario)}} className="boton_fondo_2c_v2">
                 <img src={usuarioPublicador.fotoPerfil} alt="Foto de perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
-                <h3 style={{ color: "#FFFFFF", marginLeft: "1vw", fontSize: "1.5vh" }}>{usuarioPublicador.nickName}</h3>
+                <h3 className="titulo_f">{usuarioPublicador.nickName}</h3>
               </button>
-              <p style={{marginLeft:"2vw", fontSize:"1.5vh"}}>{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
+              <p className="datos_v2">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               {meGustasPublicacion && (
               <div className="container_marginLeft">
-                <p style={{fontSize:"1.5vh"}}>{meGustasPublicacion[0]?.contador || 0}</p>
+                <p className="datos">{meGustasPublicacion[0]?.contador || 0}</p>
                 <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {userLikePublicacion ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
-                <p style={{marginLeft:"1vw", fontSize:"1.5vh"}}>{numeroComentarios.contador}</p>
+                <p className="datos">{numeroComentarios.contador}</p>
                 <button type='button' className="boton_fondo_2c_v4"><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
               </div>
               )}
             </div>
           )}
         </div>
-        <p style={{margin:"1vh", fontSize:"2vh", backgroundColor:"#2c2c2c", border: "none", textAlign: "left", width: "95%"}}>{publicacion.texto}</p>
+        <p className="datos_2c">{publicacion.texto}</p>
         {/*Línea separadora*/}
         <hr style={{width:"99%", backgroundColor:"#FFFFFF", opacity:"0.5"}} />
         <div className="container_2c">
           <div className="container_fila_noJustify">
             <img src={usuarioComentador.fotoPerfil} alt="Foto de perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
-            <h3 style={{ color: "#FFFFFF", marginLeft: "1vw", fontSize: "1.5vh" }}>{usuarioComentador.nickName}</h3>
+            <h3 className="titulo_f">{usuarioComentador.nickName}</h3>
           </div>
           <div className="container_columna_v2">
             <div className="container_fila_noJustify_v2">
-              <textarea style={{ width: "45vw", height: "5vh", backgroundColor: "#2c2c2c", color: "white", fontSize: "2vh", borderRadius: "1vh", marginTop:"1vh", resize:"none" }} placeholder="Comenta tu opinión..." maxLength={450} onChange={(e) => setTexto(e.target.value)} value={texto}></textarea>
+              <textarea className="textarea" placeholder="Comenta tu opinión..." maxLength={450} onChange={(e) => setTexto(e.target.value)} value={texto}></textarea>
               <button type='submit' onClick={handlePublicar} className="boton_fondo_2c_v5"><PaperAirplaneIcon style={{ width: "3vh", height: "3vh", color:"white" }} /></button>
             </div>
             <p style={{ color:colorContador, fontSize: "1.5vh", transition: "color 0.5s" }}> {texto.length}/{maxCaracteres} caracteres </p>
@@ -376,15 +377,15 @@ export const Comentarios = () => {
                 {comentario.usuarioComentador && (
                   <button onClick={() => {handleVisualizarPerfil(comentario.usuarioComentador.idUsuario)}} className="boton_fondo_2c_v6">
                     <img src={comentario.usuarioComentador.fotoPerfil} alt="Foto de perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
-                    <h3 style={{ color: "#FFFFFF", marginLeft: "1vw", fontSize: "1.5vh" }}>{comentario.usuarioComentador.nickName}</h3>
+                    <h3 className="titulo_f">{comentario.usuarioComentador.nickName}</h3>
                   </button>
                 )}
                 <div className="container_gap">
-                  <p style={{fontSize:"1.5vh"}}>{comentario.meGustaComentario}</p>
+                  <p className="datos">{comentario.meGustaComentario}</p>
                   <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} className="boton_fondo_2c_v4"> {userLikesComentarios[comentario.idComentarios] ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
                 </div>
               </div>
-              <p style={{margin:"1vh", fontSize:"1.75vh", backgroundColor:"#2c2c2c", border: "none", textAlign: "left", width: "95%"}}>{comentario.text}</p>
+              <p className="datos_2c">{comentario.text}</p>
             </div>
           </div> 
         ))}
