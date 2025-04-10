@@ -99,13 +99,13 @@ export const DatosEquipo = () => {
       <div className='container_overflow_border'>
         <div className='container_fila_heightAuto'>
           <img src={getImagenEquipo(equipo.constructorId)} alt="Foto del equipo" style={{ width: "8vh", height: "5vh", objectFit:"contain" }} />
-          <p style={{ fontSize: "3vh", textAlign: "center", color: "white", paddingLeft:"1vw" }}>{equipo.nombreEquipo}</p>
+          <p className='datos_v5'>{equipo.nombreEquipo}</p>
         </div>
         <div className='container_columna_marginBottom_v2'>
           <img src={getLivery(equipo.constructorId)} alt="Imagen del equipo" style={{ width: "50vh", height: "30vh", objectFit:"contain"}} />
           <div className='container_fila_marginBottom'>
             <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} style={{ width: "6vh", height: "4vh" }} />
-            <p style={{ fontSize: "2vh", textAlign: "center", color: "white", paddingLeft:"0.5vw" }}>{equipo.nacionalidadEquipo}</p>
+            <p className='datos_v6'>{equipo.nacionalidadEquipo}</p>
           </div>
         </div>
         <div className='container_columna_marginBottom'>
@@ -113,52 +113,52 @@ export const DatosEquipo = () => {
             <div className='container_columna_blanca'>
               <div className='container_fila_paddingBottom'>
                 <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Fundadores:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.founders}</p>
+                  <p className='datos_centrados'>Fundadores:</p>
+                  <p className='datos_centrados'>{equipoData.founders}</p>
                 </div>
                 <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Primera carrera:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.firstRace}</p>
+                  <p className='datos_centrados'>Primera carrera:</p>
+                  <p className='datos_centrados'>{equipoData.firstRace}</p>
                 </div>
                 <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Última carrera:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.lastRace}</p>
+                  <p className='datos_centrados'>Última carrera:</p>
+                  <p className='datos_centrados'>{equipoData.lastRace}</p>
                 </div>
                 <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Carreras terminadas:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.racesFinished}</p>
-                </div>
-              </div>
-              <div className='container_fila_paddingBottom'>
-                <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Mundiales de Constructores:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.constructorChampionships}</p>
-                </div>
-                <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Mundiales de Pilotos:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.driverChampionships}</p>
-                </div>
-                <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Victorias:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.wins}</p>
-                </div>
-                <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Puntos totales:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.points}</p>
+                  <p className='datos_centrados'>Carreras terminadas:</p>
+                  <p className='datos_centrados'>{equipoData.racesFinished}</p>
                 </div>
               </div>
               <div className='container_fila_paddingBottom'>
                 <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Poles:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.poles}</p>
+                  <p className='datos_centrados'>Mundiales de Constructores:</p>
+                  <p className='datos_centrados'>{equipoData.constructorChampionships}</p>
                 </div>
                 <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Podios:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.podiums}</p>
+                  <p className='datos_centrados'>Mundiales de Pilotos:</p>
+                  <p className='datos_centrados'>{equipoData.driverChampionships}</p>
                 </div>
                 <div className='container_columna_datos'>
-                  <p style={{ textAlign: "center" }}>Vueltas rápidas:</p>
-                  <p style={{ textAlign: "center" }}>{equipoData.fastestLaps}</p>
+                  <p className='datos_centrados'>Victorias:</p>
+                  <p className='datos_centrados'>{equipoData.wins}</p>
+                </div>
+                <div className='container_columna_datos'>
+                  <p className='datos_centrados'>Puntos totales:</p>
+                  <p className='datos_centrados'>{equipoData.points}</p>
+                </div>
+              </div>
+              <div className='container_fila_paddingBottom'>
+                <div className='container_columna_datos'>
+                  <p className='datos_centrados'>Poles:</p>
+                  <p className='datos_centrados'>{equipoData.poles}</p>
+                </div>
+                <div className='container_columna_datos'>
+                  <p className='datos_centrados'>Podios:</p>
+                  <p className='datos_centrados'>{equipoData.podiums}</p>
+                </div>
+                <div className='container_columna_datos'>
+                  <p className='datos_centrados'>Vueltas rápidas:</p>
+                  <p className='datos_centrados'>{equipoData.fastestLaps}</p>
                 </div>
               </div>
             </div>

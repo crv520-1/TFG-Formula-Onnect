@@ -96,15 +96,14 @@ export const DatosPiloto = () => {
       <br />
       <div className='container_columna_2c_v4'>
         <div className='container_fila_2c'>
-          <p style={{ fontSize: "3vh", textAlign: "center", color: "white" }}>{pilotos.nombrePiloto}</p>
-          <p style={{ fontSize: "3vh", textAlign: "center", color: "white", paddingLeft:"0.5vw" }}>{pilotos.apellidoPiloto}</p>
+          <p className='datos_v7'>{pilotos.nombrePiloto} {pilotos.apellidoPiloto}</p>
         </div>
         <div className='container_fila_marginBottom'>
           <div className='container_columna_marginBottom_v2'>
             <img src={getImagenPiloto(pilotos.driverId)} alt="Imagen del piloto" style={{ width: "30vh", height: "30vh", objectFit:"contain"}} />
-            <div className='container_columna_marginBottom_v2'>
+            <div className='container_fila_marginBottom'>
               <img src={`https://flagcdn.com/w160/${pilotos.isoNacPil}.png`} alt={pilotos.isoNacPil} style={{ width: "6vh", height: "4vh" }} />
-              <p style={{ fontSize: "2vh", textAlign: "center", color: "white", paddingLeft:"0.5vw" }}>{pilotos.nacionalidadPiloto}</p>
+              <p className='datos_v6'>{pilotos.nacionalidadPiloto}</p>
             </div>
           </div>
           <div className='container_columna_paddingLeft_v2'>
@@ -112,66 +111,66 @@ export const DatosPiloto = () => {
               <div className='container_columna_blanca'>
                 <div className='container_fila_paddingBottom'>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Fecha de nacimiento:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.birthDate}</p>
+                    <p className='datos_centrados'>Fecha de nacimiento:</p>
+                    <p className='datos_centrados'>{driverData.birthDate}</p>
                   </div>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Lugar de nacimiento:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.birthPlace}</p>
+                    <p className='datos_centrados'>Lugar de nacimiento:</p>
+                    <p className='datos_centrados'>{driverData.birthPlace}</p>
                   </div>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Fecha de fallecimiento:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.deathDate}</p>
+                    <p className='datos_centrados'>Fecha de fallecimiento:</p>
+                    <p className='datos_centrados'>{driverData.deathDate}</p>
                   </div>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Lugar de fallecimiento:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.deathPlace}</p>
-                  </div>
-                </div>
-                <div className='container_fila_paddingBottom'>
-                  <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Primera carrera:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.firstRace}</p>
-                  </div>
-                  <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Primera Victoria:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.firstWin}</p>
-                  </div>
-                  <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Última carrera:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.lastRace}</p>
-                  </div>
-                  <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Carreras terminadas:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.racesFinished}</p>
+                    <p className='datos_centrados'>Lugar de fallecimiento:</p>
+                    <p className='datos_centrados'>{driverData.deathPlace}</p>
                   </div>
                 </div>
                 <div className='container_fila_paddingBottom'>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Victorias:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.wins}</p>
+                    <p className='datos_centrados'>Primera carrera:</p>
+                    <p className='datos_centrados'>{driverData.firstRace}</p>
                   </div>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Poles:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.poles}</p>
+                    <p className='datos_centrados'>Primera Victoria:</p>
+                    <p className='datos_centrados'>{driverData.firstWin}</p>
                   </div>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Vueltas rápidas:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.fastestLaps}</p>
+                    <p className='datos_centrados'>Última carrera:</p>
+                    <p className='datos_centrados'>{driverData.lastRace}</p>
                   </div>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Podios:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.podiums}</p>
+                    <p className='datos_centrados'>Carreras terminadas:</p>
+                    <p className='datos_centrados'>{driverData.racesFinished}</p>
                   </div>
                 </div>
                 <div className='container_fila_paddingBottom'>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Mundiales:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.championships}</p>
+                    <p className='datos_centrados'>Victorias:</p>
+                    <p className='datos_centrados'>{driverData.wins}</p>
                   </div>
                   <div className='container_columna_datos_v2'>
-                    <p style={{ textAlign: "center" }}>Puntos totales:</p>
-                    <p style={{ textAlign: "center" }}>{driverData.points}</p>
+                    <p className='datos_centrados'>Poles:</p>
+                    <p className='datos_centrados'>{driverData.poles}</p>
+                  </div>
+                  <div className='container_columna_datos_v2'>
+                    <p className='datos_centrados'>Vueltas rápidas:</p>
+                    <p className='datos_centrados'>{driverData.fastestLaps}</p>
+                  </div>
+                  <div className='container_columna_datos_v2'>
+                    <p className='datos_centrados'>Podios:</p>
+                    <p className='datos_centrados'>{driverData.podiums}</p>
+                  </div>
+                </div>
+                <div className='container_fila_paddingBottom'>
+                  <div className='container_columna_datos_v2'>
+                    <p className='datos_centrados'>Mundiales:</p>
+                    <p className='datos_centrados'>{driverData.championships}</p>
+                  </div>
+                  <div className='container_columna_datos_v2'>
+                    <p className='datos_centrados'>Puntos totales:</p>
+                    <p className='datos_centrados'>{driverData.points}</p>
                   </div>
                 </div>
               </div>

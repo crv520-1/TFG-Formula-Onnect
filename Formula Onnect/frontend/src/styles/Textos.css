@@ -45,6 +45,30 @@
     color: white;
 }
 
+.datos_v5 {
+    font-size: 3vh;
+    text-align: center;
+    padding-left: 1vw;
+    color: white;
+}
+
+.datos_v6 {
+    font-size: 2vh;
+    text-align: center;
+    padding-left: 0.5vw;
+    color: white;
+}
+
+.datos_v7 {
+    font-size: 3vh;
+    text-align: center;
+    color: white;
+}
+
+.datos_centrados {
+    text-align: center;
+}
+
 .datos_informativos {
     color: white;
     font-size: 2.5vh;
