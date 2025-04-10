@@ -73,18 +73,18 @@ export const Crear = () => {
 
   return (
     <div className="container_columna">
-      <h2 style={{ backgroundColor: "#C40000", borderRadius:"0.5vh", width: "15vh", fontSize:"2vh", textAlign: "center" }}>Publicaciones</h2>
+      <h2 className="titulo_c4_v2">Publicaciones</h2>
       <br />
       <div className="container_columna_completo_v2">
         <div className="container_fila_spaceBetween">
           <button type='submit' onClick={handleCancelar} className="boton_fondo_2c_v5"><XCircleIcon style={{ width: "3vh", height: "3vh", color:"white" }} /></button>
           <div className="container_flexCenter">
             <img src={usuario.fotoPerfil} style={{ width: "5vh", height: "5vh", borderRadius: "50%", backgroundColor:"white" }} />
-            <p style={{ color:"white", marginLeft:"2vw", fontSize:"2vh" }}> {usuario.nickName} </p>
+            <p className="datos_v4"> {usuario.nickName} </p>
           </div>
           <button type='submit' onClick={handlePublicar} className="boton_fondo_2c_v5"><PaperAirplaneIcon style={{ width: "3vh", height: "3vh", color:"white" }} /></button>
         </div>
-        <textarea style={{ width: "65vh", height: "100vh", backgroundColor: "#2c2c2c", color: "white", fontSize: "2vh", borderRadius: "1vh", marginTop:"2vh", marginBottom:"1vh", resize:"none" }} placeholder="Comenta tu opinión..." maxLength={450} onChange={(e) => setTexto(e.target.value)}></textarea>
+        <textarea className="textarea_v2" placeholder="Comenta tu opinión..." maxLength={450} onChange={(e) => setTexto(e.target.value)}></textarea>
         <p style={{ color:colorContador, fontSize: "1.5vh", transition: "color 0.5s" }}> {texto.length}/{maxCaracteres} caracteres </p>
       </div>
     </div> 
