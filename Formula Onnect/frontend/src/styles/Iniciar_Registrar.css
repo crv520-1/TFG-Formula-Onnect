@@ -13,16 +13,16 @@ html, body {
 }
 
 .logo {
-    width: 15vw;
-    height: 15vh;
+    width: 20vw;
+    height: 20vh;
     object-fit: contain;
     padding-top: 5vh;
 }
 
 .title {
     color: black;
-    padding-top: 7vh;
-    font-size: 6vh;
+    padding-top: 5vh;
+    font-size: 5vh;
 }
 
 .form {
@@ -72,20 +72,15 @@ html, body {
 }
 
 @media (max-width: 1400px) {
-    .registro-logo {
+    .logo {
         width: 25vw;
         height: 25vh;
         padding-top: 5vh;
         object-fit: contain;
     }
 
-    .registro-title {
+    .title {
         font-size: 8vh;
-    }
-
-    .registro-input {
-        width: 50vw;
-        height: 6vh;
     }
 
     .continuar-button {

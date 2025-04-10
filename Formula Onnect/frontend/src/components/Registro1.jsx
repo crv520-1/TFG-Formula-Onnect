@@ -88,7 +88,7 @@ const Registro1 = () => {
 
     return (
         <div className="container">
-            <img src={logo} className="registro-logo" />
+            <img src={logo} className="logo" />
             <h1 className="title">¡Bienvenido!</h1>
             <form className="form">
                 <div>

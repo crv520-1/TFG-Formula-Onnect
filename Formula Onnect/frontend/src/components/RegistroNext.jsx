@@ -74,7 +74,7 @@ export const RegistroNext = () => {
 
     return (
         <div className="container">
-            <img src={logo} className="registro-logo" />
+            <img src={logo} className="logo" />
             <div className="header-container">
                 <h1>¡Bienvenido {nickName}!</h1>
                 <h2>Seleccione a su piloto, equipo y circuito favorito</h2>
