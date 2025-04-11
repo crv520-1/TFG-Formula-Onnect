@@ -98,13 +98,13 @@ export const DatosEquipo = () => {
       <br />
       <div className='container_overflow_border'>
         <div className='container_fila_heightAuto'>
-          <img src={getImagenEquipo(equipo.constructorId)} alt="Foto del equipo" style={{ width: "8vh", height: "5vh", objectFit:"contain" }} />
+          <img src={getImagenEquipo(equipo.constructorId)} alt="Foto del equipo" className='imagen_equipo_v3'/>
           <p className='datos_v5'>{equipo.nombreEquipo}</p>
         </div>
         <div className='container_columna_marginBottom_v2'>
-          <img src={getLivery(equipo.constructorId)} alt="Imagen del equipo" style={{ width: "50vh", height: "30vh", objectFit:"contain"}} />
+          <img src={getLivery(equipo.constructorId)} alt="Imagen del equipo" className='imagen_livery_v2'/>
           <div className='container_fila_marginBottom'>
-            <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} style={{ width: "6vh", height: "4vh" }} />
+            <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} className='imagen_bandera'/>
             <p className='datos_v6'>{equipo.nacionalidadEquipo}</p>
           </div>
         </div>

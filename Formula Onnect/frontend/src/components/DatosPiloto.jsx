@@ -100,9 +100,9 @@ export const DatosPiloto = () => {
         </div>
         <div className='container_fila_marginBottom'>
           <div className='container_columna_marginBottom_v2'>
-            <img src={getImagenPiloto(pilotos.driverId)} alt="Imagen del piloto" style={{ width: "30vh", height: "30vh", objectFit:"contain"}} />
+            <img src={getImagenPiloto(pilotos.driverId)} alt="Imagen del piloto" className='imagen_piloto_v2'/>
             <div className='container_fila_marginBottom'>
-              <img src={`https://flagcdn.com/w160/${pilotos.isoNacPil}.png`} alt={pilotos.isoNacPil} style={{ width: "6vh", height: "4vh" }} />
+              <img src={`https://flagcdn.com/w160/${pilotos.isoNacPil}.png`} alt={pilotos.isoNacPil} className='imagen_bandera'/>
               <p className='datos_v6'>{pilotos.nacionalidadPiloto}</p>
             </div>
           </div>

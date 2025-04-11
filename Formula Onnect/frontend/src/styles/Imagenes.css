@@ -45,6 +45,12 @@
     object-fit: contain;
 }
 
+.imagen_equipo_v3 {
+    width: 8vh;
+    height: 5vh;
+    object-fit: contain;
+}
+
 .imagen_livery {
     width: 25vh;
     height: 15vh;
@@ -53,11 +59,35 @@
     border-radius: 1vh;
 }
 
+.imagen_livery_v2 {
+    width: 50vh;
+    height: 30vh;
+    object-fit: contain;
+}
+
 .imagen_piloto {
     width: 15vh;
     height: 15vh;
     object-fit: contain;
     padding-top: 1vh;
+}
+
+.imagen_piloto_v2 {
+    width: 30vh;
+    height: 30vh;
+    object-fit: contain;
+}
+
+.imagen_circuito {
+    width: 65vh;
+    height: 35vh;
+    object-fit: contain;
+}
+
+.imagen_bandera {
+    width: 6vh;
+    height: 4vh;
+    object-fit: contain;
 }
   
 .icono {

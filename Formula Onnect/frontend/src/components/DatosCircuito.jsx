@@ -79,9 +79,9 @@ export const DatosCircuito = () => {
           <p className='datos_v5'>{circuito.nombreCircuito}</p>
         </div>
         <div className='container_columna_marginBottom_v2'>
-        <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del equipo" style={{ width: "65vh", height: "35vh", objectFit:"contain" }} />
+        <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del equipo" className='imagen_circuito'/>
           <div className='container_fila_marginBottom'>
-            <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} style={{ width: "6vh", height: "4vh" }} />
+            <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} className='imagen_bandera'/>
             <p className='datos_v6'>{circuito.ciudad}, {circuito.pais}</p>
           </div>
         </div>
