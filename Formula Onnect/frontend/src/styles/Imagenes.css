@@ -119,6 +119,18 @@
     object-fit: contain;
 }
 
+.imagen_circuito_v3 {
+    width: 50vh;
+    height: 35vh;
+    object-fit: contain;
+}
+
+.imagen_circuito_v4 {
+    width: 45vh;
+    height: 25vh;
+    object-fit: contain;
+}
+
 .imagen_circuito_select {
     width: 110%;
     height: 100%;

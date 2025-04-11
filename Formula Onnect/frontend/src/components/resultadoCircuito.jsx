@@ -185,7 +185,7 @@ export const ResultadoCircuito = () => {
                 <span className='span_v3_bold_v2'>{posicion.position}</span>
               </div>
               <span className='span_v5'>{posicion.driver}</span>
-              <img src={getImagenEquipo(posicion.constructorId)} alt={posicion.constructorId} style={{ width: "5vh", height: "5vh", objectFit:"contain" }}/>
+              <img src={getImagenEquipo(posicion.constructorId)} alt={posicion.constructorId} className='imagen_equipo_v2'/>
               <span className='span_v6'>{posicion.status}</span>
               <span className='span_v7'>{`+${posicion.puntos}`}</span>
             </div>
@@ -206,10 +206,10 @@ export const ResultadoCircuito = () => {
       <div className='container_columna_2c_v2'>
         <p className='datos_v7'>{circuitos.nombreCircuito}</p>
         <div className='container_fila_2c_margin'>
-          <img src={getImagenCircuito(circuitos.circuitId)} alt={circuitos.circuitId} style={{ width: "50vh", height: "35vh", objectFit:"contain" }}/>
+          <img src={getImagenCircuito(circuitos.circuitId)} alt={circuitos.circuitId} className='imagen_circuito_v3'/>
           <div className='container_columna_2c_margin'>
             <div className='container_fila_2c_margin'>
-              <img src={`https://flagcdn.com/w160/${circuitos.isoPais}.png`} alt={circuitos.isoPais} style={{ width: "6vh", height: "4vh", objectFit:"contain" }} />
+              <img src={`https://flagcdn.com/w160/${circuitos.isoPais}.png`} alt={circuitos.isoPais} className='imagen_bandera'/>
               <p className='datos_v6'>{circuitos.ciudad}, {circuitos.pais}</p>
             </div>
             {horariosGranPremio && (

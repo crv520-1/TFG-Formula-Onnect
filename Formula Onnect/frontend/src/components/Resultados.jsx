@@ -83,11 +83,11 @@ export const Resultados = () => {
         {circuitos.map((circuito) => (
           <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.circuitId, year, circuito.ronda)} className='boton_fondo_2c_v10'>
             <div key={circuito.idCircuitos} className='container_fila'>
-              <img src={getImagenCircuito(circuito.circuitId)} alt={circuito.circuitId} style={{ width: "45vh", height: "25vh" }} />
+              <img src={getImagenCircuito(circuito.circuitId)} alt={circuito.circuitId} className='imagen_circuito_v4'/>
               <div className='container_columna_paddingLeft'>
                 <h3 className='datos_v7'>{circuito.nombreCircuito}</h3>
                 <div className='container_fila'>
-                  <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} style={{ width: "6vh", height: "4vh" }} />
+                  <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} className='imagen_bandera'/>
                   <p className='datos_v6'>{circuito.ciudad}, {circuito.pais}</p>
                 </div>
                 <p className='datos_v6'>{circuito.fechaInicioFinDeSemana} - {circuito.fechaCarrera}</p>

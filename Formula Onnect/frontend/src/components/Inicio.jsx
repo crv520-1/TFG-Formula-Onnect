@@ -184,7 +184,7 @@ export const Inicio = () => {
               {publicacion.usuarioPublicador && (
                 <div className="container_fila_noJustify">
                   <button className="boton_fondo_2c_v2" onClick={() => handleVisitarPerfil(publicacion.usuarioPublicador.idUsuario)}>
-                    <img src={publicacion.usuarioPublicador.fotoPerfil} alt="Perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
+                    <img src={publicacion.usuarioPublicador.fotoPerfil} alt="Perfil" className="imagen_perfil"/>
                     <p className="datos">{publicacion.usuarioPublicador.nickName}</p>
                   </button>
                 </div>
@@ -192,9 +192,9 @@ export const Inicio = () => {
               <p className="datos_v2">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div className="container_auto">
                 <p className="datos">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} className="boton_fondo_2c"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
+                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} className="boton_fondo_2c"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
                 <p className="datos">{publicacion.numeroComentarios}</p>
-                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c"><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
+                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c"><ChatBubbleOvalLeftIcon className="icono"/></button>
               </div>
             </div>
             <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>
