@@ -77,12 +77,12 @@ export const Crear = () => {
       <br />
       <div className="container_columna_completo_v2">
         <div className="container_fila_spaceBetween">
-          <button type='submit' onClick={handleCancelar} className="boton_fondo_2c_v5"><XCircleIcon style={{ width: "3vh", height: "3vh", color:"white" }} /></button>
+          <button type='submit' onClick={handleCancelar} className="boton_fondo_2c_v5"><XCircleIcon className="icono_v2"/></button>
           <div className="container_flexCenter">
             <img src={usuario.fotoPerfil} style={{ width: "5vh", height: "5vh", borderRadius: "50%", backgroundColor:"white" }} />
             <p className="datos_v4"> {usuario.nickName} </p>
           </div>
-          <button type='submit' onClick={handlePublicar} className="boton_fondo_2c_v5"><PaperAirplaneIcon style={{ width: "3vh", height: "3vh", color:"white" }} /></button>
+          <button type='submit' onClick={handlePublicar} className="boton_fondo_2c_v5"><PaperAirplaneIcon className="icono_v2"/></button>
         </div>
         <textarea className="textarea_v2" placeholder="Comenta tu opinión..." maxLength={450} onChange={(e) => setTexto(e.target.value)}></textarea>
         <p style={{ color:colorContador, fontSize: "1.5vh", transition: "color 0.5s" }}> {texto.length}/{maxCaracteres} caracteres </p>
