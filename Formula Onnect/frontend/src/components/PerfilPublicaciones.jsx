@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import "../styles/Botones.css";
 import "../styles/Containers.css";
-import "../styles/PerfilPublicaciones.css";
+import "../styles/Imagenes.css";
 import "../styles/Textos.css";
 import HeaderPerfil from "./HeaderPerfil";
 import { carga } from "./animacionCargando";
@@ -228,14 +228,14 @@ export const PerfilPublicaciones = () => {
         {publicaciones.map((publicacion) => (
           <div key={publicacion.idPublicaciones} className="container_columna_2c_v3">
             <div className="container_fila_padding_v2">
-              <img src={usuario.fotoPerfil} className="profile-image"/>
+              <img src={usuario.fotoPerfil} className="imagen_perfil"/>
               <p className="datos">{usuario.nickName}</p>
               <p className="datos">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div className="container_auto_centro">
                 <p className="datos">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icon"/> : <NoMeGustaIcono className="icon"/>} </button>
+                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icon"/>} </button>
                 <p className="datos">{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"><ChatBubbleOvalLeftIcon className="icon"/></button>
+                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"><ChatBubbleOvalLeftIcon className="icono"/></button>
               </div>
             </div>
             <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>

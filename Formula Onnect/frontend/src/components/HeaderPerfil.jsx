@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { useNavigate } from "react-router-dom";
 import '../styles/Botones.css';
 import '../styles/Containers.css';
-import '../styles/HeaderPerfil.css';
 
 const PerfilHeader = ({ usuario, numeroPublicaciones, seguidores, siguiendo, sigo, idUser, mismoUsuario, onSeguidoresChange }) => {
   const navigate = useNavigate();
@@ -43,31 +42,31 @@ const PerfilHeader = ({ usuario, numeroPublicaciones, seguidores, siguiendo, sig
 
   return (
     <div className="container_columna">
-      <h1 className="nombreUsuario"> {usuario.nickName} </h1>
+      <h1 className="titulo_nombreUsuario"> {usuario.nickName} </h1>
       <div className="container_fila">
-        <img src={usuario.fotoPerfil} alt="Foto de perfil" className="foto"/>
+        <img src={usuario.fotoPerfil} alt="Foto de perfil" className="imagen_perfil_v2"/>
         <div className="container_columna">
           <div className="container_fila">
-            <p className="texto">{usuario.nombreCompleto}</p>
+            <p className="datos_informativos">{usuario.nombreCompleto}</p>
             {mismoUsuario ? (
               <div className="container_fila">
-                <button type='submit' onClick={handleEditarPerfil} className="boton_fondo_15"><PencilSquareIcon className="icono" /></button>
-                <button type='submit' onClick={handleCerrarSesion} className="boton_fondo_15"><ArrowRightEndOnRectangleIcon className="icono" /></button>
+                <button type='submit' onClick={handleEditarPerfil} className="boton_fondo_15"><PencilSquareIcon className="icono_v2" /></button>
+                <button type='submit' onClick={handleCerrarSesion} className="boton_fondo_15"><ArrowRightEndOnRectangleIcon className="icono_v2" /></button>
               </div>
             ) : null}
           </div>
           <div className="container_fila">
             <div className="container_columna">
-              <p className="texto_auxiliar"> Publicaciones </p>
-              <p className="texto_datos"> {numeroPublicaciones} </p>
+              <p className="datos_v13"> Publicaciones </p>
+              <p className="datos_v14"> {numeroPublicaciones} </p>
             </div>
             <div className="principal">
-              <p className="texto_auxiliar"> Seguidores </p>
-              <p className="texto_datos"> {seguidores} </p>
+              <p className="datos_v13"> Seguidores </p>
+              <p className="datos_v14"> {seguidores} </p>
             </div>
             <div className="principal">
-              <p className="texto_auxiliar"> Siguiendo </p>
-              <p className="texto_datos"> {siguiendo} </p>
+              <p className="datos_v13"> Siguiendo </p>
+              <p className="datos_v14"> {siguiendo} </p>
             </div>
           </div>
           {!mismoUsuario ? (

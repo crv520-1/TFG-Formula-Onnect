@@ -34,6 +34,11 @@
     font-size: 1.5vh;
 }
 
+.titulo_nombreUsuario {
+    font-size: 4vh;
+    margin-bottom: 3vh;
+}
+
 /*DATOS*/
 .datos {
     font-size: 1.5vh;
@@ -103,6 +108,19 @@
     text-align: center;
     color: white;
     padding-top: 3vh;
+}
+
+.datos_v13 {
+    font-size: 2vh;
+    margin: 0.5vw;
+}
+
+.datos_v14 {
+    font-size: 1.75vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .datos_centrados {

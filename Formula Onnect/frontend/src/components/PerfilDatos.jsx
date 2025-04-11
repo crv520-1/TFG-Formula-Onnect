@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import "../styles/Botones.css";
 import "../styles/Containers.css";
-import "../styles/PerfilDatos.css";
+import "../styles/Imagenes.css";
 import "../styles/Textos.css";
 import { carga } from "./animacionCargando.jsx";
 import HeaderPerfil from "./HeaderPerfil";
@@ -150,11 +150,11 @@ export const Perfil = () => {
         </div>
         <div className="container_columna_completo_v3">
           <p className="datos_informativos"> Circuito Favorito </p>
-          <img src={imagenCircuito} alt="Circuito" className="imagenCircuito"/>
+          <img src={imagenCircuito} alt="Circuito" className="imagen_v3"/>
         </div>
         <div className="container_columna_completo">
           <p className="datos_informativos"> Equipo Favorito </p>
-          <img src={imagenEquipo} alt="Equipo" className="imagenEquipo"/>
+          <img src={imagenEquipo} alt="Equipo" className="imagen_v2"/>
         </div>
       </div>
     </div> 
