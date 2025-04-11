@@ -101,12 +101,12 @@ export const Clasificacion = () => {
                 <span className='span_v3_bold'>{piloto.apellido}</span>
                 <span className='span_v4'>{piloto.constructorName}</span>
               </div>
-              <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" style={{ width: "15vh", height: "15vh", objectFit:"contain", paddingTop:"1vh" }} />
+              <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" className='imagen_piloto'/>
               <div className='container_columna_v4'>
                 <span className='span_v1'>#{piloto.numero} </span>
                 <div className='container_fila'>
-                  <img src={getImagenEquipo(piloto.constructorId)} alt="Foto de equipo" style={{ width: "5vh", height: "5vh", objectFit:"contain", marginRight:"1vw" }} />
-                  <img src={`https://flagcdn.com/w160/${piloto.nacionalidad}.png`} alt={piloto.nacionalidad} style={{ width: "5vh", height: "5vh", objectFit:"contain" }} />
+                  <img src={getImagenEquipo(piloto.constructorId)} alt="Foto de equipo" className='imagen_equipo'/>
+                  <img src={`https://flagcdn.com/w160/${piloto.nacionalidad}.png`} alt={piloto.nacionalidad} className='imagen_equipo_v2'/>
                 </div>
                 <span className='span'>{piloto.points} PTS.</span>
               </div>

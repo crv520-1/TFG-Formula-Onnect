@@ -30,7 +30,35 @@
     border-radius: 50%;
     background-color: white;
     color: white ;
-  }
+}
+
+.imagen_equipo {
+    width: 5vh;
+    height: 5vh;
+    object-fit: contain;
+    padding-right: 1vw;
+}
+
+.imagen_equipo_v2 {
+    width: 5vh;
+    height: 5vh;
+    object-fit: contain;
+}
+
+.imagen_livery {
+    width: 25vh;
+    height: 15vh;
+    object-fit: contain;
+    padding-left: 1.5vw;
+    border-radius: 1vh;
+}
+
+.imagen_piloto {
+    width: 15vh;
+    height: 15vh;
+    object-fit: contain;
+    padding-top: 1vh;
+}
   
 .icono {
     width: 2vh;

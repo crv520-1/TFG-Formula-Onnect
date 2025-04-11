@@ -90,14 +90,14 @@ export const ClasificacionEquipos = () => {
                   <span className='span_v2'>{equipo.nombre}</span>
                 </div>
                 <div className='container_fila_marginLeft_v2'>
-                  <img src={getImagenEquipo(equipo.constructorId)} alt="Foto de equipo" style={{ width: "5vh", height: "5vh", objectFit:"contain", paddingRight:"1vw" }} />
-                  <img src={`https://flagcdn.com/w160/${equipo.nacionalidad}.png`} alt={equipo.nacionalidad} style={{ width: "5vh", height: "5vh", objectFit:"contain" }} />
+                  <img src={getImagenEquipo(equipo.constructorId)} alt="Foto de equipo" className='imagen_equipo'/>
+                  <img src={`https://flagcdn.com/w160/${equipo.nacionalidad}.png`} alt={equipo.nacionalidad} className='imagen_equipo_v2'/>
                 </div>
                 <div className='container_fila'>
                   <span className='span'>{equipo.points} PTS.</span>
                 </div>
               </div>
-              <img src={getLivery(equipo.constructorId)} alt="Foto de equipo" style={{ width: "25vh", height: "15vh", objectFit:"contain", paddingLeft:"1.5vw", borderRadius:"1vh" }} />
+              <img src={getLivery(equipo.constructorId)} alt="Foto de equipo" className='imagen_livery'/>
             </div>
           ))}
         </div>
