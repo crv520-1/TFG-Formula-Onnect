@@ -336,16 +336,16 @@ export const Comentarios = () => {
           {usuarioPublicador && (
             <div className="container_fila_noJustify_v2">
               <button onClick={() => {handleVisualizarPerfil(usuarioPublicador.idUsuario)}} className="boton_fondo_2c_v2">
-                <img src={usuarioPublicador.fotoPerfil} alt="Foto de perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
+                <img src={usuarioPublicador.fotoPerfil} alt="Foto de perfil" className="imagen_perfil"/>
                 <h3 className="titulo_f">{usuarioPublicador.nickName}</h3>
               </button>
               <p className="datos_v2">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               {meGustasPublicacion && (
               <div className="container_marginLeft">
                 <p className="datos">{meGustasPublicacion[0]?.contador || 0}</p>
-                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {userLikePublicacion ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
+                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {userLikePublicacion ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
                 <p className="datos">{numeroComentarios.contador}</p>
-                <button type='button' className="boton_fondo_2c_v4"><ChatBubbleOvalLeftIcon style={{ width: "2vh", height: "2vh" }} /></button>
+                <button type='button' className="boton_fondo_2c_v4"><ChatBubbleOvalLeftIcon className="icono"/></button>
               </div>
               )}
             </div>
@@ -353,16 +353,16 @@ export const Comentarios = () => {
         </div>
         <p className="datos_2c">{publicacion.texto}</p>
         {/*Línea separadora*/}
-        <hr style={{width:"99%", backgroundColor:"#FFFFFF", opacity:"0.5"}} />
+        <hr className="linea_separadora"/>
         <div className="container_2c">
           <div className="container_fila_noJustify">
-            <img src={usuarioComentador.fotoPerfil} alt="Foto de perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
+            <img src={usuarioComentador.fotoPerfil} alt="Foto de perfil" className="imagen_perfil"/>
             <h3 className="titulo_f">{usuarioComentador.nickName}</h3>
           </div>
           <div className="container_columna_v2">
             <div className="container_fila_noJustify_v2">
               <textarea className="textarea" placeholder="Comenta tu opinión..." maxLength={450} onChange={(e) => setTexto(e.target.value)} value={texto}></textarea>
-              <button type='submit' onClick={handlePublicar} className="boton_fondo_2c_v5"><PaperAirplaneIcon style={{ width: "3vh", height: "3vh", color:"white" }} /></button>
+              <button type='submit' onClick={handlePublicar} className="boton_fondo_2c_v5"><PaperAirplaneIcon className="icono_v2"/></button>
             </div>
             <p style={{ color:colorContador, fontSize: "1.5vh", transition: "color 0.5s" }}> {texto.length}/{maxCaracteres} caracteres </p>
           </div>
@@ -376,13 +376,13 @@ export const Comentarios = () => {
               <div className="container_fila_spaceBetween_v2">
                 {comentario.usuarioComentador && (
                   <button onClick={() => {handleVisualizarPerfil(comentario.usuarioComentador.idUsuario)}} className="boton_fondo_2c_v6">
-                    <img src={comentario.usuarioComentador.fotoPerfil} alt="Foto de perfil" style={{ width: "3vh", height: "3vh", borderRadius: "50%", backgroundColor:"white" }} />
+                    <img src={comentario.usuarioComentador.fotoPerfil} alt="Foto de perfil" className="imagen_perfil" />
                     <h3 className="titulo_f">{comentario.usuarioComentador.nickName}</h3>
                   </button>
                 )}
                 <div className="container_gap">
                   <p className="datos">{comentario.meGustaComentario}</p>
-                  <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} className="boton_fondo_2c_v4"> {userLikesComentarios[comentario.idComentarios] ? <HandThumbUpIcon style={{ width: "2vh", height: "2vh" }} /> : <NoMeGustaIcono style={{ width: "2vh", height: "2vh" }} />} </button>
+                  <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} className="boton_fondo_2c_v4"> {userLikesComentarios[comentario.idComentarios] ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
                 </div>
               </div>
               <p className="datos_2c">{comentario.text}</p>

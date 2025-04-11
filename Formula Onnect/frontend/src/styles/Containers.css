@@ -536,3 +536,10 @@
     justify-content: center;
     align-items: center;
 }
+
+/*LÍNEA SEPARADORA*/
+.linea_separadora {
+    width: 99%;
+    background-color: #FFFFFF;
+    opacity: 0.5;
+}
