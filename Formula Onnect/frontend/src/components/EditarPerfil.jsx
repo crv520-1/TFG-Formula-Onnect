@@ -141,7 +141,7 @@ export const EditarPerfil = () => {
     <div className="container_columna_paddingTop">
       <input className="input_v1" type="text" placeholder={usuario.nickName} value={nickName} onChange={(e) => setNickName(e.target.value)}/>
       <div className="container_fila_paddingTop_v3">
-        <img src={usuario.fotoPerfil} alt="Foto de perfil" style={{ width: "15vh", height: "15vh", borderRadius: "50%", color:"white", backgroundColor:"white" }} />
+        <img src={usuario.fotoPerfil} alt="Foto de perfil" className="imagen_perfil_v2"/>
         <div className="container_columna">
             <input className="input" type="text" placeholder={usuario.nombreCompleto} value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)}/>
             <div className="container_relative">
@@ -164,21 +164,21 @@ export const EditarPerfil = () => {
             <select className="select_v2" value={pilotoSeleccionado} onChange={(e) => setPilotoSeleccionado(e.target.value)} >
                 {pilotos.map((piloto) => ( <option key={piloto.idPilotos} value={piloto.idPilotos}> {piloto.nombrePiloto} {piloto.apellidoPiloto} </option> ))}
             </select>
-            {pilotoSeleccionado && (<img src={getImagenPiloto(pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado))?.driverId)} alt="Piloto" style={{ width: "100%", height: "75%", marginTop:"1vh", objectFit:"contain" }} />)}
+            {pilotoSeleccionado && (<img src={getImagenPiloto(pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado))?.driverId)} alt="Piloto" className="imagen_piloto_select"/>)}
         </div>
         <div className="container_columna_completo_v3">
             <p className="datos_informativos"> Circuito Favorito </p>
             <select className="select_v3" value={circuitoSeleccionado} onChange={(e) => setCircuitoSeleccionado(e.target.value)} >
                 {circuitos.map((circuito) => ( <option key={circuito.idCircuitos} value={circuito.idCircuitos}> {circuito.nombreCircuito} </option> ))}
             </select>
-            {circuitoSeleccionado && (<img src={getImagenCircuito(circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado))?.circuitId)} alt="Circuito" style={{ width: "110%", height: "100%", marginTop: "1vh", objectFit:"contain" }} />)}
+            {circuitoSeleccionado && (<img src={getImagenCircuito(circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado))?.circuitId)} alt="Circuito" className="imagen_circuito_select"/>)}
         </div>
         <div className="container_columna_completo">
             <p className="datos_informativos"> Equipo Favorito </p>
             <select className="select_v2" value={equipoSeleccionado} onChange={(e) => setEquipoSeleccionado(e.target.value)} >
                 {equipos.map((equipo) => ( <option key={equipo.idEquipos} value={equipo.idEquipos}> {equipo.nombreEquipo} </option> ))}
             </select>
-            {equipoSeleccionado && (<img src={getImagenEquipo(equipos.find(p => p.idEquipos === Number(equipoSeleccionado))?.constructorId)} alt="Equipo" style={{ width: "19vw", height: "20vh", paddingTop: "2vh", objectFit:"contain" }} />)}
+            {equipoSeleccionado && (<img src={getImagenEquipo(equipos.find(p => p.idEquipos === Number(equipoSeleccionado))?.constructorId)} alt="Equipo" className="imagen_equipo_select"/>)}
         </div>
       </div>
       <div className="container_paddingTop">
