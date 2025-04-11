@@ -76,13 +76,13 @@ export const GuiaPilotos = () => {
           <div key={rowIndex} className="container_fila">
             {row.map((piloto) => (
               <button key={piloto.idPilotos} onClick={() => handlePiloto(piloto.idPilotos)} className="boton_fondo_2c_v9">
-                <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" style={{ width: "15vh", height: "15vh", objectFit:"contain" }} />
+                <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" className="imagen_piloto"/>
                 <div className="container_fila">
                   <div className="container_columna_izquierda">
                     <p className="datos_v8">{piloto.nombrePiloto}</p>
                     <p className="datos_v8">{piloto.apellidoPiloto}</p>
                   </div>
-                  <img src={`https://flagcdn.com/w160/${piloto.isoNacPil}.png`} alt={piloto.isoNacPil} style={{ width: "6vh", height: "4vh", objectFit:"contain" }} />
+                  <img src={`https://flagcdn.com/w160/${piloto.isoNacPil}.png`} alt={piloto.isoNacPil} className="imagen_bandera"/>
                 </div>
               </button>
             ))}

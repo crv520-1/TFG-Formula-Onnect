@@ -74,11 +74,11 @@ export const GuiaCircuitos = () => {
         }, []).map((row, rowIndex) => (
           <div key={rowIndex} className="container_fila">
             {row.map((circuito) => (
-              <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.idCircuitos)} style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "1vh", backgroundColor:"#2c2c2c", borderRadius:"1vh", width: "35vh", height: "30vh", border:"none" }}>
+              <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.idCircuitos)} className="boton_fondo_2c_v7">
                 <p className="datos_v8">{circuito.nombreCircuito}</p>
-                <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del circuito" style={{ width: "30vh", height: "25vh", paddingTop:"0.5vh", objectFit:"contain" }} />
+                <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del circuito" className="imagen_circuito_v2"/>
                 <div className="container_fila_paddingTop">
-                    <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} style={{ width: "5vh", height: "3vh", objectFit:"contain" }} />
+                    <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} className="imagen_bandera_v2"/>
                     <p className="datos_v9">{circuito.ciudad}, {circuito.pais}</p>
                 </div>
               </button>

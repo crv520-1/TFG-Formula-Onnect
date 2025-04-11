@@ -51,6 +51,13 @@
     object-fit: contain;
 }
 
+.imagen_equipo_v4 {
+    width: 5vh;
+    height: 3vh;
+    padding-left: 2vw;
+    object-fit: contain;
+}
+
 .imagen_livery {
     width: 25vh;
     height: 15vh;
@@ -62,6 +69,13 @@
 .imagen_livery_v2 {
     width: 50vh;
     height: 30vh;
+    object-fit: contain;
+}
+
+.imagen_livery_v3 {
+    width: 22vh;
+    height: 25vh;
+    border-radius: 1vh;
     object-fit: contain;
 }
 
@@ -84,9 +98,29 @@
     object-fit: contain;
 }
 
+.imagen_circuito_v2 {
+    width: 30vh;
+    height: 25vh;
+    padding-top: 0.5vh;
+    object-fit: contain;
+}
+
 .imagen_bandera {
     width: 6vh;
     height: 4vh;
+    object-fit: contain;
+}
+
+.imagen_bandera_v2 {
+    width: 5vh;
+    height: 3vh;
+    object-fit: contain;
+}
+
+.imagen_bandera_v3 {
+    width: 5vh;
+    height: 3vh;
+    padding-left: 2vw;padding-top: 0.25vh;
     object-fit: contain;
 }
   
