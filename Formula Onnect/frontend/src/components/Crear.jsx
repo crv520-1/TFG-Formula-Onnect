@@ -79,7 +79,7 @@ export const Crear = () => {
         <div className="container_fila_spaceBetween">
           <button type='submit' onClick={handleCancelar} className="boton_fondo_2c_v5"><XCircleIcon className="icono_v2"/></button>
           <div className="container_flexCenter">
-            <img src={usuario.fotoPerfil} style={{ width: "5vh", height: "5vh", borderRadius: "50%", backgroundColor:"white" }} />
+            <img src={usuario.fotoPerfil} className="imagen_perfil_v3"/>
             <p className="datos_v4"> {usuario.nickName} </p>
           </div>
           <button type='submit' onClick={handlePublicar} className="boton_fondo_2c_v5"><PaperAirplaneIcon className="icono_v2"/></button>
