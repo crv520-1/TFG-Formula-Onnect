@@ -48,8 +48,14 @@
         font-size: 6vh;
     }
 
+    .titulo_c4 {
+        font-size: 3vh;
+        width: 20vh;
+    }
+
     .titulo_c4_v2 {
         font-size: 3vh;
+        width: 20vh;
     }
 }
 
@@ -160,6 +166,10 @@
 @media (max-width: 1400px) {
     .datos_informativos {
         font-size: 3.5vh;
+    }
+
+    .datos {
+        font-size: 2.5vh;
     }
 
     .datos_v13 {

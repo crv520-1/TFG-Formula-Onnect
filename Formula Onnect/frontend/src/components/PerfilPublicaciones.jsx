@@ -242,6 +242,7 @@ export const PerfilPublicaciones = () => {
           </div>
         ))}
       </div>
+      <br/>
     </div>
   );
 };

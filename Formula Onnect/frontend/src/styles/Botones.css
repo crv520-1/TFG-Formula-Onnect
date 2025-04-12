@@ -328,6 +328,13 @@
 
     .boton_fondo_15_v2 {
         font-size: 3vh;
-        margin-left: 30vh;
+    }
+
+    .boton_fondo_15_v3 {
+        font-size: 3vh;
+    }
+
+    .boton_fondo_2c_v3 {
+        font-size: 3vh;
     }
 }
