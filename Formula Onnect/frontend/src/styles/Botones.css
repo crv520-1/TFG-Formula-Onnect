@@ -314,3 +314,15 @@
 .boton_dejar_seguir:focus {
     outline: none;
 }
+
+@media (max-width: 1400px) {
+    .boton_dejar_seguir {
+        font-size: 3vh;
+        height: 4vh;
+    }
+
+    .boton_seguir {
+        font-size: 3vh;
+        height: 4vh;
+    }
+}
