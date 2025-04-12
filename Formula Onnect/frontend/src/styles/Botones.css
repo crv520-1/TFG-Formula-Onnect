@@ -9,6 +9,10 @@
     background-color: #15151E;
 }
 
+.boton_fondo_15:focus {
+    outline: none;
+}
+
 .boton_fondo_15_v2 {
     font-size: 2vh;
     margin-left: 35vh;
@@ -19,6 +23,10 @@
     height: 3vh;
     border: none;
     background-color: #15151E;
+}
+
+.boton_fondo_15_v2:focus {
+    outline: none;
 }
 
 .boton_fondo_15_v3 {
@@ -32,6 +40,10 @@
     background-color: #15151E;
 }
 
+.boton_fondo_15_v3:focus {
+    outline: none;
+}
+
 .boton_fondo_15_v4 {
     font-size: 2vh;
     margin-left: 20vh;
@@ -42,6 +54,10 @@
     height: 3vh;
     border: none;
     background-color: #15151E;
+}
+
+.boton_fondo_15_v4:focus {
+    outline: none;
 }
 
 .boton_fondo_c4 {
@@ -57,6 +73,10 @@
     width: 15vh;
 }
 
+.boton_fondo_c4:focus {
+    outline: none;
+}
+
 .boton_fondo_c4_v2 {
     font-size: 2vh;
     text-align: center;
@@ -67,6 +87,10 @@
     border: none;
     background-color: #C40000;
     width: 15vh;
+}
+
+.boton_fondo_c4_v2:focus {
+    outline: none;
 }
 
 .boton_fondo_2c {
@@ -81,6 +105,10 @@
     margin-top: 1vh;
 }
 
+.boton_fondo_2c:focus {
+    outline: none;
+}
+
 .boton_fondo_2c_v2 {
     display: flex;
     align-items: center;
@@ -89,12 +117,20 @@
     background-color: #2c2c2c;
 }
 
+.boton_fondo_2c_v2:focus {
+    outline: none;
+}
+
 .boton_fondo_2c_v3 {
     font-size: 2vh;
     text-align: left;
     width: 100%;
     border: none;
     background-color: #2c2c2c;
+}
+
+.boton_fondo_2c_v3:focus {
+    outline: none;
 }
 
 .boton_fondo_2c_v4 {
@@ -108,6 +144,10 @@
     background-color: #2c2c2c;
 }
 
+.boton_fondo_2c_v4:focus {
+    outline: none;
+}
+
 .boton_fondo_2c_v5 {
     display: flex;
     align-items: center;
@@ -117,6 +157,10 @@
     background-color: #2c2c2c;
 }
 
+.boton_fondo_2c_v5:focus {
+    outline: none;
+}
+
 .boton_fondo_2c_v6 {
     display: flex;
     flex-direction: row;
@@ -124,6 +168,10 @@
     padding-left: 1vw;
     border: none;
     background-color: #2c2c2c;
+}
+
+.boton_fondo_2c_v6:focus {
+    outline: none;
 }
 
 .boton_fondo_2c_v7 {
@@ -139,6 +187,10 @@
     background-color: #2c2c2c;
 }
 
+.boton_fondo_2c_v7:focus {
+    outline: none;
+}
+
 .boton_fondo_2c_v8 {
     display: flex;
     flex-direction: column;
@@ -150,6 +202,10 @@
     height: 25vh;
     border: none;
     background-color: #2c2c2c;
+}
+
+.boton_fondo_2c_v8:focus {
+    outline: none;
 }
 
 .boton_fondo_2c_v9 {
@@ -165,12 +221,20 @@
     background-color: #2c2c2c;
 }
 
+.boton_fondo_2c_v9:focus {
+    outline: none;
+}
+
 .boton_fondo_2c_v10 {
     margin: 1vh;
     border-radius: 2vh;
     padding: 1vh;
     border: none;
     background-color: #2c2c2c;
+}
+
+.boton_fondo_2c_v10:focus {
+    outline: none;
 }
 
 .boton_texto_ea {
@@ -182,12 +246,36 @@
     background-color: white;
 }
 
+.boton_texto_ea:hover {
+    background-color: white;
+    color: #EA1F22;
+    border-color: #EA1F22;
+    transform: none; /* Evita cualquier transformación */
+    transition: none; /* Elimina cualquier animación */
+}
+
+.boton_texto_ea:focus {
+    outline: none;
+}
+
 .boton_fondo_ea {
     border-radius: 1.5vh;
     border-width: 3px;
     border-color: white;
     color: white;
     background-color: #EA1F22;
+}
+
+.boton_fondo_ea:hover {
+    background-color: #EA1F22;
+    color: white;
+    border-color: white;
+    transform: none; /* Evita cualquier transformación */
+    transition: none; /* Elimina cualquier animación */
+}
+
+.boton_fondo_ea:focus {
+    outline: none;
 }
 
 .boton_seguir {
@@ -204,6 +292,10 @@
     background-color: #C40000;
 }
 
+.boton_seguir:focus {
+    outline: none;
+}
+
 .boton_dejar_seguir {
     font-size: 2vh;
     height: 3vh;
@@ -217,4 +309,8 @@
     width: 15vw;
     background-color: white;
     color: #C40000;
-  }
+}
+
+.boton_dejar_seguir:focus {
+    outline: none;
+}

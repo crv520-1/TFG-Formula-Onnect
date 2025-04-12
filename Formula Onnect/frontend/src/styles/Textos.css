@@ -39,6 +39,10 @@
     margin-bottom: 3vh;
 }
 
+.titulo_app {
+    font-size: 3vh;
+}
+
 /*DATOS*/
 .datos {
     font-size: 1.5vh;
