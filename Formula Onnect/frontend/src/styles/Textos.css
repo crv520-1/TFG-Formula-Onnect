@@ -364,6 +364,7 @@
 @media (max-width: 1400px) {
     .textarea {
         width: 43vw;
-        height: 6vh;
+        height: 8vh;
+        font-size: 2vh;
     }
 }

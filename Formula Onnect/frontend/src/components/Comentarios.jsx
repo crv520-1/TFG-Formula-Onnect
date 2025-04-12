@@ -364,7 +364,7 @@ export const Comentarios = () => {
               <textarea className="textarea" placeholder="Comenta tu opinión..." maxLength={450} onChange={(e) => setTexto(e.target.value)} value={texto}></textarea>
               <button type='submit' onClick={handlePublicar} className="boton_fondo_2c_v5"><PaperAirplaneIcon className="icono_v2"/></button>
             </div>
-            <p style={{ color:colorContador, fontSize: "2vh", transition: "color 0.5s" }}> {texto.length}/{maxCaracteres} caracteres </p>
+            <p style={{ color:colorContador, fontSize: "1.75vh", transition: "color 0.5s" }}> {texto.length}/{maxCaracteres} caracteres </p>
           </div>
         </div>
       </div>
