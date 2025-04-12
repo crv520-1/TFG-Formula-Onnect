@@ -12,7 +12,7 @@
 }
 
 .imagen_v3 {
-    width: 110%;
+    width: 100%;
     height: 100%;
     object-fit: contain;
 }
@@ -132,7 +132,7 @@
 }
 
 .imagen_circuito_select {
-    width: 110%;
+    width: 100%;
     height: 100%;
     margin-top: 1vh;
     object-fit: contain;
