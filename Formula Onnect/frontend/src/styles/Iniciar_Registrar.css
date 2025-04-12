@@ -57,6 +57,14 @@ html, body {
     width: 50vw;
 }
 
+.principal-button:hover {
+    background-color: #EA1F22; /* Mantiene el color original */
+    color: white; /* Mantiene el color del texto original */
+    border-color: white; /* Mantiene el color del borde original */
+    transform: none; /* Evita cualquier transformación */
+    transition: none; /* Elimina cualquier animación */
+}
+
 .text-change-view {
     color: black;
     font-size: 3vh;
@@ -69,6 +77,14 @@ html, body {
     border-width: 3px;
     border-color: #EA1F22;
     margin-bottom: 5vh;
+}
+
+.secondary-button:hover {
+    background-color: white; /* Mantiene el color original */
+    color: #EA1F22; /* Mantiene el color del texto original */
+    border-color: #EA1F22; /* Mantiene el color del borde original */
+    transform: none; /* Evita cualquier transformación */
+    transition: none; /* Elimina cualquier animación */
 }
 
 @media (max-width: 1400px) {
