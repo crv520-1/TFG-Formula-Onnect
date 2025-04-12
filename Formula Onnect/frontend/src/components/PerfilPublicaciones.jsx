@@ -233,7 +233,7 @@ export const PerfilPublicaciones = () => {
               <p className="datos">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div className="container_auto_centro">
                 <p className="datos">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icon"/>} </button>
+                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
                 <p className="datos">{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
                 <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"><ChatBubbleOvalLeftIcon className="icono"/></button>
               </div>
