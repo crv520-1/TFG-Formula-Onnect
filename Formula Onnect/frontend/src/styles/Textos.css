@@ -48,6 +48,10 @@
         font-size: 6vh;
     }
 
+    .titulo_f {
+        font-size: 2vh;
+    }
+
     .titulo_c4 {
         font-size: 3vh;
         width: 20vh;
@@ -170,6 +174,10 @@
 @media (max-width: 1400px) {
     .datos_informativos {
         font-size: 3.5vh;
+    }
+
+    .datos_2c {
+        font-size: 2.5vh;
     }
 
     .datos {
@@ -351,4 +359,11 @@
     color: white;
     margin-left: 1vh;
     margin: 1vh;
+}
+
+@media (max-width: 1400px) {
+    .textarea {
+        width: 43vw;
+        height: 6vh;
+    }
 }
