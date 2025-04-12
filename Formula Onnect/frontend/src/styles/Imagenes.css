@@ -171,3 +171,10 @@
     width: 3vw;
     height: 3vh;
 }
+
+@media (max-width: 1400px) {
+    .imagen_perfil_v2 {
+        width: 20vh;
+        height: 20vh;
+    }
+}

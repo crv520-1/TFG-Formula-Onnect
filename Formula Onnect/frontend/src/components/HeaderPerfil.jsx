@@ -45,7 +45,7 @@ const PerfilHeader = ({ usuario, numeroPublicaciones, seguidores, siguiendo, sig
       <h1 className="titulo_nombreUsuario"> {usuario.nickName} </h1>
       <div className="container_fila">
         <img src={usuario.fotoPerfil} alt="Foto de perfil" className="imagen_perfil_v2"/>
-        <div className="container_columna">
+        <div className="container_columna_paddingLeft_v2">
           <div className="container_fila">
             <p className="datos_informativos">{usuario.nombreCompleto}</p>
             {mismoUsuario ? (
