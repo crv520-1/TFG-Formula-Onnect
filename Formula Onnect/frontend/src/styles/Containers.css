@@ -436,6 +436,12 @@
     width: 100%;
 }
 
+@media (max-width: 1400px) {
+    .container_fila_spaceBetween {
+        width: 105vh;
+    }
+}
+
 /*GRIDS*/
 .container_grid {
     display: grid;
