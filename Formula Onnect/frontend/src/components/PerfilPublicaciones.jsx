@@ -219,7 +219,7 @@ export const PerfilPublicaciones = () => {
         mismoUsuario={mismoUsuario}
       />
       <div className="container_columna">
-        <div className="container_fila">
+        <div className="container_fila_paddingTop_v4">
           <button type='submit' onClick={handleDatos} className="boton_fondo_15_v3">Datos</button>
           <h2 className="titulo_c4">Publicaciones</h2>
         </div>

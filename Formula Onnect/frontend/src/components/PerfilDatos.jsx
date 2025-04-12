@@ -139,11 +139,11 @@ export const Perfil = () => {
         mismoUsuario={mismoUsuario}
         onSeguidoresChange={handleSeguidoresChange}
       />
-      <div className="container_fila">
+      <div className="container_fila_paddingTop_v4">
         <h2 className="titulo_c4_v2">Datos</h2>
         <button type='submit' onClick={handlePublicaciones} className="boton_fondo_15_v2">Publicaciones</button>
       </div>
-      <div className="container_fila_paddingTop">
+      <div className="container_fila_paddingTop_v4">
         <div className="container_columna_completo">
           <p className="datos_informativos"> Piloto Favorito </p>
           <img src={imagenPiloto} alt="Piloto" className="imagen"/>
