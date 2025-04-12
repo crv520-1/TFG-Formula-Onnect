@@ -207,7 +207,8 @@
     height: 28vh;
     background-color: #2c2c2c;
     border-radius: 1.5vh;
-    margin-right: 5vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
 }
 
 .container_columna_completo_v2 {
@@ -230,7 +231,8 @@
     height: 40vh;
     background-color: #2c2c2c;
     border-radius: 1.5vh;
-    margin-right: 5vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
 }
 
 .container_columna_marginTop {
