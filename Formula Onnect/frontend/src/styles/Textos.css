@@ -40,7 +40,9 @@
 }
 
 .titulo_app {
-    font-size: 3vh;
+    font-size: 4vh;
+    display: flex;
+    justify-content: center;
 }
 
 @media (max-width: 1400px) {
