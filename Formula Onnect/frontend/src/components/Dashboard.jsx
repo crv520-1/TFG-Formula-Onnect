@@ -53,35 +53,35 @@ export const Dashboard = () => {
     }
 
   return (
-    <div style={{ paddingLeft: "1vh", height: "100vh", display: "flex", flexDirection: "column", width: "12vw" }} >
+    <div style={{ paddingLeft: "1vh", height: "100vh", display: "flex", flexDirection: "column", width: "18vw" }} >
         <h2 className="titulo_app">Formula Onnect</h2>
         <br />
-        <button type="submit" onClick={handleInicio} style={{ padding:"1vw", backgroundColor: getBoton("/Inicio"), borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
+        <button type="submit" onClick={handleInicio} style={{ padding:"1vw", backgroundColor: getBoton("/Inicio"), borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
             <HomeIcon className="icono_v3"/>
             <p className="datos_v11">Inicio</p>
         </button>
         <br />
-        <button type="submit" onClick={handleGuia} style={{ padding:"1vw", backgroundColor: location.pathname === "/GuiaCircuitos" || location.pathname === "/GuiaPilotos" || location.pathname === "/GuiaEquipos" || location.pathname === "/DatosPiloto" || location.pathname === "/DatosEquipo" || location.pathname === "/DatosCircuito" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
+        <button type="submit" onClick={handleGuia} style={{ padding:"1vw", backgroundColor: location.pathname === "/GuiaCircuitos" || location.pathname === "/GuiaPilotos" || location.pathname === "/GuiaEquipos" || location.pathname === "/DatosPiloto" || location.pathname === "/DatosEquipo" || location.pathname === "/DatosCircuito" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
             <BookOpenIcon className="icono_v3"/>
             <p className="datos_v11">Guía</p>
         </button>
         <br />
-        <button type="submit" onClick={handleCrear} style={{ padding:"1vw", backgroundColor: getBoton("/Crear"), borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
+        <button type="submit" onClick={handleCrear} style={{ padding:"1vw", backgroundColor: getBoton("/Crear"), borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
             <PlusCircleIcon className="icono_v3"/>
             <p className="datos_v11">Crear</p>
         </button>
         <br />
-        <button type="submit" onClick={handleClasificacion} style={{ padding:"1vw", backgroundColor: location.pathname === "/Clasificacion" || location.pathname === "/ClasificacionEquipos" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
+        <button type="submit" onClick={handleClasificacion} style={{ padding:"1vw", backgroundColor: location.pathname === "/Clasificacion" || location.pathname === "/ClasificacionEquipos" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
             <TrophyIcon className="icono_v3"/>
             <p className="datos_v11">Clasificación</p>
         </button>
         <br />
-        <button type="submit" onClick={handleResultados} style={{ padding:"1vw", backgroundColor: location.pathname === "/Resultados" || location.pathname === "/ResultadoCircuito" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
+        <button type="submit" onClick={handleResultados} style={{ padding:"1vw", backgroundColor: location.pathname === "/Resultados" || location.pathname === "/ResultadoCircuito" ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
             <FlagIcon className="icono_v3"/>
             <p className="datos_v11">Resultados</p>
         </button>
         <br />
-        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PerfilPublicaciones")) ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "3vh", width: "11vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
+        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PerfilPublicaciones")) ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
             <UserCircleIcon className="icono_v3"/>
             <p className="datos_v11">Perfil</p>
         </button>
