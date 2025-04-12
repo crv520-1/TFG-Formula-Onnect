@@ -251,6 +251,13 @@
     padding-right: 1vh;
 }
 
+@media (max-width: 1400px) {
+    .container_columna_completo_v2 {
+        width: 115vh;
+        height: 50vh;
+    }
+}
+
 /*FILAS*/
 .container_fila {
     display: flex;

@@ -190,6 +190,10 @@
         font-size: 2vh;
     }
 
+    .datos_v4 {
+        font-size: 2.5vh;
+    }
+
     .datos_v11 {
         font-size: 3vh;
         margin-left: 2vw;
@@ -368,5 +372,11 @@
         width: 43vw;
         height: 8vh;
         font-size: 2vh;
+    }
+
+    .textarea_v2 {
+        width: 100vh;
+        height: 50vh;
+        font-size: 3vh;
     }
 }
