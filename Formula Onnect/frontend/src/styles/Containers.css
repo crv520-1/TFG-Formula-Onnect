@@ -468,6 +468,12 @@
     justify-content: space-between;
 }
 
+@media (max-width: 1400px) {
+    .container_grid_v3 {
+        width: 25vw;
+    }
+}
+
 /*NADAS*/
 .container_minWidth {
     align-items: center;
