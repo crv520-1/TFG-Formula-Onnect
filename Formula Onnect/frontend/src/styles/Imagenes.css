@@ -86,8 +86,8 @@
 }
 
 .imagen_livery_v3 {
-    width: 22vh;
-    height: 25vh;
+    width: 25vh;
+    height: 28vh;
     border-radius: 1vh;
     object-fit: contain;
 }
@@ -209,9 +209,19 @@
         height: 6vh;
     }
 
+    .imagen_bandera_v3 {
+        width: 7vh;
+        height: 5vh;
+    }
+
     .imagen_livery {
         width: 30vh;
         height: 20vh;
+    }
+
+    .imagen_livery_v3 {
+        width: 33vh;
+        height: 36vh;
     }
 
     .imagen_equipo {
@@ -222,6 +232,11 @@
     .imagen_equipo_v2 {
         width: 7vh;
         height: 7vh;
+    }
+
+    .imagen_equipo_v4 {
+        width: 7vh;
+        height: 5vh;
     }
 
     .imagen_equipo_select {

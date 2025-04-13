@@ -88,6 +88,7 @@ export const GuiaEquipos = () => {
                 </div>
             ))}
         </div>
+        <br/>
     </div>
   )
 }
