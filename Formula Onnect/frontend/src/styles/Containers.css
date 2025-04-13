@@ -252,6 +252,11 @@
 }
 
 @media (max-width: 1400px) {
+    .container_columna_completo {
+        width: 20vw;
+        height: 40vh;
+    }
+
     .container_columna_completo_v2 {
         width: 115vh;
         height: 50vh;
@@ -429,6 +434,12 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+}
+
+@media (max-width: 1400px) {
+    .container_fila_spaceBetween {
+        width: 105vh;
+    }
 }
 
 /*GRIDS*/

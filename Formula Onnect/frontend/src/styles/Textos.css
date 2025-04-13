@@ -240,6 +240,16 @@
     color: white;
 }
 
+@media (max-width: 1400px) {
+    .select_v2 {
+        font-size: 2vh;
+    }
+    
+    .select_v3 {
+        font-size: 2vh;
+    }
+}
+
 /*SPAN*/
 .span {
     color: white;
@@ -313,6 +323,13 @@
     cursor: pointer;
 }
 
+@media (max-width: 1400px) {
+    .span_absolute {
+        right: 3vh;
+        top: 30%;
+    }
+}
+
 /*TEXT-AREA & INPUTS*/
 .textarea {
     width: 45vw;
@@ -378,5 +395,17 @@
         width: 100vh;
         height: 50vh;
         font-size: 3vh;
+    }
+
+    .input {
+        font-size: 4vh;
+    }
+
+    .input_v1 {
+        font-size: 5vh;
+    }
+
+    .input_v2 {
+        font-size: 4vh;
     }
 }

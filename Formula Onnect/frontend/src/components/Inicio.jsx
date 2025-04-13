@@ -201,6 +201,7 @@ export const Inicio = () => {
           </div>
         ))}
       </div>
+      <br/>
     </div>
   );
 };
