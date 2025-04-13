@@ -176,6 +176,7 @@ export const DatosPiloto = () => {
             )}
           </div>
       </div>
+      <br />
     </div>
   )
 }

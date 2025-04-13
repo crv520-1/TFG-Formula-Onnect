@@ -116,6 +116,7 @@ export const DatosCircuito = () => {
             </div>
         </div>
       </div>
+      <br />
     </div>
   )
 }

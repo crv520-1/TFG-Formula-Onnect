@@ -165,6 +165,7 @@ export const DatosEquipo = () => {
           )}
         </div>
       </div>
+      <br />
     </div>
   )
 }
