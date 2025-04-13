@@ -94,9 +94,9 @@ export const Clasificacion = () => {
       <div className='container_overflow_padding'>
         <div className='container_grid_v2'>
           {clasificacion.map((piloto, index) => (
-            <div key={piloto.driverId} style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", backgroundColor:"#2c2c2c", borderRadius:"1vh", gap: "1vh", width:"24vw",  ...(clasificacion.length % 2 !== 0 && index === clasificacion.length - 1 ? { gridColumn: "1 / span 2", justifySelf: "center" } : {}) }}>
+            <div key={piloto.driverId} className='container_grid_v4' style={{ ...(clasificacion.length % 2 !== 0 && index === clasificacion.length - 1 ? { gridColumn: "1 / span 2", justifySelf: "center" } : {}) }}>
               <div className='container_columna_v3'>
-                <span style={{ fontSize: "2.5vh", color: getColorPosicion(Number(piloto.position)), textAlign: "center", paddingBottom:"1vh", fontWeight:getEstiloPosicion(Number(piloto.position)) }}>{piloto.position ? piloto.position : "-"}. </span>
+                <span className='span_v8' style={{ color: getColorPosicion(Number(piloto.position)), fontWeight:getEstiloPosicion(Number(piloto.position)) }}>{piloto.position ? piloto.position : "-"}. </span>
                 <span className='span_v3'>{piloto.nombre}</span>
                 <span className='span_v3_bold'>{piloto.apellido}</span>
                 <span className='span_v4'>{piloto.constructorName}</span>
@@ -114,6 +114,7 @@ export const Clasificacion = () => {
           ))}
         </div>
       </div>
+      <br/>
     </div>
   )
 }
