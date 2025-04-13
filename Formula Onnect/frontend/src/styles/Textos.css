@@ -316,6 +316,12 @@
     margin-left: 10px;
 }
 
+.span_v8 {
+    font-size: 2.5vh;
+    text-align: center;
+    padding-bottom: 1vh;
+}
+
 .span_absolute {
     position: absolute;
     right: 2vh;

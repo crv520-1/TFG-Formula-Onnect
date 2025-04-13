@@ -86,7 +86,7 @@ export const ClasificacionEquipos = () => {
             <div key={equipo.constructorId} className='container_grid_v3' style={{ ...(clasificacion.length % 2 !== 0 && index === clasificacion.length - 1 ? { gridColumn: "1 / span 2", justifySelf: "center" } : {}) }}>
               <div className='container_columna_v3'>
                 <div className='container_fila_marginLeft'>
-                  <span style={{ fontSize: "2.5vh", color: getColorPosicion(Number(equipo.position)), textAlign: "center", paddingBottom:"1vh", fontWeight:getEstiloPosicion(Number(equipo.position)) }}>{equipo.position ? equipo.position : "-"}. </span>
+                  <span className='span_v8' style={{ color: getColorPosicion(Number(equipo.position)), fontWeight:getEstiloPosicion(Number(equipo.position)) }}>{equipo.position ? equipo.position : "-"}. </span>
                   <span className='span_v2'>{equipo.nombre}</span>
                 </div>
                 <div className='container_fila_marginLeft_v2'>
