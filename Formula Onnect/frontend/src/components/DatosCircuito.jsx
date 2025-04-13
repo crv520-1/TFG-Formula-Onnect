@@ -75,9 +75,7 @@ export const DatosCircuito = () => {
       </div>
       <br />
       <div className='container_overflow_border'>
-        <div className='container_file_heightAuto'>
-          <p className='datos_v5'>{circuito.nombreCircuito}</p>
-        </div>
+        <p className='datos_v5'>{circuito.nombreCircuito}</p>
         <div className='container_columna_marginBottom_v2'>
         <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del equipo" className='imagen_circuito'/>
           <div className='container_fila_marginBottom'>
