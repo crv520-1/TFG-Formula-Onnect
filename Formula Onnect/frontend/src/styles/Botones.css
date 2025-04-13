@@ -334,12 +334,21 @@
         font-size: 3vh;
     }
 
+    .boton_fondo_15_v4 {
+        font-size: 3vh;
+    }
+
     .boton_fondo_2c {
         padding-top: 3.5vh;
     }
 
     .boton_fondo_2c_v3 {
         font-size: 3vh;
+    }
+
+    .boton_fondo_2c_v9 {
+        width: 30vh;
+        height: 30vh;
     }
 
     .boton_fondo_c4_v2 {
