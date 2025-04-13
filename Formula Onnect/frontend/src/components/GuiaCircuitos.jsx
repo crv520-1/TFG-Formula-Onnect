@@ -86,6 +86,7 @@ export const GuiaCircuitos = () => {
           </div>
         ))}
       </div>
+      <br/>
     </div>
   )
 }

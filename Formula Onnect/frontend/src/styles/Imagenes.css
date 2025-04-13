@@ -209,6 +209,11 @@
         height: 6vh;
     }
 
+    .imagen_bandera_v2 {
+        width: 7vh;
+        height: 5vh;
+    }
+
     .imagen_bandera_v3 {
         width: 7vh;
         height: 5vh;
@@ -247,6 +252,11 @@
     .imagen_circuito_select {
         width: 95%;
         height: 100%;
+    }
+
+    .imagen_circuito_v2 {
+        width: 45vh;
+        height: 40vh;
     }
 
     .imagen_circuito_v3 {
