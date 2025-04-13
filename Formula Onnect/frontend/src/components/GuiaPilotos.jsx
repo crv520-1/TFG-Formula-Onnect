@@ -77,8 +77,8 @@ export const GuiaPilotos = () => {
             {row.map((piloto) => (
               <button key={piloto.idPilotos} onClick={() => handlePiloto(piloto.idPilotos)} className="boton_fondo_2c_v9">
                 <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" className="imagen_piloto"/>
-                <div className="container_fila">
-                  <div className="container_columna_izquierda">
+                <div className="container_fila_v2">
+                  <div className="container_columna">
                     <p className="datos_v8">{piloto.nombrePiloto}</p>
                     <p className="datos_v8">{piloto.apellidoPiloto}</p>
                   </div>
@@ -89,6 +89,7 @@ export const GuiaPilotos = () => {
           </div>
         ))}
       </div>
+      <br/>
     </div>
   )
 }

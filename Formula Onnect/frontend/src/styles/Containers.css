@@ -271,6 +271,14 @@
     align-items: center;
 }
 
+.container_fila_v2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 .container_fila_paddingTop {
     display: flex;
     flex-direction: row;
