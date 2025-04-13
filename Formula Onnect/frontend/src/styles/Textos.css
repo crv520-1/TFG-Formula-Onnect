@@ -241,6 +241,10 @@
 }
 
 @media (max-width: 1400px) {
+    .select {
+        font-size: 2vh;
+    }
+
     .select_v2 {
         font-size: 2vh;
     }
@@ -341,7 +345,10 @@
 
     .span_v2 {
         font-size: 2.5vh;
-        padding-top: 0;
+    }
+
+    .span_v8 {
+        font-size: 3vh;
     }
 }
 
