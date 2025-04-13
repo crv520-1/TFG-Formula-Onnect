@@ -103,6 +103,8 @@ export function getStatusTraducido(status) {
             return "Ignición";
         case "Out of fuel":
             return "Sin combustible";
+        case "Driveshaft":
+            return "Eje de transmisión";
         default:
             return status;
     }
