@@ -233,4 +233,9 @@
         width: 100%;
         height: 76%;
     }
+
+    .imagen_piloto {
+        width: 20vh;
+        height: 20vh;
+    }
 }
