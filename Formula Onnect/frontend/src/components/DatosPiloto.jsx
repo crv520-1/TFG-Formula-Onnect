@@ -128,47 +128,47 @@ export const DatosPiloto = () => {
                 </div>
                 <div className='container_fila_paddingBottom'>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Primera carrera:</p>
+                    <p className='datos_centrados_v2'>Primera carrera:</p>
                     <p className='datos_centrados'>{driverData.firstRace}</p>
                   </div>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Primera Victoria:</p>
+                    <p className='datos_centrados_v2'>Primera Victoria:</p>
                     <p className='datos_centrados'>{driverData.firstWin}</p>
                   </div>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Última carrera:</p>
+                    <p className='datos_centrados_v2'>Última carrera:</p>
                     <p className='datos_centrados'>{driverData.lastRace}</p>
                   </div>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Carreras terminadas:</p>
+                    <p className='datos_centrados_v2'>Carreras terminadas:</p>
                     <p className='datos_centrados'>{driverData.racesFinished}</p>
                   </div>
                 </div>
                 <div className='container_fila_paddingBottom'>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Victorias:</p>
+                    <p className='datos_centrados_v2'>Victorias:</p>
                     <p className='datos_centrados'>{driverData.wins}</p>
                   </div>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Poles:</p>
+                    <p className='datos_centrados_v2'>Poles:</p>
                     <p className='datos_centrados'>{driverData.poles}</p>
                   </div>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Vueltas rápidas:</p>
+                    <p className='datos_centrados_v2'>Vueltas rápidas:</p>
                     <p className='datos_centrados'>{driverData.fastestLaps}</p>
                   </div>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Podios:</p>
+                    <p className='datos_centrados_v2'>Podios:</p>
                     <p className='datos_centrados'>{driverData.podiums}</p>
                   </div>
                 </div>
                 <div className='container_fila_paddingBottom'>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Mundiales:</p>
+                    <p className='datos_centrados_v2'>Mundiales:</p>
                     <p className='datos_centrados'>{driverData.championships}</p>
                   </div>
                   <div className='container_columna_datos'>
-                    <p className='datos_centrados'>Puntos totales:</p>
+                    <p className='datos_centrados_v2'>Puntos totales:</p>
                     <p className='datos_centrados'>{driverData.points}</p>
                   </div>
                 </div>

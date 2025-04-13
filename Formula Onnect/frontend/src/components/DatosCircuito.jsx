@@ -87,29 +87,29 @@ export const DatosCircuito = () => {
           <div className='container_columna_blanca'>
             <div className='container_fila_paddingBottom'>
               <div className='container_columna_datos'>
-                <p className='datos_centrados'>Primera carrera:</p>
+                <p className='datos_centrados_v2'>Primera carrera:</p>
                 <p className='datos_centrados'>{circuito.primeraCarrera}</p>
               </div>
               <div className='container_columna_datos'>
-                <p className='datos_centrados'>Última carrera:</p>
+                <p className='datos_centrados_v2'>Última carrera:</p>
                 <p className='datos_centrados'>{circuito.ultimaCarrera}</p>
               </div>
               <div className='container_columna_datos'>
-                <p className='datos_centrados'>Record de pista:</p>
+                <p className='datos_centrados_v2'>Record de pista:</p>
                 <p className='datos_centrados'>{circuito.recordPista}</p>
               </div>
             </div>
             <div className='container_fila_paddingBottom'>
               <div className='container_columna_datos'>
-                <p className='datos_centrados'>Longitud del circuito:</p>
+                <p className='datos_centrados_v2'>Longitud del circuito:</p>
                 <p className='datos_centrados'>{circuito.longitudCircuito} km</p>
               </div>
               <div className='container_columna_datos'>
-                <p className='datos_centrados'>Número de vueltas:</p>
+                <p className='datos_centrados_v2'>Número de vueltas:</p>
                 <p className='datos_centrados'>{circuito.vueltas}</p>
               </div>
                 <div className='container_columna_datos'>
-                  <p className='datos_centrados'>Longitud de carrera:</p>
+                  <p className='datos_centrados_v2'>Longitud de carrera:</p>
                   <p className='datos_centrados'>{getLongitudCarrera(circuito.vueltas, circuito.longitudCircuito)} km</p>
                 </div>
               </div>
