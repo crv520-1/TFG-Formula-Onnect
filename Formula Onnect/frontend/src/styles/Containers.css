@@ -446,6 +446,17 @@
     margin-bottom: 2vh;
 }
 
+.container_grid_v3 {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background-color: #2c2c2c;
+    border-radius: 1vh;
+    gap: 1vh;
+    width: 22vw;
+    justify-content: space-between;
+}
+
 /*NADAS*/
 .container_minWidth {
     align-items: center;
