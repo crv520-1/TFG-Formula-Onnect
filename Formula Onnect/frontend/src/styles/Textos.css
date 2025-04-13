@@ -188,6 +188,10 @@
         font-size: 3.5vh;
     }
 
+    .datos_centrados {
+        margin: 0;
+    }
+
     .datos_2c {
         font-size: 2.5vh;
     }
@@ -202,6 +206,10 @@
 
     .datos_v4 {
         font-size: 2.5vh;
+    }
+
+    .datos_v5 {
+        font-size: 5vh;
     }
 
     .datos_v6 {

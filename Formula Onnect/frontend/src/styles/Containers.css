@@ -261,6 +261,11 @@
         width: 115vh;
         height: 50vh;
     }
+
+    .container_columna_datos {
+        width: 16vw;
+        height: 24vh;
+    }
 }
 
 /*FILAS*/
@@ -447,6 +452,10 @@
 @media (max-width: 1400px) {
     .container_fila_spaceBetween {
         width: 105vh;
+    }
+
+    .container_fila_paddingTop_v5 {
+        padding-top: 2vh;
     }
 }
 
