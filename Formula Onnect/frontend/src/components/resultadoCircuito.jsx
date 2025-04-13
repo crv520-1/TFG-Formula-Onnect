@@ -225,6 +225,7 @@ export const ResultadoCircuito = () => {
         {mostrarDisputada(disputada)}
       </div>
       </div>
+      <br/>
     </div>
   )
 }
