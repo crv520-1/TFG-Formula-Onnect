@@ -11,6 +11,10 @@ import "../styles/Textos.css";
 import HeaderPerfil from "./HeaderPerfil";
 import { carga } from "./animacionCargando";
 
+/**
+ * Componente que muestra las publicaciones de un usuario específico
+ * Permite ver e interactuar con las publicaciones desde el perfil del usuario
+ */
 export const PerfilPublicaciones = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,7 +32,11 @@ export const PerfilPublicaciones = () => {
   const [sigo, setSigo] = useState(false);
   const [mismoUsuario, setMismoUsuario] = useState(false);
 
-  // Separar las llamadas API en funciones más pequeñas
+  /**
+   * Función para obtener los datos del usuario desde el backend
+   * @param {number} idUser - ID del usuario a consultar
+   * @returns {Object} Datos del usuario
+   */
   const fetchUsuario = async (idUser) => {
     const response = await axios.get("http://localhost:3000/api/usuarios");
     const usuario = response.data.find(user => user.idUsuario === idUser);
@@ -36,11 +44,21 @@ export const PerfilPublicaciones = () => {
     return usuario;
   };
 
+  /**
+   * Función para obtener las publicaciones de un usuario
+   * @param {number} idUser - ID del usuario a consultar
+   * @returns {Array} Lista de publicaciones
+   */
   const fetchPublicaciones = async (idUser) => {
     const response = await axios.get(`http://localhost:3000/api/publicaciones/${idUser}`);
     return response.data || [];
   };
 
+  /**
+   * Función para obtener estadísticas del usuario (publicaciones, seguidores, seguidos)
+   * @param {number} idUser - ID del usuario a consultar
+   * @returns {Object} Objeto con estadísticas del usuario
+   */
   const fetchEstadisticas = async (idUser) => {
     const [numeroPublicaciones, seguidores, siguiendo] = await Promise.all([
       axios.get(`http://localhost:3000/api/publicaciones/count/${idUser}`),
@@ -55,6 +73,11 @@ export const PerfilPublicaciones = () => {
     };
   };
 
+  /**
+   * Función para obtener interacciones (me gustas y comentarios) de las publicaciones
+   * @param {Array} publicaciones - Lista de publicaciones
+   * @returns {Object} Objeto con comentarios y me gustas
+   */
   const fetchInteracciones = async (publicaciones) => {
     if (!publicaciones.length) return { comentarios: [], meGustas: [] };
 
@@ -75,6 +98,11 @@ export const PerfilPublicaciones = () => {
     };
   };
 
+  /**
+   * Función para determinar qué publicaciones tienen me gusta del usuario actual
+   * @param {Array} publicaciones - Lista de publicaciones
+   * @returns {Object} Mapa de IDs de publicación a booleanos de me gusta
+   */
   const fetchUserLikes = async (publicaciones) => {
     if (!publicaciones.length) return {};
     
@@ -96,7 +124,9 @@ export const PerfilPublicaciones = () => {
     }
   };
 
-  // Función para cargar todos los datos
+  /**
+   * Función principal que carga todos los datos necesarios para la vista
+   */
   const cargarTodo = async () => {
     setCargando(true);
     try {
@@ -131,20 +161,28 @@ export const PerfilPublicaciones = () => {
     } catch (error) {
       console.error("Error cargando datos:", error);
     } finally {
+      // Pequeño delay para mostrar la animación de carga
       setTimeout(() => { setCargando(false); }, 500);
     }
   };
 
-  // Un solo useEffect para manejar toda la carga de datos
+  // Cargar todos los datos cuando cambia el usuario o el perfil visitado
   useEffect(() => {
     cargarTodo();
   }, [idUsuario, idUser]);
 
+  /**
+   * Función para navegar a la vista de datos del perfil
+   */
   const handleDatos = (e) => {
     e.preventDefault();
     navigate("/Perfil", { state: { idUser: idUser } });
   };
 
+  /**
+   * Función para dar o quitar me gusta a una publicación
+   * @param {number} idPublicacion - ID de la publicación
+   */
   const handleMeGusta = async (idPublicacion) => {
     try {
       const meGustasResponse = await axios.get(`http://localhost:3000/api/meGusta`);
@@ -180,28 +218,52 @@ export const PerfilPublicaciones = () => {
     }
   };
 
+  /**
+   * Función para navegar a la vista de comentarios de una publicación
+   * @param {number} idPublicacion - ID de la publicación
+   */
   const handleComentarios = (idPublicacion) => {
-    // Pasar el ID de la publicación como parámetro para la vista de comentarios
     navigate(`/Comentarios`, { state: { idElemento: idPublicacion, previusPath: 1 } });
   };
   
+  // Muestra animación de carga mientras se obtienen los datos
   if (cargando) { return carga(); }
 
-  // Función para obtener el contador de me gustas para una publicación específica
+  /**
+   * Función para obtener el número de me gustas de una publicación
+   * @param {number} idPublicacion - ID de la publicación
+   * @returns {number} Número de me gustas
+   */
   const obtenerContadorMeGusta = (idPublicacion) => {
     const meGusta = meGustasPublicaciones.find(mg => mg.idElemento === idPublicacion);
     return meGusta ? meGusta.contador : 0;
   };
 
+  /**
+   * Función para obtener el número de comentarios de una publicación
+   * @param {number} idPublicacion - ID de la publicación
+   * @returns {number} Número de comentarios
+   */
   const obtenerContadorComentarios = (idPublicacion) => {
     const comentarios = comentariosPublicaciones.find(comentario => comentario.post === idPublicacion);
     return comentarios ? comentarios.contador : 0;
   };
 
+  /**
+   * Función para actualizar el estado cuando cambia el número de seguidores
+   * @param {number} nuevoNumeroSeguidores - Nuevo número de seguidores
+   * @param {boolean} nuevoEstadoSigo - Nuevo estado de seguimiento
+   */
   const handleSeguidoresChange = (nuevoNumeroSeguidores, nuevoEstadoSigo) => {
     setSeguidores(nuevoNumeroSeguidores);
     setSigo(nuevoEstadoSigo);
   };
+
+  /**
+   * Función para verificar si el usuario actual ha dado me gusta a una publicación
+   * @param {number} idPublicacion - ID de la publicación
+   * @returns {boolean} True si el usuario ha dado me gusta
+   */
   const usuarioHaDadoLike = (idPublicacion) => {
     return userLikes[idPublicacion] || false;
   };
@@ -233,12 +295,18 @@ export const PerfilPublicaciones = () => {
               <p className="datos">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div className="container_auto_centro">
                 <p className="datos">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
+                <button type='button' onClick={() => handleMeGusta(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"> 
+                  {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} 
+                </button>
                 <p className="datos">{obtenerContadorComentarios(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c_v4"><ChatBubbleOvalLeftIcon className="icono"/></button>
+                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c_v4">
+                  <ChatBubbleOvalLeftIcon className="icono"/>
+                </button>
               </div>
             </div>
-            <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>
+            <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(publicacion.idPublicaciones)}>
+              {publicacion.texto}
+            </button>
           </div>
         ))}
       </div>

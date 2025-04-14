@@ -5,12 +5,19 @@ import "../styles/Containers.css";
 import { carga } from './animacionCargando';
 import { getImagenEquipo, getLivery } from './mapeoImagenes.js';
 
+/**
+ * Componente que muestra la guía de equipos de Fórmula 1
+ * Presenta todos los equipos organizados en una cuadrícula
+ */
 export const GuiaEquipos = () => {
     const navigate = useNavigate();
     const [equipos, setEquipos] = useState([]);
     const [cargando, setCargando] = useState(true);
 
     useEffect(() => {
+        /**
+         * Función que carga los datos de los equipos desde el backend
+         */
         const cargarDatos = async () => {
             setCargando(true);
             try {
@@ -23,11 +30,16 @@ export const GuiaEquipos = () => {
             } catch (error) {
                 console.error("Error en la API", error);
             }
+            // Pequeño delay para mostrar la animación de carga
             setTimeout(() => { setCargando(false); }, 500);
         }
         cargarDatos();
     }, []);
 
+    /**
+     * Función para obtener los datos de equipos desde el backend
+     * @returns {Array} Lista de equipos
+     */
     const cargarEquipos = async () => {
         try {
             const equiposResponse = await axios.get("http://localhost:3000/api/equipos");
@@ -42,21 +54,31 @@ export const GuiaEquipos = () => {
         }
     }
 
+    /**
+     * Función para navegar a la sección de pilotos
+     */
     const handlePilotos = (e) => {
         e.preventDefault();
         navigate("/GuiaPilotos");
     }
     
+    /**
+     * Función para navegar a la sección de circuitos
+     */
     const handleCircuitos = (e) => {
         e.preventDefault();
         navigate("/GuiaCircuitos");
     }
 
+    /**
+     * Función para ver los detalles de un equipo específico
+     * @param {number} idEquipo - ID del equipo a consultar
+     */
     const handleEquipo = (idEquipo) => {
-        // Navegar a la vista de un equipo
         navigate(`/DatosEquipo`, { state: { idEquipo } });
     }
 
+    // Muestra animación de carga mientras se obtienen los datos
     if (cargando) { return carga(); }
 
   return (

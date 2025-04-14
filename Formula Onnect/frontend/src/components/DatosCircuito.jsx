@@ -5,14 +5,21 @@ import "../styles/Containers.css";
 import { carga } from './animacionCargando';
 import { getImagenCircuito } from './mapeoImagenes.js';
 
+/**
+ * Componente que muestra información detallada de un circuito de F1
+ * Obtiene datos del backend y los renderiza en pantalla
+ */
 export const DatosCircuito = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  // Obtiene el ID del circuito desde el estado de navegación
   const { idCircuito } = location.state || {};
+  // Estados para almacenar información del circuito y el estado de carga
   const [circuito, setCircuito] = useState({});
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
+    // Función que carga los datos del circuito desde el backend
     const cargarDatos = async () => {
       setCargando(true);
       try {
@@ -22,14 +29,20 @@ export const DatosCircuito = () => {
           return;
         }
         setCircuito(circuito);
+        // Pequeño delay para mostrar la animación de carga
         setTimeout(() => { setCargando(false); }, 500);
       } catch (error) {
         console.error("Error en la API", error);
       }
     };
     cargarDatos();
-  }, [idCircuito]);
+  }, [idCircuito]); // Se ejecuta cuando cambia el ID del circuito
 
+  /**
+   * Función para obtener los datos básicos del circuito desde el backend
+   * @param {string} idCircuito - ID del circuito a consultar
+   * @returns {Object} Datos del circuito
+   */
   const cargarDatosCircuito = async (idCircuito) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/circuitos/${idCircuito}`);
@@ -44,6 +57,7 @@ export const DatosCircuito = () => {
     }
   };
 
+  // Funciones de navegación para la barra de menú
   const handlePilotos = (e) => {
     e.preventDefault();
     navigate("/GuiaPilotos");
@@ -59,11 +73,17 @@ export const DatosCircuito = () => {
     navigate("/GuiaCircuitos");
   }
 
+  /**
+   * Calcula la longitud total de la carrera
+   * @param {number} vueltas - Número de vueltas
+   * @param {number} longitudCircuito - Longitud del circuito (Una vuelta) en km
+   * @returns {string} Longitud total de la carrera en km
+   */
   function getLongitudCarrera(vueltas, longitudCircuito) {
-    // Redondeamos a 3 decimales el resultado
-    return (vueltas * longitudCircuito).toFixed(3);
+    return (vueltas * longitudCircuito).toFixed(3); // Redondea a 3 decimales
   }
 
+  // Muestra animación de carga mientras se obtienen los datos
   if (cargando) { return carga(); }
 
   return (
@@ -77,7 +97,7 @@ export const DatosCircuito = () => {
       <div className='container_overflow_border'>
         <p className='datos_v5'>{circuito.nombreCircuito}</p>
         <div className='container_columna_marginBottom_v2'>
-        <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del equipo" className='imagen_circuito'/>
+          <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del equipo" className='imagen_circuito'/>
           <div className='container_fila_marginBottom'>
             <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} className='imagen_bandera'/>
             <p className='datos_v6'>{circuito.ciudad}, {circuito.pais}</p>
@@ -108,12 +128,12 @@ export const DatosCircuito = () => {
                 <p className='datos_centrados_v2'>Número de vueltas:</p>
                 <p className='datos_centrados'>{circuito.vueltas}</p>
               </div>
-                <div className='container_columna_datos'>
-                  <p className='datos_centrados_v2'>Longitud de carrera:</p>
-                  <p className='datos_centrados'>{getLongitudCarrera(circuito.vueltas, circuito.longitudCircuito)} km</p>
-                </div>
+              <div className='container_columna_datos'>
+                <p className='datos_centrados_v2'>Longitud de carrera:</p>
+                <p className='datos_centrados'>{getLongitudCarrera(circuito.vueltas, circuito.longitudCircuito)} km</p>
               </div>
             </div>
+          </div>
         </div>
       </div>
       <br />

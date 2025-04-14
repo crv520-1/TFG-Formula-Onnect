@@ -5,12 +5,19 @@ import "../styles/Containers.css";
 import { carga } from "./animacionCargando.jsx";
 import { getImagenCircuito } from './mapeoImagenes.js';
 
+/**
+ * Componente que muestra la guía de circuitos de Fórmula 1
+ * Presenta todos los circuitos organizados en una cuadrícula
+ */
 export const GuiaCircuitos = () => {
     const navigate = useNavigate();
     const [circuitos, setCircuitos] = useState([]);
     const [cargando, setCargando] = useState(true);
 
     useEffect(() => {
+        /**
+         * Función que carga los datos de los circuitos desde el backend
+         */
         const cargarDatos = async () => {
           setCargando(true);
             try {
@@ -23,11 +30,16 @@ export const GuiaCircuitos = () => {
             } catch (error) {
                 console.error("Error en la API", error);
             }
+            // Pequeño delay para mostrar la animación de carga
             setTimeout(() => { setCargando(false); }, 500);
         }
         cargarDatos();
     }, []);
 
+    /**
+     * Función para obtener los datos de circuitos desde el backend
+     * @returns {Array} Lista de circuitos
+     */
     const cargarCircuitos = async () => {
       try {
         const circuitosResponse = await axios.get("http://localhost:3000/api/circuitos");
@@ -42,21 +54,31 @@ export const GuiaCircuitos = () => {
       }
     }
 
+    /**
+     * Función para navegar a la sección de pilotos
+     */
     const handlePilotos = (e) => {
         e.preventDefault();
         navigate("/GuiaPilotos");
     }
 
+    /**
+     * Función para navegar a la sección de equipos
+     */
     const handleEquipos = (e) => {
         e.preventDefault();
         navigate("/GuiaEquipos");
     }
 
+    /**
+     * Función para ver los detalles de un circuito específico
+     * @param {number} idCircuito - ID del circuito a consultar
+     */
     const handleCircuito = (idCircuito) => {
-        // Navegar a la vista de un circuito
         navigate(`/DatosCircuito`, { state: { idCircuito } });
     }
 
+    // Muestra animación de carga mientras se obtienen los datos
     if (cargando) { return carga(); }
 
   return (

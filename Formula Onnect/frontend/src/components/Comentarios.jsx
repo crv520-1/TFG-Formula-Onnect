@@ -9,11 +9,17 @@ import "../styles/Containers.css";
 import "../styles/Textos.css";
 import { carga } from './animacionCargando';
 
+/**
+ * Componente que muestra los comentarios de una publicación específica
+ * Permite ver, comentar y dar me gusta tanto a la publicación como a sus comentarios
+ */
 export const Comentarios = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { idElemento, previusPath } = location.state || {};
   const { user: idUsuario } = useContext(UsuarioContext);
+  
+  // Estados para almacenar datos de la publicación, comentarios y usuarios
   const [publicacion, setPublicacion] = useState({});
   const [comentarios, setComentarios] = useState({});
   const [usuarioPublicador, setUsuarioPublicador] = useState({});
@@ -26,11 +32,16 @@ export const Comentarios = () => {
   const [userLikePublicacion, setUserLikePublicacion] = useState(false);
   const [cargando, setCargando] = useState(true);
   const { handleMeGusta } = useMeGusta();
+  
+  // Constantes para controlar límites de texto
   const maxCaracteres = 450;
   const advertenciaCaracteres = 400;
 
   // Actualizamos solo al cambiar de publicación
   useEffect(() => {
+    /**
+     * Función que carga todos los datos necesarios para la vista de comentarios
+     */
     const cargarDatos = async () => {
       setCargando(true);
       if (!idElemento) {
@@ -52,12 +63,16 @@ export const Comentarios = () => {
       catch (error) {
         console.error("Error al cargar los datos:", error);
       }
+      // Pequeño delay para mostrar la animación de carga
       setTimeout(() => { setCargando(false); }, 500);
     };
     cargarDatos();
   }, [idElemento]);
 
-  // Funciones para cargar los datos del usuario que va a comentar la publicación
+  /**
+   * Función para cargar los datos del usuario que va a comentar la publicación
+   * @returns {Object} Datos del usuario comentador
+   */
   const cargarUsuarioComentador = async () => {
     try {
       const usuarioComentadorResponse = await axios.get(`http://localhost:3000/api/usuarios/${idUsuario}`);
@@ -74,7 +89,11 @@ export const Comentarios = () => {
     }
   }
 
-  // Función para cargar la publicación y todos los datos relacionados con la publicación que hemos seleccionado para ver los comentarios
+  /**
+   * Función para cargar la publicación y los datos relacionados
+   * Inicia la carga de usuario publicador, me gustas y comentarios
+   * @returns {Object} Datos de la publicación
+   */
   const cargarPublicacion = async () => {
     try {
       const publicacionResponse = await axios.get(`http://localhost:3000/api/publicaciones/publicacion/${idElemento}`);
@@ -97,7 +116,11 @@ export const Comentarios = () => {
     }
   }
 
-  // Función para cargar todos los comentarios de una publicación
+  /**
+   * Función para cargar todos los comentarios de una publicación
+   * Obtiene datos adicionales como usuarios y me gustas para cada comentario
+   * @returns {Array} Lista de comentarios con datos completos
+   */
   const cargarComentarios = async () => {
     try {
       const comentariosResponse = await axios.get(`http://localhost:3000/api/comentarios/publicacion/${idElemento}`);
@@ -110,9 +133,11 @@ export const Comentarios = () => {
         return [];
       }
       
+      // Obtener todos los usuarios para mapearlos a los comentarios
       const usuariosComentadores = await axios.get(`http://localhost:3000/api/usuarios`);
       const usuariosComentadoresData = usuariosComentadores.data || {};
   
+      // Crear un mapa de usuarios para acceso rápido por ID
       const mapaUsuariosComentadores = {};
       usuariosComentadoresData.forEach(user => {
         mapaUsuariosComentadores[user.idUsuario] = user;
@@ -122,12 +147,14 @@ export const Comentarios = () => {
       const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios`);
       const todosLosMeGustas = meGustasComentarioResponse.data || [];
   
+      // Procesar cada comentario para añadir datos adicionales
       const promesasComentarios = comentariosEncontrados.map(async comentario => {
         const usuarioComentador = mapaUsuariosComentadores[comentario.user];
         const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios/numero/${comentario.idComentarios}`);
         const meGustasComentario = meGustasComentarioResponse.data || [];
         const contadorMeGustas = meGustasComentario.length > 0 ? meGustasComentario[0].contador : 0;
         
+        // Verificar si el usuario actual ha dado me gusta al comentario
         const userHasLiked = todosLosMeGustas.some(mg => 
           mg.idComent === comentario.idComentarios && mg.iDusuario === idUsuario
         );
@@ -159,7 +186,10 @@ export const Comentarios = () => {
     }
   };
 
-  // Funciones para cargar los datos del usuario que ha publicado la publicación
+  /**
+   * Función para cargar los datos del usuario que ha publicado
+   * @param {number} idUsuarioPublicador - ID del usuario que creó la publicación
+   */
   const cargarUsuarioPublicador = async (idUsuarioPublicador) => {
     try {
       const usuarioPublicadorResponse = await axios.get(`http://localhost:3000/api/usuarios/${idUsuarioPublicador}`);
@@ -175,7 +205,11 @@ export const Comentarios = () => {
     }
   }
 
-  // Método para obtener la cantidad de me gustas de una publicación
+  /**
+   * Método para obtener la cantidad de me gustas de una publicación
+   * También verifica si el usuario actual ha dado me gusta
+   * @param {number} idPublicacion - ID de la publicación
+   */
   const cargarMeGustasPublicacion = async (idPublicacion) => {
     try {
       const meGustaResponse = await axios.get(`http://localhost:3000/api/meGusta/${idPublicacion}`);
@@ -199,7 +233,10 @@ export const Comentarios = () => {
     }
   }
 
-  // Método para obtener la cantidad de comentarios de una publicación
+  /**
+   * Método para obtener la cantidad de comentarios de una publicación
+   * @param {number} idPublicacion - ID de la publicación
+   */
   const cargarNumeroComentarios = async (idPublicacion) => {
     try {
       const numeroComentariosResponse = await axios.get(`http://localhost:3000/api/comentarios/numero/${idPublicacion}`);
@@ -215,7 +252,11 @@ export const Comentarios = () => {
     }
   }
 
-  // Métodos para navegar a la vista de la que precedemos
+  /**
+   * Método para navegar a la vista de la que precedemos
+   * Redirige según el tipo de vista anterior (inicio o perfil)
+   * @param {number} IDUsuario - ID del usuario publicador
+   */
   const handleInicio = async (IDUsuario) => {
     switch (previusPath) {
       case 0:
@@ -230,7 +271,11 @@ export const Comentarios = () => {
     console.log("Inicio");
   }
 
-  // Método para dar o eliminar me gusta a una publicación
+  /**
+   * Método para dar o eliminar me gusta a una publicación
+   * Actualiza el estado local y recarga los datos
+   * @param {number} idPublicacion - ID de la publicación
+   */
   const handleMeGustaPublicacion = async (idPublicacion) => {
     try {
       await handleMeGusta(idUsuario, idPublicacion);
@@ -245,7 +290,11 @@ export const Comentarios = () => {
     }
   }
 
-  // Método para dar o eliminar me gusta a un comentario
+  /**
+   * Método para dar o eliminar me gusta a un comentario
+   * Gestiona la adición o eliminación del me gusta en la base de datos
+   * @param {number} idComentario - ID del comentario
+   */
   const handleMeGustaComentario = async (idComentario) => {
     try {
       const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios`);
@@ -280,12 +329,19 @@ export const Comentarios = () => {
     }
   };
 
-  // Método para navegar al perfil del usuario que ha subido la publicación
+  /**
+   * Método para navegar al perfil del usuario que ha subido la publicación
+   * @param {number} idUser - ID del usuario a visualizar
+   */
   const handleVisualizarPerfil = (idUser) => {
     navigate("/Perfil", { state: { idUser } });
   }
 
-  // Método para publicar un comentario
+  /**
+   * Método para publicar un nuevo comentario
+   * Valida el texto y realiza la petición al servidor
+   * @param {Event} e - Evento del formulario
+   */
   const handlePublicar = async (e) => {
     e.preventDefault();
     if (texto.length === 0) {
@@ -321,8 +377,10 @@ export const Comentarios = () => {
     }
   };
 
+  // Color del contador de caracteres basado en la longitud del texto
   const colorContador = texto.length === maxCaracteres ? "red" : texto.length >= advertenciaCaracteres ? "orange" : "white";
 
+  // Muestra animación de carga mientras se procesan los datos
   if (cargando) { return (carga()) }
 
   return (
@@ -352,7 +410,6 @@ export const Comentarios = () => {
           )}
         </div>
         <p className="datos_2c">{publicacion.texto}</p>
-        {/*Línea separadora*/}
         <hr className="linea_separadora"/>
         <div className="container_2c">
           <div className="container_fila_noJustify">

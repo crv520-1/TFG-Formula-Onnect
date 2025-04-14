@@ -9,6 +9,10 @@ import "../styles/Botones.css";
 import "../styles/Containers.css";
 import { carga } from './animacionCargando';
 
+/**
+ * Componente que muestra el feed principal de publicaciones
+ * Permite ver, dar me gusta y comentar las publicaciones de todos los usuarios
+ */
 export const Inicio = () => {
   const navigate = useNavigate();
   const { user: idUsuario } = useContext(UsuarioContext);
@@ -61,7 +65,7 @@ export const Inicio = () => {
           return {
             ...publicacion,
             usuarioPublicador: usuarioPublicador || null,
-            numeroComentarios: comentarios.contador || 0, // Usar la longitud de los comentarios
+            numeroComentarios: comentarios.contador || 0,
           };
         })
       );
@@ -129,23 +133,39 @@ export const Inicio = () => {
     ]);
   };
 
+  /**
+   * Función para navegar a la vista de comentarios de una publicación
+   * @param {number} idPublicacion - ID de la publicación a consultar
+   */
   const handleComentarios = (idPublicacion) => {
-    // Navegar a comentarios con el ID de la publicación
     navigate(`/Comentarios`, { state: { idElemento: idPublicacion, previusPath: 0 } });
   };
 
+  /**
+   * Función para navegar al perfil de un usuario
+   * @param {number} idUser - ID del usuario a visitar
+   */
   const handleVisitarPerfil = (idUser) => {
     navigate(`/Perfil`, {state: { idUser }});
   };
 
-  // Función para obtener el contador de me gustas para una publicación específica
+  /**
+   * Función para obtener el contador de me gustas para una publicación
+   * @param {number} idPublicacion - ID de la publicación
+   * @returns {number} Número de me gustas
+   */
   const obtenerContadorMeGusta = (idPublicacion) => {
     const meGusta = meGustasPublicaciones.find(mg => mg.idElemento === idPublicacion);
     return meGusta ? meGusta.contador : 0;
   };
 
+  /**
+   * Función para cargar los me gustas dados por el usuario actual
+   * Determina qué publicaciones ha marcado con me gusta el usuario
+   */
   const cargarLikesUsuario = async () => {
     try {
+      // Obtener todos los me gustas para cada publicación en paralelo
       const likesPromises = publicacionesConUsuarios.map(publicacion =>
         axios.get(`http://localhost:3000/api/meGusta/elemento/${publicacion.idPublicaciones}`)
       );
@@ -165,11 +185,16 @@ export const Inicio = () => {
     }
   };
   
-  // Reemplazar la función usuarioHaDadoLike existente
+  /**
+   * Función para verificar si el usuario ha dado me gusta a una publicación
+   * @param {number} idPublicacion - ID de la publicación a verificar
+   * @returns {boolean} Verdadero si el usuario ha dado me gusta
+   */
   const usuarioHaDadoLike = (idPublicacion) => {
     return userLikes[idPublicacion] || false;
   };
 
+  // Muestra animación de carga mientras se obtienen los datos
   if (cargando) { return carga(); }
 
   return (
@@ -192,12 +217,18 @@ export const Inicio = () => {
               <p className="datos_v2">{new Date(publicacion.fechaPublicacion).toLocaleDateString()}</p>
               <div className="container_auto">
                 <p className="datos">{obtenerContadorMeGusta(publicacion.idPublicaciones)}</p>
-                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} className="boton_fondo_2c"> {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
+                <button type='button' onClick={() => handleMeGustaPublicacion(publicacion.idPublicaciones)} className="boton_fondo_2c"> 
+                  {usuarioHaDadoLike(publicacion.idPublicaciones) ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} 
+                </button>
                 <p className="datos">{publicacion.numeroComentarios}</p>
-                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c"><ChatBubbleOvalLeftIcon className="icono"/></button>
+                <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c">
+                  <ChatBubbleOvalLeftIcon className="icono"/>
+                </button>
               </div>
             </div>
-            <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(publicacion.idPublicaciones)}>{publicacion.texto}</button>
+            <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(publicacion.idPublicaciones)}>
+              {publicacion.texto}
+            </button>
           </div>
         ))}
       </div>

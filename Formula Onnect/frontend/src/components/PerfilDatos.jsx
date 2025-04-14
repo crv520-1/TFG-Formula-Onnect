@@ -10,11 +10,19 @@ import { carga } from "./animacionCargando.jsx";
 import HeaderPerfil from "./HeaderPerfil";
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 
+/**
+ * Componente que muestra el perfil de un usuario y sus favoritos
+ * Gestiona la visualización de datos personales, estadísticas y elementos favoritos
+ */
 export const Perfil = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  // Obtiene el ID del usuario a visualizar desde el estado de navegación
   const { idUser } = location.state || {};
+  // Obtiene el ID del usuario logueado del contexto
   const { user: idUsuario } = useContext(UsuarioContext);
+  
+  // Estados para almacenar información
   const [usuario, setUsuario] = useState([]);
   const [seguidores, setSeguidores] = useState([]);
   const [siguiendo, setSiguiendo] = useState([]);
@@ -27,28 +35,37 @@ export const Perfil = () => {
   const [numeroPublicaciones, setNumeroPublicaciones] = useState(0);
 
   useEffect(() => {
+    /**
+     * Función que carga todos los datos del perfil
+     * Obtiene información del usuario, favoritos, seguidores y publicaciones
+     */
     const cargarDatos = async () => {
       try {
         const usuariosResponse = await axios.get("http://localhost:3000/api/usuarios");
         const usuario = await cargarUsuario(usuariosResponse, idUser);
         setUsuario(usuario);
   
+        // Cargar elementos favoritos del usuario
         const { pilotoFav, equipoFav, circuitoFav } = await cargarFavoritos(usuario);
         if (pilotoFav) setImagenPiloto(getImagenPiloto(pilotoFav.driverId));
         if (equipoFav) setImagenEquipo(getImagenEquipo(equipoFav.constructorId));
         if (circuitoFav) setImagenCircuito(getImagenCircuito(circuitoFav.circuitId));
   
+        // Obtener número de publicaciones del usuario
         const publicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUser}`);
         setNumeroPublicaciones(publicacionesResponse.data["COUNT(*)"]);
   
+        // Cargar información de seguidores y seguidos
         const { seguidores, siguiendo } = await cargarSeguidores(idUser);
         setSeguidores(seguidores);
         setSiguiendo(siguiendo);
   
+        // Verificar relación entre usuario actual y perfil visitado
         const { mismoUsuario, sigo } = await verificarSeguimiento(idUser, idUsuario);
         setMismoUsuario(mismoUsuario);
         setSigo(sigo);
   
+        // Pequeño delay para mostrar la animación de carga
         setTimeout(() => { setCargando(false); }, 500);
       } catch (error) {
         console.error("Error obteniendo datos:", error);
@@ -58,6 +75,12 @@ export const Perfil = () => {
     cargarDatos();
   }, [idUser, idUsuario]);
 
+  /**
+   * Función para encontrar los datos del usuario específico
+   * @param {Object} usuariosResponse - Respuesta con todos los usuarios
+   * @param {number} idUser - ID del usuario a buscar
+   * @returns {Object} Datos del usuario
+   */
   const cargarUsuario = async (usuariosResponse, idUser) => {
     const usuarioEncontrado = usuariosResponse.data.find(user => user.idUsuario === idUser);
     if (!usuarioEncontrado) {
@@ -66,6 +89,11 @@ export const Perfil = () => {
     return usuarioEncontrado;
   };
   
+  /**
+   * Función para cargar los elementos favoritos del usuario
+   * @param {Object} usuario - Datos del usuario
+   * @returns {Object} Objetos con los favoritos del usuario
+   */
   const cargarFavoritos = async (usuario) => {
     const [pilotosResponse, equiposResponse, circuitosResponse] = await Promise.all([
       axios.get("http://localhost:3000/api/pilotos"),
@@ -84,6 +112,11 @@ export const Perfil = () => {
     };
   };
   
+  /**
+   * Función para obtener el número de seguidores y seguidos
+   * @param {number} idUser - ID del usuario a consultar
+   * @returns {Object} Cantidades de seguidores y seguidos
+   */
   const cargarSeguidores = async (idUser) => {
     try {
       const [seguidoresResponse, siguiendoResponse] = await Promise.all([
@@ -101,6 +134,13 @@ export const Perfil = () => {
     }
   };
   
+  /**
+   * Función para verificar relación entre usuarios
+   * Determina si es el mismo usuario o si el usuario actual sigue al visualizado
+   * @param {number} idUser - ID del usuario visualizado
+   * @param {number} idUsuario - ID del usuario actual
+   * @returns {Object} Estado de la relación entre usuarios
+   */
   const verificarSeguimiento = async (idUser, idUsuario) => {
     if (idUser === idUsuario) {
       return { mismoUsuario: true, sigo: false };
@@ -115,16 +155,25 @@ export const Perfil = () => {
     }
   };
 
+  /**
+   * Función para navegar a la vista de publicaciones del usuario
+   */
   const handlePublicaciones = (e) => {
     e.preventDefault();
     navigate("/PerfilPublicaciones", { state: { idUser } });
   }
 
+  /**
+   * Función para actualizar el estado cuando cambia el número de seguidores
+   * @param {number} nuevoNumeroSeguidores - Nuevo número de seguidores
+   * @param {boolean} nuevoEstadoSigo - Nuevo estado de seguimiento
+   */
   const handleSeguidoresChange = (nuevoNumeroSeguidores, nuevoEstadoSigo) => {
     setSeguidores(nuevoNumeroSeguidores);
     setSigo(nuevoEstadoSigo);
   };
 
+  // Muestra animación de carga mientras se obtienen los datos
   if (cargando) { return carga(); }
 
   return (

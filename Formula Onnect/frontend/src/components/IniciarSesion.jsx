@@ -7,17 +7,29 @@ import '../styles/Iniciar_Registrar.css';
 import '../styles/IniciarSesion.css';
 import { carga } from "./animacionCargando";
 
+/**
+ * Componente que muestra el formulario de inicio de sesión
+ * Permite a los usuarios autenticarse para acceder a la aplicación
+ */
 export const IniciarSesion = () => {
     const [cargando, setCargando] = useState(true);
     const [usuarios, setUsuarios] = useState([]);
     const [nickName, setNickName] = useState("");
     const [contraseña, setContraseña] = useState("");
+    
+    // Estados para controlar la visibilidad de la contraseña
     const [tipo, setTipo] = useState("password");
     const [icono, setIcono] = useState(EyeSlashIcon);
+    
+    // Contexto para mantener la sesión del usuario
     const { setUser } = useContext(UsuarioContext);
     const navigate = useNavigate();
     let logo = "images/logo/Posible4NOFondo.png";
 
+    /**
+     * Carga la lista de usuarios al iniciar el componente
+     * Necesario para validar las credenciales de inicio de sesión
+     */
     useEffect(() => {
         axios.get("http://localhost:3000/api/usuarios").then(response => {
             setUsuarios(response.data);
@@ -27,6 +39,10 @@ export const IniciarSesion = () => {
         setCargando(false);
     }, []);
 
+    /**
+     * Función para alternar entre mostrar y ocultar la contraseña
+     * Cambia el tipo de input y el icono correspondiente
+     */
     const handleOcultarMostrar = () => {
         if (tipo==="password"){
            setIcono(EyeIcon);
@@ -37,11 +53,18 @@ export const IniciarSesion = () => {
         }
      }
 
+    /**
+     * Función para navegar al formulario de registro
+     */
     const handleCrearCuenta = (e) => {
         e.preventDefault();
         navigate("/Registro1");
     };
 
+    /**
+     * Función para validar credenciales e iniciar sesión
+     * Verifica que el usuario exista y que la contraseña coincida
+     */
     const handleIniciarSesion = async (e) => {
         e.preventDefault();
         // Implementar lógica de inicio de sesión
@@ -62,6 +85,7 @@ export const IniciarSesion = () => {
         navigate("/Inicio");
     };
 
+    // Muestra animación de carga mientras se obtienen los datos
     if (cargando) { return carga() };
 
     return (

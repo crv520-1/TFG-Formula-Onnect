@@ -5,12 +5,19 @@ import "../styles/Containers.css";
 import { carga } from './animacionCargando';
 import { getImagenPiloto } from './mapeoImagenes.js';
 
+/**
+ * Componente que muestra la guía de pilotos de Fórmula 1
+ * Presenta todos los pilotos organizados en una cuadrícula
+ */
 export const GuiaPilotos = () => {
   const navigate = useNavigate();
   const [pilotos, setPilotos] = useState([]);
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
+    /**
+     * Función que carga los datos de los pilotos desde el backend
+     */
     const cargarDatos = async () => {
       setCargando(true);
       try {
@@ -23,11 +30,16 @@ export const GuiaPilotos = () => {
       } catch (error) {
         console.error("Error en la API", error);
       }
+      // Pequeño delay para mostrar la animación de carga
       setTimeout(() => { setCargando(false); }, 500);
     }
     cargarDatos();
   }, []);
 
+  /**
+   * Función para obtener los datos de pilotos desde el backend
+   * @returns {Array} Lista de pilotos
+   */
   const cargarPilotos = async () => {
     setCargando(true);
     try {
@@ -43,21 +55,31 @@ export const GuiaPilotos = () => {
     }
   }
 
+  /**
+   * Función para navegar a la sección de equipos
+   */
   const handleEquipos = (e) => {
     e.preventDefault();
     navigate("/GuiaEquipos");
   }
     
+  /**
+   * Función para navegar a la sección de circuitos
+   */
   const handleCircuitos = (e) => {
     e.preventDefault();
     navigate("/GuiaCircuitos");
   }
 
+  /**
+   * Función para ver los detalles de un piloto específico
+   * @param {number} idPiloto - ID del piloto a consultar
+   */
   const handlePiloto = (idPiloto) => {
-    // Navegar a la vista de un piloto
     navigate(`/DatosPiloto`, { state: { idPiloto } });
   }
 
+  // Muestra animación de carga mientras se obtienen los datos
   if (cargando) { return carga(); }
         
   return (

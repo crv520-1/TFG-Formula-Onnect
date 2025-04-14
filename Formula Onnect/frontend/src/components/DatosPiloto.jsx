@@ -5,18 +5,26 @@ import '../styles/Containers.css';
 import { carga } from './animacionCargando.jsx';
 import { getImagenPiloto } from './mapeoImagenes.js';
 
+/**
+ * Componente que muestra información detallada de un piloto de F1
+ * Obtiene datos del backend y realiza scraping de Wikipedia
+ */
 export const DatosPiloto = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  // Obtiene el ID del piloto desde el estado de navegación
   const { idPiloto } = location.state || {};
+  // Estados para almacenar información
   const [pilotos, setPilotos] = useState([]);
   const [driverData, setDriverData] = useState(null);
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
+    // Función que carga los datos del piloto y realiza scraping
     const cargarDatos = async () => {
       setCargando(true);
       try {
+        // Carga datos básicos del piloto desde el backend
         const piloto = await cargarDatosPiloto(idPiloto);
         if (!piloto) {
           console.error("Piloto no encontrado");
@@ -31,14 +39,20 @@ export const DatosPiloto = () => {
           return;
         }
         setDriverData(scraperResponse);
+        // Pequeño delay para mostrar la animación de carga
         setTimeout(() => { setCargando(false); }, 500);
       } catch (error) {
         console.error("Error en la API", error);
       }
     }
     cargarDatos();
-  }, [idPiloto]);
+  }, [idPiloto]); // Se ejecuta cuando cambia el ID del piloto
 
+  /**
+   * Función para obtener los datos básicos del piloto desde el backend
+   * @param {string} idPiloto - ID del piloto a consultar
+   * @returns {Object} Datos del piloto
+   */
   const cargarDatosPiloto = async (idPiloto) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/pilotos/${idPiloto}`);
@@ -53,6 +67,11 @@ export const DatosPiloto = () => {
     }
   };
 
+  /**
+   * Función para obtener datos detallados mediante scraping de Wikipedia
+   * @param {string} url - URL de Wikipedia del piloto
+   * @returns {Object} Datos extraídos por scraping
+   */
   const cargarDatosScraping = async (url) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/scrapingPilotos/driver-data`, {
@@ -69,6 +88,7 @@ export const DatosPiloto = () => {
     }
   };
 
+  // Funciones de navegación para la barra de menú
   const handlePilotos = (e) => {
     e.preventDefault();
     navigate("/GuiaPilotos");
@@ -84,6 +104,7 @@ export const DatosPiloto = () => {
     navigate("/GuiaCircuitos");
   }
 
+  // Muestra animación de carga mientras se obtienen los datos
   if (cargando) { return carga(); }
 
   return (

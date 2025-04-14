@@ -6,10 +6,16 @@ import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito, getImagenEquipo } from './mapeoImagenes.js';
 import { getStatusTraducido } from './mapeoStatus.js';
 
+/**
+ * Componente que muestra los resultados de una carrera en un circuito específico
+ * Obtiene datos de la API Ergast para mostrar horarios y resultados de carrera y sprint
+ */
 export const ResultadoCircuito = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  // Obtiene los parámetros del circuito desde el estado de navegación
   const { circuitId, year, round } = location.state || {};
+
   const [circuitos, setCircuitos] = useState([]);
   const [horariosGranPremio, setHorariosGranPremio] = useState([]);
   const [posiciones, setPosiciones] = useState([]);
@@ -19,10 +25,13 @@ export const ResultadoCircuito = () => {
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
+    /**
+     * Función que carga todos los datos necesarios para mostrar resultados
+     * Realiza llamadas en paralelo para optimizar la carga
+     */
     const loadData = async () => {
       try {
         setCargando(true);
-
         const [circuito, resultados, horarios] = await Promise.all([
           fetchCircuito(circuitId),
           fetchCarreraResultados(year, round),
@@ -45,6 +54,7 @@ export const ResultadoCircuito = () => {
       } catch (error) {
         console.error("Error al cargar los datos:", error);
       } finally {
+        // Pequeño delay para mostrar la animación de carga
         setTimeout(() => setCargando(false), 500);
       }
     };
@@ -52,6 +62,11 @@ export const ResultadoCircuito = () => {
     loadData();
   }, [circuitId, year, round]);
 
+  /**
+   * Función para obtener los datos del circuito desde la base de datos
+   * @param {string} circuitId - ID del circuito a consultar
+   * @returns {Object} Datos del circuito
+   */
   const fetchCircuito = async (circuitId) => {
     const response = await axios.get(`http://localhost:3000/api/circuitos`);
     const circuito = response.data.find(c => c.circuitId === circuitId);
@@ -61,6 +76,12 @@ export const ResultadoCircuito = () => {
     return circuito;
   };
   
+  /**
+   * Función para obtener los resultados de la carrera desde la API Ergast
+   * @param {number} year - Año de la temporada
+   * @param {number} round - Número de carrera en la temporada
+   * @returns {Array|null} Lista de resultados o null si no hay datos
+   */
   const fetchCarreraResultados = async (year, round) => {
     const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/results.json`);
     const resultadosData = response.data.MRData.RaceTable.Races[0];
@@ -76,6 +97,12 @@ export const ResultadoCircuito = () => {
     }));
   };
   
+  /**
+   * Función para obtener los horarios del Gran Premio desde la API Ergast
+   * @param {number} year - Año de la temporada
+   * @param {number} round - Número de carrera en la temporada
+   * @returns {Object} Horarios formateados del Gran Premio
+   */
   const fetchHorarios = async (year, round) => {
     const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/races.json`);
     const data = response.data.MRData.RaceTable.Races[0];
@@ -98,6 +125,12 @@ export const ResultadoCircuito = () => {
     };
   };
   
+  /**
+   * Función para obtener los resultados de la carrera sprint desde la API Ergast
+   * @param {number} year - Año de la temporada
+   * @param {number} round - Número de carrera en la temporada
+   * @returns {Array|null} Lista de resultados o null si no hay datos
+   */
   const fetchSprintResultados = async (year, round) => {
     const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/${round}/sprint.json`);
     const data = response.data.MRData.RaceTable.Races[0];
@@ -112,10 +145,19 @@ export const ResultadoCircuito = () => {
     }));
   };
 
+  /**
+   * Función para navegar a la vista de calendario de resultados
+   * @param {number} ano - Año del calendario a consultar
+   */
   const handleCalendario = (ano) => {
     navigate("/Resultados", { state: { ano } });
   }
 
+  /**
+   * Función para mostrar diferente información según haya sprint o no
+   * @param {Object} horario - Objeto con los horarios del Gran Premio
+   * @returns {JSX.Element} Elemento con la información de los horarios
+   */
   function mostrarCasoSprint(horario) {
     if (horario.hasSprint) {
       return (
@@ -134,6 +176,12 @@ export const ResultadoCircuito = () => {
     }
   }
 
+  /**
+   * Función que determina qué mostrar según el estado de las carreras
+   * Muestra diferentes secciones dependiendo de si se han disputado carreras
+   * @param {boolean} disputada - Indica si la carrera principal se ha disputado
+   * @returns {JSX.Element} Elemento con los resultados o mensaje informativo
+   */
   function mostrarDisputada(disputada) {
     if (horariosGranPremio.hasSprint === false) {
       if (!disputada) {
@@ -174,6 +222,11 @@ export const ResultadoCircuito = () => {
     }
   }
 
+  /**
+   * Función para renderizar los resultados de carrera en el formato adecuado
+   * @param {Array} posiciones - Lista de resultados a mostrar
+   * @returns {JSX.Element} Elemento con la tabla de resultados
+   */
   function frontendResultados(posiciones) {
     return (
       <div className='container_grid'>
@@ -195,6 +248,7 @@ export const ResultadoCircuito = () => {
     )
   }
 
+  // Muestra animación de carga mientras se obtienen los datos
   if (cargando) { return ( carga() ); }
 
   return (

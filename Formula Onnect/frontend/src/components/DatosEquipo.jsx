@@ -5,18 +5,26 @@ import "../styles/Containers.css";
 import { carga } from './animacionCargando.jsx';
 import { getImagenEquipo, getLivery } from './mapeoImagenes.js';
 
+/**
+ * Componente que muestra información detallada de un equipo de F1
+ * Obtiene datos del backend y realiza scraping de Wikipedia
+ */
 export const DatosEquipo = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  // Obtiene el ID del equipo desde el estado de navegación
   const { idEquipo } = location.state || {};
+  // Estados para almacenar información
   const [equipo, setEquipo] = useState({});
   const [equipoData, setEquipoData] = useState({});
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
+    // Función que carga los datos del equipo y realiza scraping
     const fetchData = async () => {
       setCargando(true);
       try {
+        // Carga datos básicos del equipo desde el backend
         const equipo = await cargarDatosEquipo(idEquipo);
         if (!equipo) {
           console.error("Equipo no encontrado");
@@ -24,21 +32,27 @@ export const DatosEquipo = () => {
         }
         setEquipo(equipo);
 
-        // Consultar la wikipedia con la url del equipo para obtener los datos de interés
+        // Consulta Wikipedia para obtener datos adicionales del equipo
         const scraperResponse = await cargarDatosScraping(equipo.urlEquipo, equipo.urlCastellano);
         if (!scraperResponse) {
           console.error("Datos de scraping no encontrados");
           return;
         }
         setEquipoData(scraperResponse);
+        // Pequeño delay para mostrar la animación de carga
         setTimeout(() => { setCargando(false); }, 500);
       } catch (error) {
         console.error("Error en la API", error);
       }
     }
     fetchData();
-  }, [idEquipo]);
+  }, [idEquipo]); // Se ejecuta cuando cambia el ID del equipo
 
+  /**
+   * Función para obtener los datos básicos del equipo desde el backend
+   * @param {string} idEquipo - ID del equipo a consultar
+   * @returns {Object} Datos del equipo
+   */
   const cargarDatosEquipo = async (idEquipo) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/equipos/${idEquipo}`);
@@ -53,6 +67,13 @@ export const DatosEquipo = () => {
     }
   };
   
+  /**
+   * Función para obtener datos detallados mediante scraping de Wikipedia
+   * @param {string} urlEquipo - URL en inglés del equipo
+   * @param {string} urlCastellano - URL en español del equipo
+   * @returns {Object} Datos extraídos por scraping
+   * Se analiza la URL en español y si faltan datos se obtienen con la URL en inglés
+   */
   const cargarDatosScraping = async (urlEquipo, urlCastellano) => {
     try {
       const response = await axios.get(`http://localhost:3000/api/scrapingEquipos/equipo-data`, {
@@ -69,6 +90,7 @@ export const DatosEquipo = () => {
     }
   };
 
+  // Funciones de navegación para la barra de menú
   const handlePilotos = (e) => {
     e.preventDefault();
     navigate("/GuiaPilotos");
@@ -84,6 +106,7 @@ export const DatosEquipo = () => {
     navigate("/GuiaCircuitos");
   }
 
+  // Muestra animación de carga mientras se obtienen los datos
   if (cargando) { 
     return carga(); 
   }

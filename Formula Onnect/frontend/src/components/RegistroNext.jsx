@@ -7,6 +7,10 @@ import '../styles/RegistroNext.css';
 import { carga } from './animacionCargando.jsx';
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 
+/**
+ * Componente que muestra el segundo paso del registro de usuario
+ * Permite seleccionar favoritos (piloto, equipo, circuito) antes de crear la cuenta
+ */
 export const RegistroNext = () => {
     let logo = "images/logo/Posible4NOFondo.png";
     let newUsuario = [];
@@ -18,10 +22,16 @@ export const RegistroNext = () => {
     const [circuitoSeleccionado, setCircuitoSeleccionado] = useState("");
     const location = useLocation();
     const { nickName, nombreCompleto, email, contraseña } = location.state || {};
+    
+    // Contexto para establecer el usuario actual tras el registro
     const { setUser } = useContext(UsuarioContext);
     const navigate = useNavigate();
     const [cargando, setCargando] = useState(true);
     
+    /**
+     * Carga las opciones de pilotos, equipos y circuitos al iniciar el componente
+     * Establece las opciones por defecto
+     */
     useEffect(() => {
         setCargando(true);
         axios.get("http://localhost:3000/api/pilotos").then(response => {
@@ -45,6 +55,11 @@ export const RegistroNext = () => {
         setTimeout(() => { setCargando(false); }, 100);
     }, []);
 
+    /**
+     * Función para crear la cuenta con todos los datos recopilados
+     * Envía la información al servidor y navega al inicio si es exitoso
+     * @param {Event} e - Evento del formulario
+     */
     const handleCrearCuenta = async (e) => {
         e.preventDefault();
         newUsuario = {
@@ -70,6 +85,7 @@ export const RegistroNext = () => {
         }
     };
 
+    // Muestra animación de carga mientras se obtienen los datos
     if (cargando) { return carga() };
 
     return (

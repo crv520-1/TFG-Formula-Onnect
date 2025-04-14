@@ -8,28 +8,42 @@ import { carga } from './animacionCargando';
 import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 import { validarContraseña } from "./validarContraseña.js";
 
+/**
+ * Componente para editar el perfil del usuario
+ * Permite modificar datos personales y seleccionar favoritos (pilotos, equipos, circuitos)
+ */
 export const EditarPerfil = () => {
     const navigate = useNavigate();
     const { user: idUsuario } = useContext(UsuarioContext);
+    
+    // Estados para almacenar datos de usuario y opciones de selección
     const [usuario, setUsuario] = useState([]);
     const [pilotos, setPilotos] = useState([]);
     const [equipos, setEquipos] = useState([]);
     const [circuitos, setCircuitos] = useState([]);
+    
+    // Estados para almacenar selecciones de favoritos
     const [pilotoSeleccionado, setPilotoSeleccionado] = useState("");
     const [equipoSeleccionado, setEquipoSeleccionado] = useState("");
     const [circuitoSeleccionado, setCircuitoSeleccionado] = useState("");
+    
+    // Estados para almacenar datos del formulario
     const [nickName, setNickName] = useState("");
     const [nombreCompleto, setNombreCompleto] = useState("");
     const [contraseña, setContraseña] = useState("");
     const [contraseñaRepe, setContraseñaRepe] = useState("");
+    
+    // Estados para el control de visibilidad de contraseña
     const [tipo, setTipo] = useState("password");
     const [cargando, setCargando] = useState(true);
     const [icono, setIcono] = useState(EyeSlashIcon);
 
     useEffect(() => {
+        /**
+         * Función que carga los datos del usuario y las opciones para favoritos
+         */
         const cargarDatos = async () => {
             try {
-                // Obtener usuario y datos favoritos en paralelo
                 const [usuarioEncontrado, datosFavoritos] = await Promise.all([
                     cargarDatosUsuario(idUsuario),
                     cargarDatosFavoritos()
@@ -53,11 +67,16 @@ export const EditarPerfil = () => {
             } catch (error) {
                 console.error("Error obteniendo datos:", error);
             }
+            // Pequeño delay para mostrar la animación de carga
             setTimeout(() => { setCargando(false); }, 500);
         };
         cargarDatos();
     }, [idUsuario]);
 
+    /**
+     * Función para cargar los datos del usuario actual
+     * @returns {Object} Datos del usuario
+     */
     const cargarDatosUsuario = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/api/usuarios/${idUsuario}`);
@@ -69,6 +88,10 @@ export const EditarPerfil = () => {
         }
     };
 
+    /**
+     * Función para cargar los datos de pilotos, equipos y circuitos
+     * @returns {Object} Objeto con arrays de pilotos, equipos y circuitos
+     */
     const cargarDatosFavoritos = async () => {
         const [pilotosRes, equiposRes, circuitosRes] = await Promise.all([
             axios.get("http://localhost:3000/api/pilotos"),
@@ -82,6 +105,9 @@ export const EditarPerfil = () => {
         };
     };
 
+    /**
+     * Función para alternar la visibilidad de la contraseña
+     */
     const handleOcultarMostrar = () => {
         if (tipo==="password"){
             setIcono(EyeIcon);
@@ -92,13 +118,18 @@ export const EditarPerfil = () => {
         }
     }
 
+    /**
+     * Función para cancelar la edición y volver al perfil
+     */
     const handleCancelar = (e) => {
         e.preventDefault();
         navigate("/Perfil", { state: { idUser: idUsuario } });
     }
 
-    
-
+    /**
+     * Función para guardar los cambios del perfil
+     * Valida los datos antes de enviarlos al servidor
+     */
     const handleGuardar = async (e) => {
         e.preventDefault();
         
@@ -135,6 +166,7 @@ export const EditarPerfil = () => {
         navigate("/Perfil", { state: { idUser: idUsuario } });
     }
 
+    // Muestra animación de carga mientras se obtienen los datos
     if (cargando) { return carga()}
 
   return (

@@ -5,17 +5,32 @@ import { useNavigate } from "react-router-dom";
 import '../styles/Botones.css';
 import '../styles/Containers.css';
 
+/**
+ * Componente que muestra la cabecera del perfil de usuario
+ * Incluye información básica, estadísticas y botones de acción
+ * Gestiona la funcionalidad de seguir/dejar de seguir a otros usuarios
+ */
 const PerfilHeader = ({ usuario, numeroPublicaciones, seguidores, siguiendo, sigo, idUser, mismoUsuario, onSeguidoresChange }) => {
   const navigate = useNavigate();
 
+  /**
+   * Función para navegar a la página de editar perfil
+   */
   const handleEditarPerfil = () => {
     navigate("/EditarPerfil");
   };
 
+  /**
+   * Función para cerrar sesión y volver a la pantalla de login
+   */
   const handleCerrarSesion = () => {
     navigate("/IniciarSesion");
   };
 
+  /**
+   * Función para seguir o dejar de seguir a un usuario
+   * Actualiza la relación en la base de datos y actualiza el contador de seguidores
+   */
   const handleSeguir = async () => {
     if (!sigo) {
       // Seguir al usuario que se está visualizando

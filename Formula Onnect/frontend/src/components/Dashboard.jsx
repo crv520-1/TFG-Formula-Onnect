@@ -3,18 +3,35 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 
+/**
+ * Componente que muestra la barra lateral de navegación principal
+ * Gestiona el estado visual de los botones según la ruta actual
+ * Permite navegar entre las diferentes secciones de la aplicación
+ */
 export const Dashboard = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    // Estado para mantener la ruta anterior (necesario para la vista de comentarios)
     const [prevPath, setPrevPath] = useState("");
+    // Obtiene el ID del usuario actual del contexto
     const { user: idUsuario } = useContext(UsuarioContext);
 
+    /**
+     * Efecto que guarda la ruta anterior cuando el usuario navega
+     * Excluye la ruta de comentarios para mantener la referencia a la vista original
+     */
     useEffect(() => {
         if (location.pathname !== "/Comentarios") {
             setPrevPath(location.pathname);
         }
     }, [location.pathname]);
 
+    /**
+     * Función que determina el color de fondo de los botones según la ruta actual
+     * Maneja casos especiales para la vista de comentarios
+     * @param {string} path - Ruta a comparar
+     * @returns {string} Código de color hexadecimal
+     */
     const getBoton = (path) => {
         if (location.pathname === "/Comentarios") {
             return prevPath === path ? "#C40000" : "#15151E";
@@ -22,6 +39,7 @@ export const Dashboard = () => {
         return location.pathname === path ? "#C40000" : "#15151E";
     };
 
+    // Funciones de navegación para cada sección principal de la aplicación
     const handleInicio = (e) => {
         e.preventDefault();
         navigate("/Inicio");

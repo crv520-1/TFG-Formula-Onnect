@@ -6,6 +6,10 @@ import '../styles/Containers.css';
 import { carga } from './animacionCargando';
 import { getImagenEquipo, getImagenPiloto } from './mapeoImagenes';
 
+/**
+ * Componente que muestra la clasificación de pilotos de F1
+ * Obtiene datos de una API y permite seleccionar el año
+ */
 export const Clasificacion = () => {
   const navigate = useNavigate();
   const [year, setYear] = useState(2025);
@@ -13,14 +17,13 @@ export const Clasificacion = () => {
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
+    // Carga los datos de clasificación al cambiar el año
     const cargarDatos = async () => {
       setCargando(true);
       try {
         const standings = await cargarClasificacionPilotos(year);
         setClasificacion(standings);
-        setTimeout(() => {
-          setCargando(false);
-        }, 500);
+        setTimeout(() => { setCargando(false); }, 500); // Simula un pequeño retraso
       } catch (error) {
         console.error("Error en la API", error);
       }
@@ -28,6 +31,11 @@ export const Clasificacion = () => {
     cargarDatos();
   }, [year]);
 
+  /**
+   * Obtiene la clasificación de pilotos desde la API
+   * @param {number} year - Año a consultar
+   * @returns {Array} Datos de clasificación del mundial
+   */
   const cargarClasificacionPilotos = async (year) => {
     try {
       const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/driverstandings.json`);
@@ -56,15 +64,29 @@ export const Clasificacion = () => {
     }
   };
 
+  /**
+   * Navega a la página de clasificación de equipos
+   */
   const handleEquipos = (e) => {
     e.preventDefault();
     navigate("/ClasificacionEquipos");
     console.log("Equipos");
   }
 
-  // Se crea un array que comprenda los años entre el 2000 y el 2025
-  const years = Array.from({ length: 26 }, (_, i) => 2025 - i);
+  // Obtiene el año actual
+  const currentYear = new Date().getFullYear();
 
+  // Calcula la longitud del array de años
+  const length = (currentYear - 2000) + 1;
+
+  // Genera un array de años entre 2000 y 2025
+  const years = Array.from({ length: length }, (_, i) => currentYear - i);
+
+  /**
+   * Devuelve el color según la posición
+   * @param {number} posicion - Posición del equipo
+   * @returns {string} Color asociado
+   */
   const getColorPosicion = (posicion) => {
     if (posicion === 1) return "#FFD700";
     if (posicion === 2) return "#C0C0C0";
@@ -72,11 +94,17 @@ export const Clasificacion = () => {
     return "white";
   }
 
+  /**
+   * Devuelve el estilo de fuente según la posición
+   * @param {number} posicion - Posición del equipo
+   * @returns {string} Estilo de fuente
+   */
   const getEstiloPosicion = (posicion) => {
     if (posicion <= 3) return "bold";
     return "normal";
   }
 
+  // Muestra animación de carga mientras se obtienen los datos
   if (cargando) { return ( carga() )};
 
   return (
@@ -86,7 +114,6 @@ export const Clasificacion = () => {
         <button type='submit' onClick={handleEquipos} className='boton_fondo_15_v2'>Equipos</button>
       </div>
       <div className='container_fila'>
-        {/* Seleccionable para elegir el año */}
         <select className='select' onChange={(e) => setYear(e.target.value)} value={year}>
           {years.map(year => ( <option key={year} value={year}>{year}</option> ))}
         </select>
