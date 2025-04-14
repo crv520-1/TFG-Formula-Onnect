@@ -224,6 +224,11 @@
         height: 20vh;
     }
 
+    .imagen_livery_v2 {
+        width: 90vh;
+        height: 50vh;
+    }
+
     .imagen_livery_v3 {
         width: 33vh;
         height: 36vh;
@@ -236,6 +241,11 @@
 
     .imagen_equipo_v2 {
         width: 7vh;
+        height: 7vh;
+    }
+
+    .imagen_equipo_v3 {
+        width: 10vh;
         height: 7vh;
     }
 
@@ -252,6 +262,11 @@
     .imagen_circuito_select {
         width: 95%;
         height: 100%;
+    }
+
+    .imagen_circuito {
+        width: 90vh;
+        height: 50vh;
     }
 
     .imagen_circuito_v2 {
@@ -277,5 +292,10 @@
     .imagen_piloto {
         width: 20vh;
         height: 20vh;
+    }
+
+    .imagen_piloto_v2 {
+        width: 40vh;
+        height: 40vh;
     }
 }
