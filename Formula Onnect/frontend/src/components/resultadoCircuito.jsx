@@ -233,7 +233,7 @@ export const ResultadoCircuito = () => {
         {posiciones.map((posicion, index) => {
           const isEven = index % 2 !== 0;
           return (
-            <div key={index} style={{ display: "flex", flexDirection: "row", alignItems: "center", backgroundColor: "#1a1a1a", padding: "5px 10px", borderRadius: "0.5vh", marginBottom: "1vh", paddingLeft: "0.5vh", transform: isEven ? "translateY(1.5vh)" : "none" }}>
+            <div key={index} style={{ display: "flex", flexDirection: "row", alignItems: "center", backgroundColor: "#5B5B61", padding: "5px 10px", borderRadius: "0.5vh", marginBottom: "1vh", paddingLeft: "0.5vh", transform: isEven ? "translateY(1.5vh)" : "none" }}>
               <div className='container_minWidth_v2'>
                 <span className='span_v3_bold_v2'>{posicion.position}</span>
               </div>

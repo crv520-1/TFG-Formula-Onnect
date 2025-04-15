@@ -50,7 +50,7 @@ html, body {
 }
 
 .principal-button {
-    background-color: #EA1F22;
+    background-color: #FF1E00;
     border-radius: 1.5vh;
     border-width: 3px;
     border-color: White;
@@ -58,7 +58,7 @@ html, body {
 }
 
 .principal-button:hover {
-    background-color: #EA1F22; /* Mantiene el color original */
+    background-color: #FF1E00; /* Mantiene el color original */
     color: white; /* Mantiene el color del texto original */
     border-color: white; /* Mantiene el color del borde original */
     transform: none; /* Evita cualquier transformación */
@@ -71,18 +71,18 @@ html, body {
 }
 
 .secondary-button {
-    color: #EA1F22;
+    color: #FF1E00;
     background-color: white;
     border-radius: 1.5vh;
     border-width: 3px;
-    border-color: #EA1F22;
+    border-color: #FF1E00;
     margin-bottom: 5vh;
 }
 
 .secondary-button:hover {
     background-color: white; /* Mantiene el color original */
-    color: #EA1F22; /* Mantiene el color del texto original */
-    border-color: #EA1F22; /* Mantiene el color del borde original */
+    color: #FF1E00; /* Mantiene el color del texto original */
+    border-color: #FF1E00; /* Mantiene el color del borde original */
     transform: none; /* Evita cualquier transformación */
     transition: none; /* Elimina cualquier animación */
 }

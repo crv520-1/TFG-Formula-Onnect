@@ -69,7 +69,7 @@
     justify-content: center;
     height: 3vh;
     border: none;
-    background-color: #C40000;
+    background-color: #FF1E00;
     width: 15vh;
 }
 
@@ -85,7 +85,7 @@
     justify-content: center;
     height: 3vh;
     border: none;
-    background-color: #C40000;
+    background-color: #FF1E00;
     width: 15vh;
 }
 
@@ -101,7 +101,7 @@
     justify-content: center;
     height: 3vh;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     margin-top: 1vh;
 }
 
@@ -114,7 +114,7 @@
     align-items: center;
     justify-content: row;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 .boton_fondo_2c_v2:focus {
@@ -126,7 +126,7 @@
     text-align: left;
     width: 100%;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 .boton_fondo_2c_v3:focus {
@@ -141,7 +141,7 @@
     justify-content: center;
     height: 3vh;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 .boton_fondo_2c_v4:focus {
@@ -154,7 +154,7 @@
     justify-content: center;
     height: 5vh;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 .boton_fondo_2c_v5:focus {
@@ -167,7 +167,7 @@
     align-items: center;
     padding-left: 1vw;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 .boton_fondo_2c_v6:focus {
@@ -184,7 +184,7 @@
     width: 35vh;
     height: 30vh;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 .boton_fondo_2c_v7:focus {
@@ -201,7 +201,7 @@
     width: 25vh;
     height: 25vh;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 .boton_fondo_2c_v8:focus {
@@ -218,7 +218,7 @@
     width: 23vh;
     height: 23vh;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 .boton_fondo_2c_v9:focus {
@@ -230,7 +230,7 @@
     border-radius: 2vh;
     padding: 1vh;
     border: none;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 .boton_fondo_2c_v10:focus {
@@ -241,15 +241,15 @@
     border-radius: 1.5vh;
     border-width: 3px;
     margin-right: 10vw;
-    border-color: #EA1F22;
-    color: #EA1F22;
+    border-color: #FF1E00;
+    color: #FF1E00;
     background-color: white;
 }
 
 .boton_texto_ea:hover {
     background-color: white;
-    color: #EA1F22;
-    border-color: #EA1F22;
+    color: #FF1E00;
+    border-color: #FF1E00;
     transform: none; /* Evita cualquier transformación */
     transition: none; /* Elimina cualquier animación */
 }
@@ -263,11 +263,11 @@
     border-width: 3px;
     border-color: white;
     color: white;
-    background-color: #EA1F22;
+    background-color: #FF1E00;
 }
 
 .boton_fondo_ea:hover {
-    background-color: #EA1F22;
+    background-color: #FF1E00;
     color: white;
     border-color: white;
     transform: none; /* Evita cualquier transformación */
@@ -289,7 +289,7 @@
     justify-content: center;
     border: none;
     width: 15vw;
-    background-color: #C40000;
+    background-color: #FF1E00;
 }
 
 .boton_seguir:focus {
@@ -308,7 +308,7 @@
     border: none;
     width: 15vw;
     background-color: white;
-    color: #C40000;
+    color: #FF1E00;
 }
 
 .boton_dejar_seguir:focus {

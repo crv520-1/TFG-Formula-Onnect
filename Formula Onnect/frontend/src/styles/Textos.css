@@ -1,6 +1,6 @@
 /*TÍTULOS*/
 .titulo_c4 {
-    background-color: #C40000;
+    background-color: #FF1E00;
     border-radius: 0.5vh;
     width: 15vh;
     font-size: 2vh;
@@ -10,7 +10,7 @@
 }
 
 .titulo_c4_v2 {
-    background-color: #C40000;
+    background-color: #FF1E00;
     border-radius: 0.5vh;
     width: 15vh;
     font-size: 2vh;
@@ -19,7 +19,7 @@
 }
 
 .titulo_c4_v3 {
-    background-color: #C40000;
+    background-color: #FF1E00;
     border-radius: 0.5vh;
     width: 15vh;
     font-size: 2vh;
@@ -175,7 +175,7 @@
 }
 
 .datos_2c {
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     font-size: 2vh;
     text-align: left;
     border: none;
@@ -252,7 +252,7 @@
 
 /*SELECTS*/
 .select {
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 2vh;
     margin: 1vh;
     padding: 1vh;
@@ -264,7 +264,7 @@
 
 .select_v2 {
     width: 20vw;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1.5vh;
     padding-top: 0.5vh;
     font-size: 1.25vh;
@@ -274,7 +274,7 @@
 
 .select_v3 {
     width: 100%;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1.5vh;
     padding-top: 0.5vh;
     font-size: 1.25vh;
@@ -430,7 +430,7 @@
 .textarea {
     width: 45vw;
     height: 5vh;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     color: white;
     font-size: 2vh;
     border-radius: 1vh;
@@ -441,7 +441,7 @@
 .textarea_v2 {
     width: 65vh;
     height: 100vh;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     color: white;
     font-size: 2vh;
     border-radius: 1vh;
@@ -455,7 +455,7 @@
     text-align: center;
     border-radius: 1.5vh;
     border: 2px solid white;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     color: white;
     margin-left: 1vh;
     margin: 1vh;
@@ -466,7 +466,7 @@
     text-align: center;
     border-radius: 1.5vh;
     border: 2px solid white;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     color: white;
 }
 
@@ -474,7 +474,7 @@
     font-size: 3vh;
     border-radius: 1.5vh;
     border: 2px solid white;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     color: white;
     margin-left: 1vh;
     margin: 1vh;

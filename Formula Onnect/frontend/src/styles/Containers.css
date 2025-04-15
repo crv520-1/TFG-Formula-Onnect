@@ -24,7 +24,7 @@
     overflow: auto;
     overflow-x: hidden;
     border-radius: 1vh;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
 }
 
 /*COLUMNAS*/
@@ -83,7 +83,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #3e3e3e;
+    background-color: #5B5B61;
     border-radius: 1vh;
     margin: 1vh;
     width: 10vw;
@@ -95,7 +95,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #3e3e3e;
+    background-color: #5B5B61;
     border-radius: 1vh;
     margin: 1vh;
     width: 7vw;
@@ -124,7 +124,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 0.5vh;
 }
 
@@ -133,7 +133,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 0.5vh;
     width: 100%;
     padding-bottom: 2vh;
@@ -144,7 +144,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1vh;
     width: 65vw;
     height: auto;
@@ -155,7 +155,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1vh;
     width: 100%;
     height: auto;
@@ -167,7 +167,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1vh;
     width: 50vw;
     height: auto;
@@ -179,7 +179,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 0.5vh;
     margin: 2vh;
 }
@@ -218,7 +218,7 @@
     align-items: center;
     width: 75vh;
     height: 50vh;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1vh;
     padding-top: 2vh;
 }
@@ -229,7 +229,7 @@
     align-items: center;
     width: 25vw;
     height: 40vh;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1.5vh;
     margin-left: 2vw;
     margin-right: 2vw;
@@ -337,7 +337,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 0.5vh;
     margin: 2vh;
 }
@@ -347,7 +347,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1vh;
     width: 50vw;
     height: auto;
@@ -437,7 +437,7 @@
     justify-content: space-between;
     align-items: center;
     width: 70vh;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1vh;
 }
 
@@ -478,7 +478,7 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1vh;
     gap: 1vh;
     width: 22vw;
@@ -489,7 +489,7 @@
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1vh;
     gap: 1vh;
     width: 24vw;
@@ -509,7 +509,7 @@
 .container_minWidth {
     align-items: center;
     min-width: 25px;
-    background-color: #C40000;
+    background-color: #FF1E00;
     border-radius: 50%;
     padding: 2px;
 }
@@ -517,7 +517,7 @@
 .container_minWidth_v2 {
     text-align: center;
     min-width: 25px;
-    background-color: #C40000;
+    background-color: #FF1E00;
     border-radius: 50%;
     padding: 2px;
 }
@@ -560,7 +560,7 @@
 }
 
 .container_2c {
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     border-radius: 1vh;
     width: 50vw;
     height: auto;
@@ -577,7 +577,7 @@
     width: 15vw;
     height: 25vh;
     border-radius: 25px;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -588,7 +588,7 @@
     height: 20vh;
     margin-left: 15vh;
     border-radius: 25px;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -599,7 +599,7 @@
     height: 35vh;
     margin-left: 15vh;
     border-radius: 25px;
-    background-color: #2c2c2c;
+    background-color: #2C2C34;
     display: flex;
     justify-content: center;
     align-items: center;
