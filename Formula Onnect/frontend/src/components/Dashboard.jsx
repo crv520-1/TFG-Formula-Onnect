@@ -99,7 +99,7 @@ export const Dashboard = () => {
             <p className="datos_v11">Resultados</p>
         </button>
         <br />
-        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PerfilPublicaciones")) ? "#C40000" : "#15151E", borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
+        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PerfilPublicaciones")) ? "#FF1E00" : "#15151E", borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
             <UserCircleIcon className="icono_v3"/>
             <p className="datos_v11">Perfil</p>
         </button>

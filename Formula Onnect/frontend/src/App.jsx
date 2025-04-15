@@ -49,11 +49,11 @@ const Layout = () => {
     </div>
   );
 };
-
+// D9D9D9
 function App() {
   return (
-    <UsuarioProvider>
-      <div style={{ backgroundColor: "#D9D9D9", height: "100vh", width: "100vw" }}>
+    <UsuarioProvider> 
+      <div style={{ backgroundColor: "#B8B8BB", height: "100vh", width: "100vw" }}>
         <Router>
           <Routes>
             {/* Redirigir a / si está en la raíz */}
