@@ -283,8 +283,21 @@ export const Comentarios = () => {
       // Actualizar el estado local inmediatamente
       setUserLikePublicacion(prev => !prev);
       
-      // Recargar los me gustas para actualizar el contador
-      await cargarMeGustasPublicacion(idPublicacion);
+      // Actualizar el contador localmente para feedback inmediato
+      setMeGustasPublicacion(prevState => {
+        if (!prevState || !prevState[0]) return [{ contador: userLikePublicacion ? 0 : 1 }];
+        
+        const newCount = userLikePublicacion 
+          ? Math.max(0, prevState[0].contador - 1) 
+          : prevState[0].contador + 1;
+          
+        return [{ ...prevState[0], contador: newCount }];
+      });
+      
+      // Agregar un pequeño retraso antes de recargar los datos del servidor
+      setTimeout(async () => {
+        await cargarMeGustasPublicacion(idPublicacion);
+      }, 300);
     } catch (error) {
       console.error("Error al dar me gusta a la publicación:", error);
     }
@@ -323,7 +336,9 @@ export const Comentarios = () => {
       }));
   
       // Actualizar los comentarios para refrescar el contador
-      await cargarComentarios();
+      setTimeout(async () => {
+        await cargarComentarios();
+      }, 300);
     } catch (error) {
       console.error("Error al dar me gusta:", error);
     }
