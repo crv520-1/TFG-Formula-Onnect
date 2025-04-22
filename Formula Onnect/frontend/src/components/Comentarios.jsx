@@ -310,16 +310,35 @@ export const Comentarios = () => {
    */
   const handleMeGustaComentario = async (idComentario) => {
     try {
-      const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios`);
-      const meGustasComentario = meGustasComentarioResponse.data || [];
-  
-      const hasLiked = meGustasComentario.some(
-        meGustaComantario => 
-          meGustaComantario.idComent === idComentario && 
-          meGustaComantario.iDusuario === idUsuario
+      // Encontrar el comentario actual para tener el contador actual
+      const comentarioActual = comentarios.find(c => c.idComentarios === idComentario);
+      if (!comentarioActual) return;
+
+      // Determinar el estado actual de like
+      const currentLikeState = userLikesComentarios[idComentario] || false;
+      
+      // Actualizar UI inmediatamente (optimistic update)
+      setUserLikesComentarios(prev => ({
+        ...prev,
+        [idComentario]: !currentLikeState
+      }));
+      
+      // Actualizar el contador en la UI inmediatamente
+      setComentarios(prevComentarios => 
+        prevComentarios.map(comentario => {
+          if (comentario.idComentarios === idComentario) {
+            const nuevoContador = currentLikeState
+              ? Math.max(0, comentario.meGustaComentario - 1)
+              : comentario.meGustaComentario + 1;
+            
+            return { ...comentario, meGustaComentario: nuevoContador };
+          }
+          return comentario;
+        })
       );
-  
-      if (hasLiked) {
+      
+      // Realizar la operación en el servidor
+      if (currentLikeState) {
         await axios.delete(`http://localhost:3000/api/meGustaComentarios/${idUsuario}/${idComentario}`);
       } else {
         const nuevoMeGusta = {
@@ -328,17 +347,48 @@ export const Comentarios = () => {
         };
         await axios.post("http://localhost:3000/api/meGustaComentarios", nuevoMeGusta);
       }
-  
-      // Actualizar el estado local inmediatamente
-      setUserLikesComentarios(prev => ({
-        ...prev,
-        [idComentario]: !prev[idComentario]
-      }));
-  
-      // Actualizar los comentarios para refrescar el contador
-      await cargarComentarios();
+      
+      // Obtener solo el contador actualizado de este comentario específico
+      const meGustasComentarioActualizadoResp = await axios.get(
+        `http://localhost:3000/api/meGustaComentarios/numero/${idComentario}`
+      );
+      const meGustasActualizado = meGustasComentarioActualizadoResp.data;
+      
+      if (meGustasActualizado && meGustasActualizado.length > 0) {
+        // Actualizar solo el contador de este comentario específico con el valor del servidor
+        setComentarios(prevComentarios =>
+          prevComentarios.map(comentario => {
+            if (comentario.idComentarios === idComentario) {
+              return {
+                ...comentario,
+                meGustaComentario: meGustasActualizado[0].contador
+              };
+            }
+            return comentario;
+          })
+        );
+      }
     } catch (error) {
       console.error("Error al dar me gusta:", error);
+      
+      // En caso de error, revertir los cambios optimistas
+      setUserLikesComentarios(prev => ({
+        ...prev,
+        [idComentario]: userLikesComentarios[idComentario] || false
+      }));
+      
+      // También revertir el contador
+      const comentarioOriginal = comentarios.find(c => c.idComentarios === idComentario);
+      if (comentarioOriginal) {
+        setComentarios(prevComentarios =>
+          prevComentarios.map(comentario => {
+            if (comentario.idComentarios === idComentario) {
+              return { ...comentarioOriginal };
+            }
+            return comentario;
+          })
+        );
+      }
     }
   };
 
