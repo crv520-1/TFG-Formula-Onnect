@@ -318,25 +318,6 @@ export const Comentarios = () => {
           meGustaComantario.idComent === idComentario && 
           meGustaComantario.iDusuario === idUsuario
       );
-
-      // Actualizar el estado local inmediatamente para un feedback instantáneo
-      setUserLikesComentarios(prev => ({
-        ...prev,
-        [idComentario]: !prev[idComentario]
-      }));
-
-      // Actualizar la interfaz de usuario optimisticamente
-      setComentarios(prevComentarios => 
-        prevComentarios.map(comentario => {
-          if (comentario.idComentarios === idComentario) {
-            const nuevoContador = hasLiked 
-              ? Math.max(0, comentario.meGustaComentario - 1) 
-              : comentario.meGustaComentario + 1;
-            return { ...comentario, meGustaComentario: nuevoContador };
-          }
-          return comentario;
-        })
-      );
   
       if (hasLiked) {
         await axios.delete(`http://localhost:3000/api/meGustaComentarios/${idUsuario}/${idComentario}`);
@@ -355,9 +336,7 @@ export const Comentarios = () => {
       }));
   
       // Actualizar los comentarios para refrescar el contador
-      setTimeout(async () => {
-        await cargarComentarios();
-      }, 300);
+      await cargarComentarios();
     } catch (error) {
       console.error("Error al dar me gusta:", error);
     }
