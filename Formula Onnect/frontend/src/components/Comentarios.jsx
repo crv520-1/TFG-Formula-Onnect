@@ -372,20 +372,20 @@ export const Comentarios = () => {
       
       await axios.post("http://localhost:3000/api/comentarios", nuevoComentario);
       setTexto("");
+
+      await new Promise(resolve => setTimeout(resolve, 300)); // Esperar un poco para la animación de carga
       
       // Recargar todos los datos necesarios
       await Promise.all([
         cargarPublicacion(),
-        cargarNumeroComentarios(idElemento)
+        cargarNumeroComentarios(idElemento),
+        cargarComentarios()
       ]);
       
-      // Cargar comentarios después de la publicación
-      await cargarComentarios();
-      
       setHayComentarios(true);
+      setCargando(false);
     } catch (error) {
       console.error("Error al publicar:", error);
-    } finally {
       setCargando(false);
     }
   };
