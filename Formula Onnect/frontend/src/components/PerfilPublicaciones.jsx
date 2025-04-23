@@ -130,6 +130,11 @@ export const PerfilPublicaciones = () => {
   const cargarTodo = async () => {
     setCargando(true);
     try {
+      // Verificar relación entre usuario actual y perfil visitado
+      const { mismoUsuario, sigo } = await verificarSeguimiento(idUser, idUsuario);
+      setMismoUsuario(mismoUsuario);
+      setSigo(sigo);
+
       const usuario = await fetchUsuario(idUser);
       setUsuario(usuario);
 
@@ -148,16 +153,6 @@ export const PerfilPublicaciones = () => {
       // Cargar los me gustas del usuario actual
       const likes = await fetchUserLikes(publicaciones);
       setUserLikes(likes);
-
-      // Comprobar si es el mismo usuario o si lo sigue
-      if (idUser !== idUsuario) {
-        setMismoUsuario(false);
-        const sigoResponse = await axios.get(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
-        setSigo(sigoResponse.data);
-      } else {
-        setMismoUsuario(true);
-        setSigo(false);
-      }
     } catch (error) {
       console.error("Error cargando datos:", error);
     } finally {
@@ -165,6 +160,27 @@ export const PerfilPublicaciones = () => {
       setTimeout(() => { setCargando(false); }, 500);
     }
   };
+
+  /**
+   * Función para verificar relación entre usuarios
+   * Determina si es el mismo usuario o si el usuario actual sigue al visualizado
+   * @param {number} idUser - ID del usuario visualizado
+   * @param {number} idUsuario - ID del usuario actual
+   * @returns {Object} Estado de la relación entre usuarios
+   */
+    const verificarSeguimiento = async (idUser, idUsuario) => {
+      if (idUser === idUsuario) {
+        return { mismoUsuario: true, sigo: false };
+      }
+    
+      try {
+        const sigoResponse = await axios.get(`http://localhost:3000/api/seguidores/${idUsuario}/${idUser}`);
+        return { mismoUsuario: false, sigo: sigoResponse.data };
+      } catch (error) {
+        console.error("Error obteniendo si sigo al usuario:", error);
+        return { mismoUsuario: false, sigo: false };
+      }
+    };
 
   // Cargar todos los datos cuando cambia el usuario o el perfil visitado
   useEffect(() => {
