@@ -17,7 +17,7 @@ exports.getAllMeGustaById = async (req, res) => {
     try {
         const meGusta = await meGustaController.getAllMeGustaById(idElemento);
         if (meGusta.length === 0) {
-            return res.status(404).json({ error: 'No se encontraron me gusta para este elemento' });
+            return res.json([]);
         }
         return res.json(meGusta);
     } catch (error) {
