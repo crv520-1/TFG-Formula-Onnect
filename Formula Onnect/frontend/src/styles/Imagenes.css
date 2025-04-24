@@ -65,8 +65,8 @@
 }
 
 .imagen_equipo_select {
-    width: 19vh;
-    height: 20vh;
+    width: 35vh;
+    height: 35vh;
     padding-top: 2vh;
     object-fit: contain;
 }
