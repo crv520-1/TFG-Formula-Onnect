@@ -21,6 +21,17 @@ exports.getPilotosByIdPiloto = async (req, res) => {
     }
 }
 
+// Obtener un piloto por su driverId
+exports.getPilotosByDriverId = async (req, res) => {
+    const driverId = req.params.driverId;
+    try {
+        const piloto = await pilotosModel.getPilotosByDriverId(driverId);
+        res.json(piloto);
+    } catch (error) {
+        res.status(404).json({ error: 'Piloto no encontrado' });
+    }
+}
+
 // Almacenar un nuevo piloto
 exports.postPilotos = (req, res) => {
     const piloto = req.body;

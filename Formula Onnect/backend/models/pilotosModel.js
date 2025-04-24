@@ -20,6 +20,16 @@ exports.getPilotosByIdPiloto = async (idPilotos) => {
   return rows[0];
 };
 
+// Obtener un piloto por su driverId
+exports.getPilotosByDriverId = async (driverId) => {
+  const query = 'SELECT * FROM Pilotos WHERE driverId = ?';
+  const [rows] = await db.query(query, [driverId]);
+  if (rows.length === 0) {
+    throw new Error('Piloto no encontrado');
+  }
+  return rows[0];
+}
+
 // Verificar si un piloto ya existe
 exports.pilotoExiste = async (driverId) => {
   const query = 'SELECT COUNT(*) as count FROM Pilotos WHERE driverId = ?';

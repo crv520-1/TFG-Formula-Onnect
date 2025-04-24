@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getPaisISO } from '../../../backend/scripts/mapeoPaises';
 import '../styles/Containers.css';
 import { carga } from './animacionCargando';
-import { getImagenEquipo, getImagenPiloto } from './mapeoImagenes';
+import { getImagenEquipo } from './mapeoImagenes';
 
 /**
  * Componente que muestra la clasificación de pilotos de F1
@@ -40,7 +40,9 @@ export const Clasificacion = () => {
     try {
       const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/driverstandings.json`);
       const data = response.data.MRData.StandingsTable.StandingsLists[0];
-      return data.DriverStandings.map(piloto => {
+      
+      // Paso 1: Crear array de pilotos sin imágenes
+      const pilotos = data.DriverStandings.map(piloto => {
         const constructors = piloto.Constructors.map(constructor => ({
           constructorId: constructor.constructorId,
           name: constructor.name
@@ -54,15 +56,33 @@ export const Clasificacion = () => {
           apellido: piloto.Driver.familyName,
           nacionalidad: getPaisISO(piloto.Driver.nationality),
           numero: piloto.Driver.permanentNumber,
-          // Recorrer todos los constructores para obtener el último de la lista
           constructorId: constructors.length > 0 ? constructors[constructors.length - 1].constructorId : '',
           constructorName: constructors.length > 0 ? constructors[constructors.length - 1].name : ''
         };
       });
+      
+      const imagenes = await Promise.all(
+        pilotos.map(piloto => cargarPilotos(piloto.driverId))
+      );
+      
+      return pilotos.map((piloto, index) => ({
+        ...piloto,
+        imagenPilotos: imagenes[index]
+      }));
+      
     } catch (error) {
       console.error("Error al obtener la clasificación", error);
+      return [];
     }
   };
+
+  const cargarPilotos = async (driverID) => {
+    const response = await axios.get(`http://localhost:3000/api/pilotos/driverId/${driverID}`);
+    if (!response.data) {
+      throw new Error("Piloto no encontrado");
+    }
+    return response.data.imagenPilotos;
+  }
 
   /**
    * Navega a la página de clasificación de equipos
@@ -120,6 +140,7 @@ export const Clasificacion = () => {
       </div>
       <div className='container_overflow_padding'>
         <div className='container_grid_v2'>
+          {console.log(clasificacion)}
           {clasificacion.map((piloto, index) => (
             <div key={piloto.driverId} className='container_grid_v4' style={{ ...(clasificacion.length % 2 !== 0 && index === clasificacion.length - 1 ? { gridColumn: "1 / span 2", justifySelf: "center" } : {}) }}>
               <div className='container_columna_v3'>
@@ -128,7 +149,7 @@ export const Clasificacion = () => {
                 <span className='span_v3_bold'>{piloto.apellido}</span>
                 <span className='span_v4'>{piloto.constructorName}</span>
               </div>
-              <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" className='imagen_piloto'/>
+              <img src={piloto.imagenPilotos} alt="Foto de piloto" className='imagen_piloto'/>
               <div className='container_columna_v4'>
                 <span className='span_v1'>#{piloto.numero} </span>
                 <div className='container_fila'>
