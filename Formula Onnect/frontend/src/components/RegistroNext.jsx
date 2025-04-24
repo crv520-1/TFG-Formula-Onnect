@@ -5,7 +5,6 @@ import { UsuarioContext } from "../context/UsuarioContext";
 import '../styles/Iniciar_Registrar.css';
 import '../styles/RegistroNext.css';
 import { carga } from './animacionCargando.jsx';
-import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 
 /**
  * Componente que muestra el segundo paso del registro de usuario
@@ -105,7 +104,10 @@ export const RegistroNext = () => {
                         ))}
                     </select>
                     {pilotoSeleccionado && (
-                        <img src={getImagenPiloto(pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado))?.driverId)} alt="Piloto" className="piloto-imagen"/>
+                        (() => {
+                            const piloto = pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado));
+                            return piloto ? <img src={piloto.imagenPilotos} alt="Piloto" className="piloto-imagen"/> : null;
+                        })()
                     )}
                 </div>
                 <div className="selector-container">
@@ -117,7 +119,10 @@ export const RegistroNext = () => {
                         ))}
                     </select>
                     {equipoSeleccionado && (
-                        <img src={getImagenEquipo(equipos.find(p => p.idEquipos === Number(equipoSeleccionado))?.constructorId)} alt="Equipo" className="equipo-imagen"/>
+                        (() => {
+                            const equipo = equipos.find(p => p.idEquipos === Number(equipoSeleccionado));
+                            return equipo ? <img src={equipo.imagenEquipos} alt="Equipo" className="equipo-imagen"/> : null;
+                        })()
                     )}
                 </div>
                 <div className="selector-container">
@@ -129,7 +134,10 @@ export const RegistroNext = () => {
                         ))}
                     </select>
                     {circuitoSeleccionado && (
-                        <img src={getImagenCircuito(circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado))?.circuitId)} alt="Circuito" className="circuito-imagen"/>
+                        (() => {
+                            const circuito = circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado));
+                            return circuito ? <img src={circuito.imagenCircuitos} alt="Circuito" className="circuito-imagen"/> : null;
+                        })()
                     )}
                 </div>
             </form>
