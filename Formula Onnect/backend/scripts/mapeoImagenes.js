@@ -156,7 +156,7 @@ function getImagenCircuito(circuitId){
         "silverstone" : "images/circuits/silverstone.png",
         "spa" : "images/circuits/spa.png",
         "suzuka" : "images/circuits/suzuka.png",
-        "villeneuve" : "images/circuits/gilles_villeneuve.png",
+        "villeneuve" : "images/circuits/gilles_villenueve.png",
         "bahrain" : "images/circuits/barhain.png",
         "shanghai" : "images/circuits/china.png",
         "istanbul" : "images/circuits/instanbul.png",
