@@ -3,6 +3,7 @@ const db = require('./models/equiposModel');
 const dotenv = require('dotenv');
 const { getPaisISO, getTraduccionPais } = require('./scripts/mapeoPaises');
 const { getURLWikiCastellanoEquipo } = require('./scripts/mapeoURLWiki');
+const { getImagenEquipo, getLivery } = require('./scripts/mapeoImagenes');
 
 dotenv.config();
 
@@ -30,6 +31,8 @@ async function buscarYAlmacenarEquipos() {
                             urlEquipo: equipo.url,
                             isoNacEqui: getPaisISO(equipo.nationality),
                             urlCastellano: getURLWikiCastellanoEquipo(equipo.constructorId),
+                            imagenEquipos: getImagenEquipo(equipo.constructorId),
+                            imagenLivery: getLivery(equipo.constructorId)
                         });
                     }
                 });

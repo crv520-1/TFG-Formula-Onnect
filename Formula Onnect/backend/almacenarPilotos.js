@@ -2,6 +2,7 @@ const axios = require('axios');
 const db = require('./models/pilotosModel');
 const dotenv = require('dotenv');
 const { getPaisISO, getTraduccionPais } = require('./scripts/mapeoPaises');
+const { getImagenPiloto } = require('../frontend/src/components/mapeoImagenes');
 
 dotenv.config();
 
@@ -27,7 +28,8 @@ async function buscarYAlmacenarPilotos() {
                         apellidoPiloto: piloto.familyName,
                         nacionalidadPiloto: getTraduccionPais(piloto.nationality),
                         urlPiloto: piloto.url,
-                        isoNacPil: getPaisISO(piloto.nationality)
+                        isoNacPil: getPaisISO(piloto.nationality),
+                        imagenPilotos: getImagenPiloto(piloto.driverId)
                     });
                 }
             });

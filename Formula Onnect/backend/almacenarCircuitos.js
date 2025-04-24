@@ -3,7 +3,7 @@ const db = require('./models/circuitosModel');
 const dotenv = require('dotenv');
 const { getPaisISO, getTraduccionPais } = require('./scripts/mapeoPaises');
 const { getPrimeraCarrera, getUltimaCarrera, getLongitudCircuito, getVueltas, getRecordPista, getURLStats } = require('./scripts/mapeoDatosCircuito');
-const { getImagenCircuito } = require('./mapeoImagenes');
+const { getImagenCircuito } = require('./scripts/mapeoImagenes');
 
 dotenv.config();
 
