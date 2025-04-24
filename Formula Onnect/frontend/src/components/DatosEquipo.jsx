@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Containers.css";
 import { carga } from './animacionCargando.jsx';
-import { getImagenEquipo, getLivery } from './mapeoImagenes.js';
 
 /**
  * Componente que muestra información detallada de un equipo de F1
@@ -121,11 +120,11 @@ export const DatosEquipo = () => {
       <br />
       <div className='container_overflow_border'>
         <div className='container_fila_heightAuto'>
-          <img src={getImagenEquipo(equipo.constructorId)} alt="Foto del equipo" className='imagen_equipo_v3'/>
+          <img src={equipo.imagenEquipos} alt="Foto del equipo" className='imagen_equipo_v3'/>
           <p className='datos_v5'>{equipo.nombreEquipo}</p>
         </div>
         <div className='container_columna_marginBottom_v2'>
-          <img src={getLivery(equipo.constructorId)} alt="Imagen del equipo" className='imagen_livery_v2'/>
+          <img src={equipo.imagenLivery} alt="Imagen del equipo" className='imagen_livery_v2'/>
           <div className='container_fila_marginBottom'>
             <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} className='imagen_bandera'/>
             <p className='datos_v6'>{equipo.nacionalidadEquipo}</p>

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Containers.css";
 import { carga } from './animacionCargando';
-import { getImagenCircuito } from './mapeoImagenes.js';
 
 /**
  * Componente que muestra información detallada de un circuito de F1
@@ -97,7 +96,7 @@ export const DatosCircuito = () => {
       <div className='container_overflow_border'>
         <p className='datos_v5'>{circuito.nombreCircuito}</p>
         <div className='container_columna_marginBottom_v2'>
-          <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del equipo" className='imagen_circuito'/>
+          <img src={circuito.imagenCircuitos} alt="Foto del equipo" className='imagen_circuito'/>
           <div className='container_fila_marginBottom'>
             <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} className='imagen_bandera'/>
             <p className='datos_v6'>{circuito.ciudad}, {circuito.pais}</p>

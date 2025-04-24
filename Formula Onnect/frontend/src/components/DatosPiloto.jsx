@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import '../styles/Containers.css';
 import { carga } from './animacionCargando.jsx';
-import { getImagenPiloto } from './mapeoImagenes.js';
 
 /**
  * Componente que muestra información detallada de un piloto de F1
@@ -120,7 +119,7 @@ export const DatosPiloto = () => {
           <p className='datos_v7'>{pilotos.nombrePiloto} {pilotos.apellidoPiloto}</p>
         </div>
           <div className='container_columna_marginBottom_v2'>
-            <img src={getImagenPiloto(pilotos.driverId)} alt="Imagen del piloto" className='imagen_piloto_v2'/>
+            <img src={pilotos.imagenPilotos} alt="Imagen del piloto" className='imagen_piloto_v2'/>
             <div className='container_fila_marginBottom'>
               <img src={`https://flagcdn.com/w160/${pilotos.isoNacPil}.png`} alt={pilotos.isoNacPil} className='imagen_bandera'/>
               <p className='datos_v6'>{pilotos.nacionalidadPiloto}</p>
