@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Containers.css";
 import { carga } from './animacionCargando';
-import { getImagenPiloto } from './mapeoImagenes.js';
 
 /**
  * Componente que muestra la guía de pilotos de Fórmula 1
@@ -98,7 +97,7 @@ export const GuiaPilotos = () => {
           <div key={rowIndex} className="container_fila">
             {row.map((piloto) => (
               <button key={piloto.idPilotos} onClick={() => handlePiloto(piloto.idPilotos)} className="boton_fondo_2c_v9">
-                <img src={getImagenPiloto(piloto.driverId)} alt="Foto de piloto" className="imagen_piloto"/>
+                <img src={piloto.imagenPilotos} alt="Foto de piloto" className="imagen_piloto"/>
                 <div className="container_fila_v2">
                   <div className="container_columna">
                     <p className="datos_v8">{piloto.nombrePiloto}</p>

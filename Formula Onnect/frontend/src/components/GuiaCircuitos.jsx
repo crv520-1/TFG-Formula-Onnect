@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Containers.css";
 import { carga } from "./animacionCargando.jsx";
-import { getImagenCircuito } from './mapeoImagenes.js';
 
 /**
  * Componente que muestra la guía de circuitos de Fórmula 1
@@ -98,7 +97,7 @@ export const GuiaCircuitos = () => {
             {row.map((circuito) => (
               <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.idCircuitos)} className="boton_fondo_2c_v7">
                 <p className="datos_v8">{circuito.nombreCircuito}</p>
-                <img src={getImagenCircuito(circuito.circuitId)} alt="Foto del circuito" className="imagen_circuito_v2"/>
+                <img src={circuito.imagenCircuitos} alt="Foto del circuito" className="imagen_circuito_v2"/>
                 <div className="container_fila_paddingTop">
                     <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} className="imagen_bandera_v2"/>
                     <p className="datos_v9">{circuito.ciudad}, {circuito.pais}</p>

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "../styles/Containers.css";
 import { carga } from './animacionCargando';
-import { getImagenEquipo, getLivery } from './mapeoImagenes.js';
 
 /**
  * Componente que muestra la guía de equipos de Fórmula 1
@@ -97,12 +96,12 @@ export const GuiaEquipos = () => {
                 <div key={rowIndex} className="container_fila">
                     {row.map((equipo) => (
                         <button key={equipo.idEquipos} onClick={() => handleEquipo(equipo.idEquipos)} className="boton_fondo_2c_v8">
-                            <img src={getLivery(equipo.constructorId)} alt="Foto del equipo" className="imagen_livery_v3"/>
+                            <img src={equipo.imagenLivery} alt="Foto del equipo" className="imagen_livery_v3"/>
                             <div className="container_fila_paddingTop">
                                 <p className="datos_v8">{equipo.nombreEquipo}</p>
                                 <div className="container_columna">
                                     <img src={`https://flagcdn.com/w160/${equipo.isoNacEqui}.png`} alt={equipo.isoNacEqui} className="imagen_equipo_v4"/>
-                                    <img src={getImagenEquipo(equipo.constructorId)} alt="Foto del equipo" className="imagen_bandera_v3"/>
+                                    <img src={equipo.imagenEquipos} alt="Foto del equipo" className="imagen_bandera_v3"/>
                                 </div>
                             </div>
                         </button>
