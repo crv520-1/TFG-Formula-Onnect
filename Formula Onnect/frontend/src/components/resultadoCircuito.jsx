@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import '../styles/Containers.css';
 import { carga } from './animacionCargando.jsx';
-import { getImagenCircuito, getImagenEquipo } from './mapeoImagenes.js';
+import { getImagenEquipo } from './mapeoImagenes.js';
 import { getStatusTraducido } from './mapeoStatus.js';
 
 /**
@@ -260,7 +260,7 @@ export const ResultadoCircuito = () => {
       <div className='container_columna_2c_v2'>
         <p className='datos_v7'>{circuitos.nombreCircuito}</p>
         <div className='container_fila_2c_margin'>
-          <img src={getImagenCircuito(circuitos.circuitId)} alt={circuitos.circuitId} className='imagen_circuito_v3'/>
+          <img src={circuitos.imagenCircuitos} alt={circuitos.circuitId} className='imagen_circuito_v3'/>
           <div className='container_columna_2c_margin'>
             <div className='container_fila_2c_margin'>
               <img src={`https://flagcdn.com/w160/${circuitos.isoPais}.png`} alt={circuitos.isoPais} className='imagen_bandera'/>

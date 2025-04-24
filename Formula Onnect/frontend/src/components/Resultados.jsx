@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import '../styles/Containers.css';
 import { carga } from './animacionCargando.jsx';
-import { getImagenCircuito } from './mapeoImagenes.js';
 
 /**
  * Componente que muestra el calendario de carreras de una temporada específica
@@ -105,9 +104,9 @@ export const Resultados = () => {
       <div className='container_overflow_padding'>
         {circuitos.map((circuito) => (
           <button key={circuito.idCircuitos} onClick={() => handleCircuito(circuito.circuitId, year, circuito.ronda)} className='boton_fondo_2c_v10'>
-            <div key={circuito.idCircuitos} className='container_fila'>
-              <img src={getImagenCircuito(circuito.circuitId)} alt={circuito.circuitId} className='imagen_circuito_v4'/>
-              <div className='container_columna_paddingLeft'>
+            <div key={circuito.idCircuitos} className='container_fila_v2'>
+              <img src={circuito.imagenCircuitos} alt={circuito.circuitId} className='imagen_circuito_v4'/>
+              <div className='container_columna_centrada'>
                 <h3 className='datos_v7'>{circuito.nombreCircuito}</h3>
                 <div className='container_fila'>
                   <img src={`https://flagcdn.com/w160/${circuito.isoPais}.png`} alt={circuito.isoPais} className='imagen_bandera'/>
