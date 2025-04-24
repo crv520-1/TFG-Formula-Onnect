@@ -20,6 +20,16 @@ exports.getEquiposByIdEquipo = async (idEquipos) => {
   return rows[0];
 };
 
+// Obtener un equipo por su constructorId
+exports.getEquiposByConstructorId = async (constructorId) => {
+  const query = 'SELECT * FROM Equipos WHERE constructorId = ?';
+  const [rows] = await db.query(query, [constructorId]);
+  if (rows.length === 0) {
+    throw new Error('Equipo no encontrado');
+  }
+  return rows[0];
+}
+
 // Verificar si un equipo ya existe
 exports.equipoExiste = async (constructorId) => {
   const query = 'SELECT COUNT(*) as count FROM Equipos WHERE constructorId = ?';

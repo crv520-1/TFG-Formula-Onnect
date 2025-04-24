@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { getPaisISO } from '../../../backend/scripts/mapeoPaises';
 import '../styles/Containers.css';
 import { carga } from './animacionCargando';
-import { getImagenEquipo } from './mapeoImagenes';
 
 /**
  * Componente que muestra la clasificación de pilotos de F1
@@ -41,7 +40,6 @@ export const Clasificacion = () => {
       const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/driverstandings.json`);
       const data = response.data.MRData.StandingsTable.StandingsLists[0];
       
-      // Paso 1: Crear array de pilotos sin imágenes
       const pilotos = data.DriverStandings.map(piloto => {
         const constructors = piloto.Constructors.map(constructor => ({
           constructorId: constructor.constructorId,
@@ -64,10 +62,15 @@ export const Clasificacion = () => {
       const imagenes = await Promise.all(
         pilotos.map(piloto => cargarPilotos(piloto.driverId))
       );
+
+      const equipos = await Promise.all(
+        pilotos.map(piloto => cargarEquipos(piloto.constructorId))
+      );
       
       return pilotos.map((piloto, index) => ({
         ...piloto,
-        imagenPilotos: imagenes[index]
+        imagenPilotos: imagenes[index],
+        imagenEquipos: equipos[index]
       }));
       
     } catch (error) {
@@ -82,6 +85,14 @@ export const Clasificacion = () => {
       throw new Error("Piloto no encontrado");
     }
     return response.data.imagenPilotos;
+  }
+
+  const cargarEquipos = async (constructorID) => {
+    const response = await axios.get(`http://localhost:3000/api/equipos/constructorId/${constructorID}`);
+    if (!response.data) {
+      throw new Error("Equipo no encontrado");
+    }
+    return response.data.imagenEquipos;
   }
 
   /**
@@ -153,7 +164,7 @@ export const Clasificacion = () => {
               <div className='container_columna_v4'>
                 <span className='span_v1'>#{piloto.numero} </span>
                 <div className='container_fila'>
-                  <img src={getImagenEquipo(piloto.constructorId)} alt="Foto de equipo" className='imagen_equipo'/>
+                  <img src={piloto.imagenEquipos} alt="Foto de equipo" className='imagen_equipo'/>
                   <img src={`https://flagcdn.com/w160/${piloto.nacionalidad}.png`} alt={piloto.nacionalidad} className='imagen_equipo_v2'/>
                 </div>
                 <span className='span'>{piloto.points} PTS.</span>

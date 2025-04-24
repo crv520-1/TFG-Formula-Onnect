@@ -21,6 +21,17 @@ exports.getEquiposByIdEquipo = async (req, res) => {
     }
 }
 
+// Obtener un equipo por su constructorId
+exports.getEquiposByConstructorId = async (req, res) => {
+    const constructorId = req.params.constructorId;
+    try {
+        const equipo = await equiposController.getEquiposByConstructorId(constructorId);
+        res.json(equipo);
+    } catch (error) {
+        res.status(404).json({ error: 'Equipo no encontrado' });
+    }
+}
+
 // Almacenar un nuevo equipo
 exports.postEquipos = (req, res) => {
     const equipo = req.body;
