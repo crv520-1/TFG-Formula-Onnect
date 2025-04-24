@@ -5,7 +5,6 @@ import { getPaisISO } from '../../../backend/scripts/mapeoPaises';
 import '../styles/Containers.css';
 import '../styles/Textos.css';
 import { carga } from './animacionCargando';
-import { getImagenEquipo, getLivery } from './mapeoImagenes';
 
 /**
  * Componente que muestra la clasificación de equipos de F1
@@ -41,17 +40,40 @@ export const ClasificacionEquipos = () => {
     try {
       const response = await axios.get(`https://api.jolpi.ca/ergast/f1/${year}/constructorstandings.json`);
       const data = response.data.MRData.StandingsTable.StandingsLists[0];
-      return data.ConstructorStandings.map(equipo => ({
+      const equipos = data.ConstructorStandings.map(equipo => ({
         position: equipo.position,
         points: equipo.points,
         constructorId: equipo.Constructor.constructorId,
         nombre: equipo.Constructor.name,
         nacionalidad: getPaisISO(equipo.Constructor.nationality)
       }));
+
+      const imagenes = await Promise.all(
+        equipos.map(async (equipo) => cargarEquipos(equipo.constructorId))
+      );
+
+      return equipos.map((equipo, index) => ({
+        ...equipo,
+        imagenLivery: imagenes[index].imagenLivery,
+        imagenEquipos: imagenes[index].imagenEquipos,
+      }));
+
     } catch (error) {
       console.error("Error al obtener la clasificación", error);
+      return [];
     }
   };
+
+  const cargarEquipos = async (constructorId) => {
+    const response = await axios.get(`http://localhost:3000/api/equipos/constructorId/${constructorId}`);
+    if (!response.data) {
+      throw new Error('No se encontró el equipo');
+    }
+    return{
+      imagenLivery: response.data.imagenLivery,
+      imagenEquipos: response.data.imagenEquipos,
+    };
+  }
 
   /**
    * Navega a la página de clasificación de pilotos
@@ -116,14 +138,14 @@ export const ClasificacionEquipos = () => {
                   <span className='span_v2'>{equipo.nombre}</span>
                 </div>
                 <div className='container_fila_marginLeft_v2'>
-                  <img src={getImagenEquipo(equipo.constructorId)} alt="Foto de equipo" className='imagen_equipo'/>
+                  <img src={equipo.imagenEquipos} alt="Foto de equipo" className='imagen_equipo'/>
                   <img src={`https://flagcdn.com/w160/${equipo.nacionalidad}.png`} alt={equipo.nacionalidad} className='imagen_equipo_v2'/>
                 </div>
                 <div className='container_fila'>
                   <span className='span'>{equipo.points} PTS.</span>
                 </div>
               </div>
-              <img src={getLivery(equipo.constructorId)} alt="Foto de equipo" className='imagen_livery'/>
+              <img src={equipo.imagenLivery} alt="Foto de equipo" className='imagen_livery'/>
             </div>
           ))}
         </div>
