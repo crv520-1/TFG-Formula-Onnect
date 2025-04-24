@@ -1,5 +1,5 @@
 // Función para obtener la imagen de un piloto
-export function getImagenPiloto(driverId) {
+function getImagenPiloto(driverId) {
     // Mapa de las imágenes de los pilotos
     const imagenPiloto = {
         "alesi" : "images/pilotos/Jean Alesi.png",
@@ -137,54 +137,54 @@ export function getImagenPiloto(driverId) {
 }
 
 // Función para obtener la imagen de un circuito
-export function getImagenCircuito(circuitId){
+function getImagenCircuito(circuitId){
     // Mapa de las imágenes de los circuitos
     const imagenCircuito = {
-        "albert_park" : "images/circuits/Albert Park.avif",
-        "catalunya" : "images/circuits/Barcelona.avif",
-        "hockenheimring" : "images/circuits/Hockenheim.avif",
-        "hungaroring" : "images/circuits/Hungaroring.png",
-        "imola" : "images/circuits/Enzo e Dino Ferrari.avif",
+        "albert_park" : "images/circuits/albert_park.png",
+        "catalunya" : "images/circuits/barcelona.png",
+        "hockenheimring" : "images/circuits/hockeheim.png",
+        "hungaroring" : "images/circuits/hungaroring.png",
+        "imola" : "images/circuits/imola.png",
         "indianapolis" : "images/circuits/Indianapolis.png",
-        "interlagos" : "images/circuits/Interlagos.avif",
+        "interlagos" : "images/circuits/interlagos.png",
         "magny_cours" : "images/circuits/Magny-Cours.png",
-        "monaco" : "images/circuits/Monaco.avif",
-        "monza" : "images/circuits/Monza.avif",
-        "nurburgring" : "images/circuits/Nurburgring.avif",
-        "red_bull_ring" : "images/circuits/Autria.avif",
+        "monaco" : "images/circuits/monaco.png",
+        "monza" : "images/circuits/monza.png",
+        "nurburgring" : "images/circuits/nurburgring.png",
+        "red_bull_ring" : "images/circuits/red_bull_ring.png",
         "sepang" : "images/circuits/Sepang.png",
-        "silverstone" : "images/circuits/Silverstone.avif",
-        "spa" : "images/circuits/Spa-Francorchamps.avif",
-        "suzuka" : "images/circuits/Suzuka.avif",
-        "villeneuve" : "images/circuits/gilles villeneuve.avif",
-        "bahrain" : "images/circuits/bahrain.avif",
-        "shanghai" : "images/circuits/shanghai.avif",
-        "istanbul" : "images/circuits/Turquía.avif",
+        "silverstone" : "images/circuits/silverstone.png",
+        "spa" : "images/circuits/spa.png",
+        "suzuka" : "images/circuits/suzuka.png",
+        "villeneuve" : "images/circuits/gilles_villeneuve.png",
+        "bahrain" : "images/circuits/barhain.png",
+        "shanghai" : "images/circuits/china.png",
+        "istanbul" : "images/circuits/instanbul.png",
         "fuji" : "images/circuits/Fuji.png",
-        "marina_bay" : "images/circuits/Singapur.avif",
+        "marina_bay" : "images/circuits/singapur.png",
         "valencia" : "images/circuits/Valencia.png",
-        "yas_marina" : "images/circuits/Abu Dhabi.avif",
+        "yas_marina" : "images/circuits/abu_dabi.png",
         "yeongam" : "images/circuits/Korea.png",
         "buddh" : "images/circuits/Buddh.png",
-        "americas" : "images/circuits/Austin.avif",
-        "sochi" : "images/circuits/Sochi.avif",
-        "rodriguez" : "images/circuits/Hermanos Rodriguez.avif",
-        "baku" : "images/circuits/Baku.avif",
-        "ricard" : "images/circuits/Paul Ricard.avif",
-        "mugello" : "images/circuits/Mugello.avif",
-        "portimao" : "images/circuits/Algarve.avif",
-        "jeddah" : "images/circuits/Jeddah.avif",
-        "losail" : "images/circuits/Losail.avif",
-        "zandvoort" : "images/circuits/Zandvoort.avif",
-        "miami" : "images/circuits/Miami.avif",
-        "vegas" : "images/circuits/Las Vegas.avif",
+        "americas" : "images/circuits/austin.png",
+        "sochi" : "images/circuits/sochi.png",
+        "rodriguez" : "images/circuits/mexico.png",
+        "baku" : "images/circuits/baku.png",
+        "ricard" : "images/circuits/paul_ricard.png",
+        "mugello" : "images/circuits/mugello.png",
+        "portimao" : "images/circuits/algarve.png",
+        "jeddah" : "images/circuits/jeddah.png",
+        "losail" : "images/circuits/losail.png",
+        "zandvoort" : "images/circuits/zandvoort.png",
+        "miami" : "images/circuits/miami.png",
+        "vegas" : "images/circuits/las_vegas.png",
     }
 
     return imagenCircuito[circuitId] || 'null';
 }
 
 // Función para obtener la imagen de un equipo
-export function getImagenEquipo(constructorId){
+function getImagenEquipo(constructorId){
     // Mapa de las imágenes de los equipos
     const imagenEquipo = {
         "arrows" : "images/escuderias/Arrows.png",
@@ -231,7 +231,7 @@ export function getImagenEquipo(constructorId){
 }
 
 // Función para obtener la imagen del coche de un equipo
-export function getLivery(constructorId) {
+function getLivery(constructorId) {
     // Mapa de las imágenes de los coches de un equipo
     const livery = {
         "arrows" : "images/liverys/Arrow.jpg",
@@ -275,3 +275,10 @@ export function getLivery(constructorId) {
     }
     return livery[constructorId] || 'null';
 }
+
+module.exports = {
+    getImagenPiloto,
+    getImagenCircuito,
+    getImagenEquipo,
+    getLivery
+};
