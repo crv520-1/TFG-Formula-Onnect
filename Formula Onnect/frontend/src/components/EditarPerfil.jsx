@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { UsuarioContext } from "../context/UsuarioContext";
 import "../styles/Containers.css";
 import { carga } from './animacionCargando';
-import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 import { validarContraseña } from "./validarContraseña.js";
 
 /**
@@ -196,21 +195,36 @@ export const EditarPerfil = () => {
             <select className="select_v2" value={pilotoSeleccionado} onChange={(e) => setPilotoSeleccionado(e.target.value)} >
                 {pilotos.map((piloto) => ( <option key={piloto.idPilotos} value={piloto.idPilotos}> {piloto.nombrePiloto} {piloto.apellidoPiloto} </option> ))}
             </select>
-            {pilotoSeleccionado && (<img src={getImagenPiloto(pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado))?.driverId)} alt="Piloto" className="imagen_piloto_select"/>)}
+            {pilotoSeleccionado && (
+                (() => {
+                    const piloto = pilotos.find(p => p.idPilotos === Number(pilotoSeleccionado));
+                    return piloto ? <img src={piloto.imagenPilotos} alt="Piloto" className="imagen_piloto_select"/> : null;
+                })()
+            )}
         </div>
         <div className="container_columna_completo_v3">
             <p className="datos_informativos"> Circuito Favorito </p>
             <select className="select_v3" value={circuitoSeleccionado} onChange={(e) => setCircuitoSeleccionado(e.target.value)} >
                 {circuitos.map((circuito) => ( <option key={circuito.idCircuitos} value={circuito.idCircuitos}> {circuito.nombreCircuito} </option> ))}
             </select>
-            {circuitoSeleccionado && (<img src={getImagenCircuito(circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado))?.circuitId)} alt="Circuito" className="imagen_circuito_select"/>)}
+            {circuitoSeleccionado && (
+                (() => {
+                    const circuito = circuitos.find(p => p.idCircuitos === Number(circuitoSeleccionado));
+                    return circuito ? <img src={circuito.imagenCircuitos} alt="Circuito" className="imagen_circuito_select"/> : null;
+                })()
+            )}
         </div>
         <div className="container_columna_completo">
             <p className="datos_informativos"> Equipo Favorito </p>
             <select className="select_v2" value={equipoSeleccionado} onChange={(e) => setEquipoSeleccionado(e.target.value)} >
                 {equipos.map((equipo) => ( <option key={equipo.idEquipos} value={equipo.idEquipos}> {equipo.nombreEquipo} </option> ))}
             </select>
-            {equipoSeleccionado && (<img src={getImagenEquipo(equipos.find(p => p.idEquipos === Number(equipoSeleccionado))?.constructorId)} alt="Equipo" className="imagen_equipo_select"/>)}
+            {equipoSeleccionado && (
+                (() => {
+                    const equipo = equipos.find(p => p.idEquipos === Number(equipoSeleccionado));
+                    return equipo ? <img src={equipo.imagenEquipos} alt="Equipo" className="imagen_equipo_select"/> : null;
+                })()
+            )}
         </div>
       </div>
       <div className="container_paddingTop">

@@ -8,7 +8,6 @@ import "../styles/Imagenes.css";
 import "../styles/Textos.css";
 import { carga } from "./animacionCargando.jsx";
 import HeaderPerfil from "./HeaderPerfil";
-import { getImagenCircuito, getImagenEquipo, getImagenPiloto } from './mapeoImagenes.js';
 
 /**
  * Componente que muestra el perfil de un usuario y sus favoritos
@@ -47,9 +46,9 @@ export const Perfil = () => {
   
         // Cargar elementos favoritos del usuario
         const { pilotoFav, equipoFav, circuitoFav } = await cargarFavoritos(usuario);
-        if (pilotoFav) setImagenPiloto(getImagenPiloto(pilotoFav.driverId));
-        if (equipoFav) setImagenEquipo(getImagenEquipo(equipoFav.constructorId));
-        if (circuitoFav) setImagenCircuito(getImagenCircuito(circuitoFav.circuitId));
+        if (pilotoFav) setImagenPiloto(pilotoFav.imagenPilotos);
+        if (equipoFav) setImagenEquipo(equipoFav.imagenEquipos);
+        if (circuitoFav) setImagenCircuito(circuitoFav.imagenCircuitos);
   
         // Obtener número de publicaciones del usuario
         const publicacionesResponse = await axios.get(`http://localhost:3000/api/publicaciones/count/${idUser}`);
