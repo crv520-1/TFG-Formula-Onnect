@@ -29,8 +29,8 @@ exports.pilotoExiste = async (driverId) => {
 
 // Almacenar un nuevo piloto
 exports.postPilotos = async (piloto) => {
-    const query = 'INSERT INTO Pilotos (driverId, nombrePiloto, apellidoPiloto, nacionalidadPiloto, urlPiloto, isoNacPil) VALUES (?, ?, ?, ?, ?, ?)';
-    const values = [piloto.driverId, piloto.nombrePiloto, piloto.apellidoPiloto, piloto.nacionalidadPiloto, piloto.urlPiloto, piloto.isoNacPil];
+    const query = 'INSERT INTO Pilotos (driverId, nombrePiloto, apellidoPiloto, nacionalidadPiloto, urlPiloto, isoNacPil, imagenPilotos) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const values = [piloto.driverId, piloto.nombrePiloto, piloto.apellidoPiloto, piloto.nacionalidadPiloto, piloto.urlPiloto, piloto.isoNacPil, piloto.imagenPilotos];
   
     try {
       const [result] = await db.query(query, values);
