@@ -11,6 +11,7 @@ import EditarPerfil from "./components/EditarPerfil";
 import GuiaCircuitos from "./components/GuiaCircuitos";
 import GuiaEquipos from "./components/GuiaEquipos";
 import GuiaPilotos from "./components/GuiaPilotos";
+import HiloComentarios from "./components/HiloComentarios";
 import IniciarSesion from "./components/IniciarSesion";
 import Inicio from "./components/Inicio";
 import PerfilDatos from "./components/PerfilDatos";
@@ -44,6 +45,7 @@ const Layout = () => {
           <Route path="/DatosCircuito" element={<DatosCircuito />} />
           <Route path="/DatosEquipo" element={<DatosEquipo/>} />
           <Route path="/ResultadoCircuito" element={<ResultadoCircuito />} />
+          <Route path="/HiloComentarios" element={<HiloComentarios />} />
         </Routes>
       </div>
     </div>

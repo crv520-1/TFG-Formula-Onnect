@@ -21,7 +21,7 @@ export const Dashboard = () => {
      * Excluye la ruta de comentarios para mantener la referencia a la vista original
      */
     useEffect(() => {
-        if (location.pathname !== "/Comentarios") {
+        if (location.pathname !== "/Comentarios" && location.pathname !== "/HiloComentarios") {
             setPrevPath(location.pathname);
         }
     }, [location.pathname]);
@@ -33,7 +33,7 @@ export const Dashboard = () => {
      * @returns {string} Código de color hexadecimal
      */
     const getBoton = (path) => {
-        if (location.pathname === "/Comentarios") {
+        if (location.pathname === "/Comentarios" || location.pathname === "/HiloComentarios") {
             return prevPath === path ? "#FF1E00" : "#15151E";
         }
         return location.pathname === path ? "#FF1E00" : "#15151E";
@@ -99,7 +99,7 @@ export const Dashboard = () => {
             <p className="datos_v11">Resultados</p>
         </button>
         <br />
-        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PerfilPublicaciones")) ? "#FF1E00" : "#15151E", borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
+        <button type="submit" onClick={handlePerfil} style={{ padding:"1vw", backgroundColor: location.pathname === "/Perfil" || location.pathname === "/PerfilPublicaciones" || location.pathname === "/EditarPerfil" || (location.pathname === "/Comentarios" && (prevPath === "/PerfilPublicaciones")) || (location.pathname === "/HiloComentarios" && (prevPath === "/PerfilPublicaciones")) ? "#FF1E00" : "#15151E", borderRadius: "1.5vh", height: "5vh", width: "15vw", display: "flex", flexDirection: "row", alignItems: "center", color: "white", border: "none", outline: "none" }}>
             <UserCircleIcon className="icono_v3"/>
             <p className="datos_v11">Perfil</p>
         </button>

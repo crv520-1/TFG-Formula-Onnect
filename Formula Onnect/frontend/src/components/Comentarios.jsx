@@ -161,14 +161,15 @@ export const Comentarios = () => {
 
         const contadorComentariosHijoResponse = await axios.get(`http://localhost:3000/api/comentarios/numeroComentarioPadre/${comentario.idComentarios}`);
         const contadorComentariosHijoData = contadorComentariosHijoResponse.data || [];
-        const contadorComentariosHijo = contadorComentariosHijoData.length > 0 ? contadorComentariosHijoData[0].contador : 0;
+        console.log(contadorComentariosHijoData);
+        const contadorComentariosHijo = contadorComentariosHijoData.contador || 0;
   
         return {
           ...comentario,
           usuarioComentador: usuarioComentador || null,
           meGustaComentario: contadorMeGustas,
           userHasLiked,
-          contadorComentariosHijo
+          contadorComentariosHijo : contadorComentariosHijo
         };
       });
   
@@ -273,7 +274,6 @@ export const Comentarios = () => {
       default:
         navigate("/Inicio");
     }
-    console.log("Inicio");
   }
 
   /**
@@ -396,8 +396,7 @@ export const Comentarios = () => {
   };
 
   const handleComentarios = async (idComentarios) => {
-    //navigate("/HiloComentarios", { state: { idElemento: idComentarios, previusPath: previusPath } });
-    console.log("Hilo de comentarios: ", idComentarios);
+    navigate("/HiloComentarios", { state: { idComentario: idComentarios, idElemento: idElemento, previusPath: previusPath } });
   }
 
   // Color del contador de caracteres basado en la longitud del texto
@@ -463,13 +462,14 @@ export const Comentarios = () => {
                 <div className="container_gap">
                   <p className="datos">{comentario.meGustaComentario}</p>
                   <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} className="boton_fondo_2c_v4"> {userLikesComentarios[comentario.idComentarios] ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
+                  {console.log(comentario)}
                   <p className="datos">{comentario.contadorComentariosHijo}</p>
-                  <button type='button' onClick={() => handleComentarios(comentario.idComentario)} className="boton_fondo_2c_v4">
+                  <button type='button' onClick={() => handleComentarios(comentario.idComentarios)} className="boton_fondo_2c_v4">
                     <ChatBubbleOvalLeftIcon className="icono"/>
                   </button>
                 </div>
               </div>
-              <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(comentario.idComentario)}>
+              <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(comentario.idComentarios)}>
                 {comentario.text}
               </button>
             </div>
