@@ -33,6 +33,17 @@ exports.getComentariosByIdPublicacion = async (post) => {
   }
 };
 
+// Obtener los comentarios de un comentario por el comentario padre
+exports.getComentariosByComentarioPadre = async (comentarioPadre) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM Comentarios WHERE comentarioPadre = ?', [comentarioPadre]);
+    return rows;
+  } catch (error) {
+    console.log("Error en la consulta de comentarios:", error);
+    throw error;
+  }
+};
+
 // Obtener el numero de comentarios de una publicacion por el id de la publicacion
 exports.getNumeroComentariosByIdPublicacion = async (post) => {
   try {
@@ -44,10 +55,21 @@ exports.getNumeroComentariosByIdPublicacion = async (post) => {
   }
 };
 
+// Obtener el numero de comentarios de un comentario por el comentario padre
+exports.getNumeroComentariosByComentarioPadre = async (comentarioPadre) => {
+  try {
+    const [rows] = await db.query('SELECT comentarioPadre, COUNT(*) AS contador FROM Comentarios WHERE comentarioPadre = ?', [comentarioPadre]);
+    return rows[0];
+  } catch (error) {
+    console.log("Error en la consulta de comentarios:", error);
+    throw error;
+  }
+};
+
 // Crear un nuevo comentario
 exports.createComentarios = async (comentario) => {
-  const query = 'INSERT INTO Comentarios (text, user, post) VALUES (?, ?, ?)';
-  const values = [comentario.text, comentario.user, comentario.post];
+  const query = 'INSERT INTO Comentarios (text, user, post, comentarioPadre) VALUES (?, ?, ?, ?)';
+  const values = [comentario.text, comentario.user, comentario.post, comentario.comentarioPadre];
   try {
     const [result] = await db.query(query, values);
     return result.insertId;
