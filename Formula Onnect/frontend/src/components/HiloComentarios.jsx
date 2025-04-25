@@ -160,7 +160,7 @@ export const HiloComentarios = () => {
 
         const contadorRespuestasHijoResponse = await axios.get(`http://localhost:3000/api/comentarios/numeroComentarioPadre/${respuesta.idComentarios}`);
         const contadorRespuestasHijoData = contadorRespuestasHijoResponse.data || [];
-        const contadorRespuestasHijo = contadorRespuestasHijoData.length > 0 ? contadorRespuestasHijoData[0].contador : 0;
+        const contadorRespuestasHijo = contadorRespuestasHijoData.contador || 0;
   
         return {
           ...respuesta,
