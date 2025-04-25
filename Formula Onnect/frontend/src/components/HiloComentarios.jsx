@@ -120,7 +120,7 @@ export const HiloComentarios = () => {
    */
   const cargarRespuestas = async () => {
     try {
-      const respuestasResponse = await axios.get(`http://localhost:3000/api/comentarios/comentarioPadre/${idComentario}`);
+      const respuestasResponse = await axios.get(`http://localhost:3000/api/comentarios/publicacion/${idElemento}`);
       const respuestasEncontradas = respuestasResponse.data || [];
       
       // Si no hay respuestas, actualizar el estado y retornar
@@ -170,18 +170,37 @@ export const HiloComentarios = () => {
       });
   
       const respuestasCompletas = await Promise.all(promesasRespuestas);
+
+      const respuestasPadre = respuestasCompletas.filter(c => c.comentarioPadre === idComentario);
+      const respuestasHijos = respuestasCompletas.filter(c => c.comentarioPadre !== idComentario);
+      
+      const mapaRespuestasHijosPorPadre = {};
+      respuestasHijos.forEach(hijo => {
+        if (!mapaRespuestasHijosPorPadre[hijo.comentarioPadre]) {
+          mapaRespuestasHijosPorPadre[hijo.comentarioPadre] = [];
+        }
+        mapaRespuestasHijosPorPadre[hijo.comentarioPadre].push(hijo);
+      });
+      
+      const respuestasOrdenados = [];
+      respuestasPadre.forEach(padre => {
+        respuestasOrdenados.push(padre);
+        
+        const hijos = mapaRespuestasHijosPorPadre[padre.idComentarios] || [];
+        respuestasOrdenados.push(...hijos);
+      });
       
       // Actualizar el estado de likes
       const likesTemp = {};
-      respuestasCompletas.forEach(respuesta => {
+      respuestasOrdenados.forEach(respuesta => {
         likesTemp[respuesta.idComentarios] = respuesta.userHasLiked;
       });
       
       setUserLikesRespuestas(likesTemp);
-      setRespuestas(respuestasCompletas);
+      setRespuestas(respuestasOrdenados);
       setHayRespuestas(true);
       
-      return respuestasCompletas;
+      return respuestasOrdenados;
     } catch (error) {
       console.error("Error obteniendo respuestas:", error);
       return [];

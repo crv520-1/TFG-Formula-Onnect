@@ -136,17 +136,17 @@ export const Comentarios = () => {
       // Obtener todos los usuarios para mapearlos a los comentarios
       const usuariosComentadores = await axios.get(`http://localhost:3000/api/usuarios`);
       const usuariosComentadoresData = usuariosComentadores.data || {};
-  
+
       // Crear un mapa de usuarios para acceso rápido por ID
       const mapaUsuariosComentadores = {};
       usuariosComentadoresData.forEach(user => {
         mapaUsuariosComentadores[user.idUsuario] = user;
       });
-  
+
       // Obtener todos los me gustas de comentarios
       const meGustasComentarioResponse = await axios.get(`http://localhost:3000/api/meGustaComentarios`);
       const todosLosMeGustas = meGustasComentarioResponse.data || [];
-  
+
       // Procesar cada comentario para añadir datos adicionales
       const promesasComentarios = comentariosEncontrados.map(async comentario => {
         const usuarioComentador = mapaUsuariosComentadores[comentario.user];
@@ -162,7 +162,7 @@ export const Comentarios = () => {
         const contadorComentariosHijoResponse = await axios.get(`http://localhost:3000/api/comentarios/numeroComentarioPadre/${comentario.idComentarios}`);
         const contadorComentariosHijoData = contadorComentariosHijoResponse.data || [];
         const contadorComentariosHijo = contadorComentariosHijoData.contador || 0;
-  
+
         return {
           ...comentario,
           usuarioComentador: usuarioComentador || null,
@@ -171,20 +171,39 @@ export const Comentarios = () => {
           contadorComentariosHijo : contadorComentariosHijo
         };
       });
-  
-      const comentariosCompletos = await Promise.all(promesasComentarios);
+
+      let comentariosCompletos = await Promise.all(promesasComentarios);
+      
+      const comentariosPadre = comentariosCompletos.filter(c => c.comentarioPadre === null);
+      const comentariosHijos = comentariosCompletos.filter(c => c.comentarioPadre !== null);
+      
+      const mapaComentariosHijosPorPadre = {};
+      comentariosHijos.forEach(hijo => {
+        if (!mapaComentariosHijosPorPadre[hijo.comentarioPadre]) {
+          mapaComentariosHijosPorPadre[hijo.comentarioPadre] = [];
+        }
+        mapaComentariosHijosPorPadre[hijo.comentarioPadre].push(hijo);
+      });
+      
+      const comentariosOrdenados = [];
+      comentariosPadre.forEach(padre => {
+        comentariosOrdenados.push(padre);
+        
+        const hijos = mapaComentariosHijosPorPadre[padre.idComentarios] || [];
+        comentariosOrdenados.push(...hijos);
+      });
       
       // Actualizar el estado de likes
       const likesTemp = {};
-      comentariosCompletos.forEach(comentario => {
+      comentariosOrdenados.forEach(comentario => {
         likesTemp[comentario.idComentarios] = comentario.userHasLiked;
       });
       
       setUserLikesComentarios(likesTemp);
-      setComentarios(comentariosCompletos);
+      setComentarios(comentariosOrdenados);
       setHayComentarios(true);
       
-      return comentariosCompletos;
+      return comentariosOrdenados;
     } catch (error) {
       console.error("Error obteniendo comentarios:", error);
       return [];
