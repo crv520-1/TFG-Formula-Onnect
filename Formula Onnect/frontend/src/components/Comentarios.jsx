@@ -161,7 +161,6 @@ export const Comentarios = () => {
 
         const contadorComentariosHijoResponse = await axios.get(`http://localhost:3000/api/comentarios/numeroComentarioPadre/${comentario.idComentarios}`);
         const contadorComentariosHijoData = contadorComentariosHijoResponse.data || [];
-        console.log(contadorComentariosHijoData);
         const contadorComentariosHijo = contadorComentariosHijoData.contador || 0;
   
         return {
@@ -462,7 +461,6 @@ export const Comentarios = () => {
                 <div className="container_gap">
                   <p className="datos">{comentario.meGustaComentario}</p>
                   <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} className="boton_fondo_2c_v4"> {userLikesComentarios[comentario.idComentarios] ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
-                  {console.log(comentario)}
                   <p className="datos">{comentario.contadorComentariosHijo}</p>
                   <button type='button' onClick={() => handleComentarios(comentario.idComentarios)} className="boton_fondo_2c_v4">
                     <ChatBubbleOvalLeftIcon className="icono"/>

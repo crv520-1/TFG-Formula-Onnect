@@ -35,8 +35,6 @@ export const HiloComentarios = () => {
   const maxCaracteres = 450;
   const advertenciaCaracteres = 400;
 
-  console.log("idComentario", idComentario);
-
   // Actualizamos solo al cambiar de comentario
   useEffect(() => {
     /**
@@ -254,7 +252,14 @@ export const HiloComentarios = () => {
    * Método para navegar a la vista de comentarios de la publicación
    */
   const handleVolverComentarios = () => {
-    navigate("/Comentarios", { state: { idElemento, previusPath } });
+    // Comprobar si el comentario padre tiene predecesor
+    if (comentarioPadre.comentarioPadre) {
+      // Si tiene, navegar a la vista de hilo de comentarios
+      navigate("/HiloComentarios", { state: { idComentario: comentarioPadre.comentarioPadre, idElemento, previusPath } });
+    } else {
+      // Si no tiene, navegar a la vista de comentarios
+      navigate("/Comentarios", { state: { idElemento, previusPath } });
+    }
   }
 
   /**
