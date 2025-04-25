@@ -77,7 +77,7 @@ exports.getNumeroComentariosByComentarioPadre = async (req, res) => {
     const comentarioPadre = req.params.id;
 
     try {
-        const numeroComentarios = await comentariosController.getNumeroComentariosByIdComentarioPadre(comentarioPadre);
+        const numeroComentarios = await comentariosController.getNumeroComentariosByComentarioPadre(comentarioPadre);
         return res.json(numeroComentarios);
     } catch (error) {
         console.error("Error en la API:", error);

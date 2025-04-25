@@ -158,12 +158,17 @@ export const Comentarios = () => {
         const userHasLiked = todosLosMeGustas.some(mg => 
           mg.idComent === comentario.idComentarios && mg.iDusuario === idUsuario
         );
+
+        const contadorComentariosHijoResponse = await axios.get(`http://localhost:3000/api/comentarios/numeroComentarioPadre/${comentario.idComentarios}`);
+        const contadorComentariosHijoData = contadorComentariosHijoResponse.data || [];
+        const contadorComentariosHijo = contadorComentariosHijoData.length > 0 ? contadorComentariosHijoData[0].contador : 0;
   
         return {
           ...comentario,
           usuarioComentador: usuarioComentador || null,
           meGustaComentario: contadorMeGustas,
-          userHasLiked
+          userHasLiked,
+          contadorComentariosHijo
         };
       });
   
@@ -390,6 +395,11 @@ export const Comentarios = () => {
     }
   };
 
+  const handleComentarios = async (idComentarios) => {
+    //navigate("/HiloComentarios", { state: { idElemento: idComentarios, previusPath: previusPath } });
+    console.log("Hilo de comentarios: ", idComentarios);
+  }
+
   // Color del contador de caracteres basado en la longitud del texto
   const colorContador = texto.length === maxCaracteres ? "red" : texto.length >= advertenciaCaracteres ? "orange" : "white";
 
@@ -453,6 +463,10 @@ export const Comentarios = () => {
                 <div className="container_gap">
                   <p className="datos">{comentario.meGustaComentario}</p>
                   <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} className="boton_fondo_2c_v4"> {userLikesComentarios[comentario.idComentarios] ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
+                  <p className="datos">{comentario.contadorComentariosHijo}</p>
+                  <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c_v4">
+                    <ChatBubbleOvalLeftIcon className="icono"/>
+                  </button>
                 </div>
               </div>
               <p className="datos_2c">{comentario.text}</p>
