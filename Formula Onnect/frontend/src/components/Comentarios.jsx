@@ -464,12 +464,14 @@ export const Comentarios = () => {
                   <p className="datos">{comentario.meGustaComentario}</p>
                   <button type='button' onClick={() => handleMeGustaComentario(comentario.idComentarios)} className="boton_fondo_2c_v4"> {userLikesComentarios[comentario.idComentarios] ? <HandThumbUpIcon className="icono"/> : <NoMeGustaIcono className="icono"/>} </button>
                   <p className="datos">{comentario.contadorComentariosHijo}</p>
-                  <button type='button' onClick={() => handleComentarios(publicacion.idPublicaciones)} className="boton_fondo_2c_v4">
+                  <button type='button' onClick={() => handleComentarios(comentario.idComentario)} className="boton_fondo_2c_v4">
                     <ChatBubbleOvalLeftIcon className="icono"/>
                   </button>
                 </div>
               </div>
-              <p className="datos_2c">{comentario.text}</p>
+              <button className="boton_fondo_2c_v3" onClick={() => handleComentarios(comentario.idComentario)}>
+                {comentario.text}
+              </button>
             </div>
           </div> 
         ))}
