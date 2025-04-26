@@ -478,7 +478,7 @@ export const HiloComentarios = () => {
       <br/>
       <div className="container_overflow_padding">
         {hayRespuestas && respuestas.map((respuesta) => (
-          <div key={respuesta.idComentarios} className="container_2c">
+          <div key={respuesta.idComentarios} className={respuesta.comentarioPadre === idComentario ? "container_2c" : "container_2c_v2"}>
             <div className="container_columna_100">
               <div className="container_fila_spaceBetween_v2">
                 {respuesta.usuarioComentador && (

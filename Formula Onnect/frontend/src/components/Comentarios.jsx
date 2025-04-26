@@ -468,7 +468,7 @@ export const Comentarios = () => {
       <br/>
       <div className="container_overflow_padding">
         {hayComentarios && comentarios.map((comentario) => (
-          <div key={comentario.idComentarios} className="container_2c">
+          <div key={comentario.idComentarios} className={comentario.comentarioPadre === null ? "container_2c" : "container_2c_v2"}>
             <div className="container_columna_100">
               <div className="container_fila_spaceBetween_v2">
                 {comentario.usuarioComentador && (

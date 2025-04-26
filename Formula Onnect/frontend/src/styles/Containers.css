@@ -577,6 +577,15 @@
     margin-top: 1vh;
 }
 
+.container_2c_v2 {
+    background-color: #2C2C34;
+    border-radius: 1vh;
+    width: 40vw;
+    height: auto;
+    margin-top: 1vh;
+    margin-left: 5vw;
+}
+
 .container_gap {
     display: flex;
     align-items: center;
