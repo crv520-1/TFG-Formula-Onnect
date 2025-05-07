@@ -42,6 +42,22 @@ exports.getMeGustaById = async (req, res) => {
     }
 }
 
+// Obtener si el usuario ya le dio me gusta a un elemento
+exports.getMeGustaByUser = async (req, res) => {
+    const { idUser, idElemento } = req.params;
+
+    try {
+        const meGusta = await meGustaController.getMeGustaByUser(idUser, idElemento);
+        if (!meGusta) {
+            return res.status(404).json(null);
+        }
+        return res.json(meGusta);
+    } catch (error) {
+        console.error("Error en la API:", error);
+        return res.status(500).json({ error: 'Error al buscar en la base de datos' });
+    }
+}
+
 // Crear un nuevo me gusta
 exports.createMeGusta = async (req, res) => {
     try {

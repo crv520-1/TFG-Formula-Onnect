@@ -32,6 +32,17 @@ exports.getMeGustaById = async (idElemento) => {
   }
 };
 
+// Obtener si el usuario ya le dio me gusta a un elemento
+exports.getMeGustaByUser = async (idUser, idElemento) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM MeGusta WHERE idUser = ? AND idElemento = ?', [idUser, idElemento]);
+    return rows[0] || null;
+  } catch (error) {
+    console.error("Error en la consulta de me gusta por usuario:", error);
+    throw error;
+  }
+};
+
 // Crear un nuevo me gusta
 exports.createMeGusta = async (meGusta) => {
   const query = 'INSERT INTO MeGusta (idUser, idElemento) VALUES (?, ?)';
