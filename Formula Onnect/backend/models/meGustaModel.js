@@ -32,6 +32,17 @@ exports.getMeGustaById = async (idElemento) => {
   }
 };
 
+// Copia del anterior con modificación para Kotlin
+exports.getMeGustaByIdKotlin = async (idElemento) => {
+  try {
+    const [rows] = await db.query('SELECT idElemento, COUNT(*) AS contador FROM MeGusta WHERE idElemento = ?', [idElemento]);
+    return rows[0] || null;
+  } catch (error) {
+    console.error("Error en la consulta de me gusta:", error);
+    throw error;
+  }
+};
+
 // Obtener si el usuario ya le dio me gusta a un elemento
 exports.getMeGustaByUser = async (idUser, idElemento) => {
   try {
