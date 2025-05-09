@@ -32,6 +32,17 @@ exports.getMeGustaComentariosCount = async (idComentario) => {
   }
 };
 
+// Obtener si un usuario ya le dio me gusta a un comentario
+exports.getMeGustaComentariosByUser = async (iDusuario, idComent) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM MeGustaComentarios WHERE iDusuario = ? AND idComent = ?', [iDusuario, idComent]);
+    return rows;
+  } catch (error) {
+    console.error("Error en la consulta de me gusta de comentarios:", error);
+    throw error;
+  }
+};
+
 // Crear un nuevo me gusta de comentario
 exports.createMeGustaComentarios = async (meGustaComentarios) => {
   const query = 'INSERT INTO MeGustaComentarios (iDusuario, idComent) VALUES (?, ?)';
