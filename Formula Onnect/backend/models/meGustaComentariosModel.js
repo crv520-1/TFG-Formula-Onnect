@@ -32,11 +32,33 @@ exports.getMeGustaComentariosCount = async (idComentario) => {
   }
 };
 
+// Copia del anterior con modificación para Kotlin
+exports.getMeGustaComentariosCountKotlin = async (idComentario) => {
+  try {
+    const [rows] = await db.query('SELECT COUNT(*) AS contador FROM MeGustaComentarios WHERE idComent = ?', [idComentario]);
+    return rows[0] || null;
+  } catch (error) {
+    console.error("Error en la consulta de me gusta de comentarios:", error);
+    throw error;
+  }
+};
+
 // Obtener si un usuario ya le dio me gusta a un comentario
 exports.getMeGustaComentariosByUser = async (iDusuario, idComent) => {
   try {
     const [rows] = await db.query('SELECT * FROM MeGustaComentarios WHERE iDusuario = ? AND idComent = ?', [iDusuario, idComent]);
     return rows;
+  } catch (error) {
+    console.error("Error en la consulta de me gusta de comentarios:", error);
+    throw error;
+  }
+};
+
+// Copia del anterior con modificación para Kotlin
+exports.getMeGustaComentariosByUserKotlin = async (iDusuario, idComent) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM MeGustaComentarios WHERE iDusuario = ? AND idComent = ?', [iDusuario, idComent]);
+    return rows[0] || null;
   } catch (error) {
     console.error("Error en la consulta de me gusta de comentarios:", error);
     throw error;

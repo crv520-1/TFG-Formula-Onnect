@@ -42,6 +42,22 @@ exports.getMeGustaComentariosCount = async (req, res) => {
     }
 }
 
+// Copia del anterior con modificación para Kotlin
+exports.getMeGustaComentariosCountKotlin = async (req, res) => {
+    const { idComentario } = req.params;
+
+    try {
+        const meGustaComentarios = await meGustaComentariosModel.getMeGustaComentariosCountKotlin(idComentario);
+        if (!meGustaComentarios) {
+            return res.status(404).json(null);
+        }
+        return res.json(meGustaComentarios);
+    } catch (error) {
+        console.error("Error en la API:", error);
+        return res.status(500).json({ error: 'Error al buscar en la base de datos' });
+    }
+}
+
 // Obtener si un usuario ya le dio me gusta a un comentario
 exports.getMeGustaComentariosByUser = async (req, res) => {
     const { iDusuario, idComent } = req.params;
@@ -50,6 +66,22 @@ exports.getMeGustaComentariosByUser = async (req, res) => {
         const meGustaComentarios = await meGustaComentariosModel.getMeGustaComentariosByUser(iDusuario, idComent);
         if (meGustaComentarios.length === 0) {
             return res.status(404).json({ error: 'Me gusta no encontrado' });
+        }
+        return res.json(meGustaComentarios);
+    } catch (error) {
+        console.error("Error en la API:", error);
+        return res.status(500).json({ error: 'Error al buscar en la base de datos' });
+    }
+}
+
+// Copia del anterior con modificación para Kotlin
+exports.getMeGustaComentariosByUserKotlin = async (req, res) => {
+    const { iDusuario, idComent } = req.params;
+
+    try {
+        const meGustaComentarios = await meGustaComentariosModel.getMeGustaComentariosByUserKotlin(iDusuario, idComent);
+        if (!meGustaComentarios) {
+            return res.status(404).json(null);
         }
         return res.json(meGustaComentarios);
     } catch (error) {
