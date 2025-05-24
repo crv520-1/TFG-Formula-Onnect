@@ -143,7 +143,7 @@ function getImagenCircuito(circuitId){
         "albert_park" : "images/circuits/albert_park.png",
         "catalunya" : "images/circuits/barcelona.png",
         "hockenheimring" : "images/circuits/hockeheim.png",
-        "hungaroring" : "images/circuits/hungaroring.png",
+        "hungaroring" : "images/circuits/Hungaroring.png",
         "imola" : "images/circuits/imola.png",
         "indianapolis" : "images/circuits/Indianapolis.png",
         "interlagos" : "images/circuits/interlagos.png",
