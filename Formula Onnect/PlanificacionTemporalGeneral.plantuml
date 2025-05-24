@@ -1,0 +1,12 @@
+@startgantt
+project starts 2025-02-01
+[Estudio de las herramientas (30h)] lasts 14 days
+[Analisis de requisitos (30h)] lasts 14 days
+[Realización de los prototipos (50h)] lasts 18 days
+[Implementacion aplicacion web (125h)] lasts 41 days
+[Implementacion aplicacion web (125h)] starts at [Realización de los prototipos (50h)]'s end
+[Implementacion aplicacion movil (75h)] lasts 30 days
+[Implementacion aplicacion movil (75h)] starts at [Implementacion aplicacion web (125h)]'s end
+[Documentación (50h)] lasts 20 days
+[Documentación (50h)] starts at [Implementacion aplicacion movil (75h)]'s end
+@endgantt

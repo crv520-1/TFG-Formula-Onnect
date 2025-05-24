@@ -1,0 +1,26 @@
+@startgantt
+project starts 2025-03-01
+[Creación servidor local (4h)] lasts 2 days
+[Registro (10h)] lasts 5 days
+[Registro (10h)] starts at [Creación servidor local (4h)]'s end
+[Iniciar sesión (10h)] lasts 5 days
+[Iniciar sesión (10h)] starts at [Creación servidor local (4h)]'s end
+[Dashboard (7h)] lasts 4 days
+[Dashboard (7h)] starts at [Iniciar sesión (10h)]'s end
+[Perfil usuario (7h)] lasts 4 days
+[Perfil usuario (7h)] starts at [Dashboard (7h)]'s end
+[Clasificación (17h)] lasts 8 days
+[Clasificación (17h)] starts at [Perfil usuario (7h)]'s end
+[Resultados (17h)] lasts 8 days
+[Resultados (17h)] starts at [Perfil usuario (7h)]'s end
+[Inicio (7h)] lasts 4 days
+[Inicio (7h)] starts at [Resultados (17h)]'s end
+[Comentarios (8h)] lasts 5 days
+[Comentarios (8h)] starts at [Inicio (7h)]'s end
+[Crear publicaciones (5h)] lasts 2 day
+[Crear publicaciones (5h)] starts at [Comentarios (8h)]'s end
+[Guias (10h)] lasts 7 days
+[Guias (10h)] starts at [Crear publicaciones (5h)]'s end
+[Scraping (10h)] lasts 7 days
+[Scraping (10h)] starts at [Crear publicaciones (5h)]'s end
+@endgantt
