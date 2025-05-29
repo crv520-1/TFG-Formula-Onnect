@@ -33,66 +33,96 @@ async function getEquipoData(index, urlEng, urlEsp) {
   const page = await browser.newPage();
 
   try {
-    await page.goto(urlEsp, { waitUntil: 'domcontentloaded' });
+    // Use Spanish URL first (index 0), then English URL (index 1)
+    const url = index == 0 ? urlEsp : urlEng;
+    const isEnglish = index == 1;
+    
+    await page.goto(url, { waitUntil: 'domcontentloaded' });
 
     // Extraer datos del equipo
-    const data = await page.evaluate(() => {
-      const getTableData = (headerText) => {
+    const data = await page.evaluate((isEnglish) => {
+      // Define headers in both languages
+      const headers = {
+        formula1Section: isEnglish ? ['Formula One', 'F1'] : ['Fórmula 1', 'F1'],
+        races: isEnglish ? ['Entries', 'Races'] : ['Carreras'],
+        wins: isEnglish ? ['Race victories', 'Wins'] : ['Victorias'],
+        poles: isEnglish ? ['Pole positions'] : ['Pole positions'],
+        founders: isEnglish ? ['Founder', 'Founded by'] : ['Fundador/es'],
+        points: isEnglish ? ['Points'] : ['Puntos'],
+        debut: isEnglish ? ['First entry', 'First race'] : ['Debut'],
+        lastRace: isEnglish ? ['Last entry', 'Last race'] : ['Última carrera'],
+        constructorChampionships: isEnglish ? ["Constructors' Championships", "Constructors' titles"] : ['Campeonatos de Constructores', 'Campeonatos de Escuderías'],
+        driverChampionships: isEnglish ? ["Drivers' Championships"] : ['Campeonatos de Pilotos'],
+        fastestLaps: isEnglish ? ['Fastest laps'] : ['Vueltas rápidas'],
+        podiums: isEnglish ? ['Podiums'] : ['Podios']
+      };
+
+      const getTableData = (headerTexts) => {
         const rows = Array.from(document.querySelectorAll('.infobox tr'));
-        // Poner tanto la versión española como la versión inglesa de la tabla
-        const sectionHeaderIndex = rows.findIndex(r => r.querySelector('th') && (r.querySelector('th').textContent.includes('Fórmula 1') || r.querySelector('th').textContent.includes('F1')));
+        // Look for Formula 1 or F1 section
+        const sectionHeaderIndex = rows.findIndex(r => {
+          const th = r.querySelector('th');
+          return th && headers.formula1Section.some(text => th.textContent.includes(text));
+        });
+        
         if (sectionHeaderIndex === -1) return null;
 
         const sectionRows = rows.slice(sectionHeaderIndex + 1);
-        const row = sectionRows.find(r => r.querySelector('th') && r.querySelector('th').textContent.includes(headerText));
+        
+        // Find row that matches any of the provided header texts
+        const row = sectionRows.find(r => {
+          const th = r.querySelector('th');
+          return th && headerTexts.some(text => th.textContent.includes(text));
+        });
+        
         return row ? row.querySelector('td') : null;
       };
 
-      const getHistoria = (headerText) => {
+      const getHistoria = (headerTexts) => {
         const rows = Array.from(document.querySelectorAll('.infobox tr'));
-        const row = rows.find(r => r.querySelector('th') && r.querySelector('th').textContent.includes(headerText));
+        const row = rows.find(r => {
+          const th = r.querySelector('th');
+          return th && headerTexts.some(text => th.textContent.includes(text));
+        });
         return row ? row.querySelector('td') : null;
       };
 
-      const racesFinishedCell = getTableData('Carreras');
+      // Extract data using the language-specific headers
+      const racesFinishedCell = getTableData(headers.races);
       let racesFinished = null;
       if (racesFinishedCell) {
-        // Extraer carreras terminadas
         const racesFinishedText = racesFinishedCell.textContent.replace(/\[.*?\]/g, '').trim();
         const match = racesFinishedText.match(/^(\d+)/);
         racesFinished = match ? match[1] : racesFinishedText;
       }
 
-      const winsCell = getTableData('Victorias');
+      const winsCell = getTableData(headers.wins);
       let wins = null;
       if (winsCell) {
-        // Extraer victorias
         const winsText = winsCell.textContent.replace(/\[.*?\]/g, '').trim();
         const match = winsText.match(/^(\d+)/);
         wins = match ? match[1] : winsText;
       }
 
-      const polesCell = getTableData('Pole positions');
+      const polesCell = getTableData(headers.poles);
       let poles = null;
       if (polesCell) {
-        // Extraer poles
         const polesText = polesCell.textContent.replace(/\[.*?\]/g, '').trim();
         const match = polesText.match(/^(\d+)/);
         poles = match ? match[1] : polesText;
       }
 
-      const foundersCell = getHistoria('Fundador/es');
+      const foundersCell = getHistoria(headers.founders);
       let founders = null;
       if (foundersCell) {
-        founders = foundersCell.textContent.replace(/\[.*?\]/g, '').trim()
+        founders = foundersCell.textContent.replace(/\[.*?\]/g, '').trim();
       } else {
         founders = "Desconocido";
       }
 
-      const pointsCell = getTableData('Puntos');
+      const pointsCell = getTableData(headers.points);
       let points = null;
       if (pointsCell) {
-        // Extraer puntos
         const pointsText = pointsCell.textContent.replace(/\[.*?\]/g, '').trim();
         const match = pointsText.match(/^(\d+)/);
         points = match ? match[1] : pointsText;
@@ -101,19 +131,19 @@ async function getEquipoData(index, urlEng, urlEsp) {
       }
 
       return {
-        founders, // Fundadores
-        firstRace: getTableData('Debut')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Carrera de debut
-        lastRace: getTableData('Última carrera')?.textContent.replace(/\[.*?\]/g, '').trim() || "Desconocida", // Carrera de retiro
-        constructorChampionships: getTableData('Campeonatos de Constructores')?.textContent.replace(/\[.*?\]/g, '').trim() || getTableData('Campeonatos de Escuderías')?.textContent.replace(/\[.*?\]/g, '').trim() || "No hay datos", // Mundiales de constructores ganados
-        driverChampionships: getTableData('Campeonatos de Pilotos')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Mundiales de pilotos ganados
-        wins, // Victorias
-        poles, // Poles
-        fastestLaps: getTableData('Vueltas rápidas')?.textContent.replace(/\[.*?\]/g, '').trim() || null, // Vueltas rápidas
-        podiums: getTableData('Podios')?.textContent.replace(/\[.*?\]/g, '').trim() || "Sin datos encontrados", // Podios
-        points, // Puntos totales
-        racesFinished, // Carreras terminadas
+        founders,
+        firstRace: getTableData(headers.debut)?.textContent.replace(/\[.*?\]/g, '').trim() || null,
+        lastRace: getTableData(headers.lastRace)?.textContent.replace(/\[.*?\]/g, '').trim() || "Desconocida",
+        constructorChampionships: getTableData(headers.constructorChampionships)?.textContent.replace(/\[.*?\]/g, '').trim() || "No hay datos",
+        driverChampionships: getTableData(headers.driverChampionships)?.textContent.replace(/\[.*?\]/g, '').trim() || null,
+        wins,
+        poles,
+        fastestLaps: getTableData(headers.fastestLaps)?.textContent.replace(/\[.*?\]/g, '').trim() || null,
+        podiums: getTableData(headers.podiums)?.textContent.replace(/\[.*?\]/g, '').trim() || "Sin datos encontrados",
+        points,
+        racesFinished,
       };
-    });
+    }, isEnglish);
 
     return data;
   } finally {
