@@ -131,7 +131,8 @@ export const EditarPerfil = () => {
      */
     const handleGuardar = async (e) => {
         e.preventDefault();
-        
+
+        // Validaciones básicas
         if (!nickName || !nombreCompleto || !contraseña || !contraseñaRepe) {
             alert("Por favor, llene todos los campos");
             return;
@@ -146,23 +147,40 @@ export const EditarPerfil = () => {
             alert("Las contraseñas no coinciden");
             return;
         }
-                
-        const usuarioActualizado = {
-            nickName: nickName,
-            nombreCompleto: nombreCompleto,
-            email: usuario.email,
-            contrasena: contraseña,
-            pilotoFav: pilotoSeleccionado,
-            equipoFav: equipoSeleccionado,
-            circuitoFav: circuitoSeleccionado,
-            fotoPerfil: usuario.fotoPerfil
-        };
+
         try {
+            const response = await axios.get("http://localhost:3000/api/usuarios");
+            const todosLosUsuarios = response.data;
+
+            // Verificar si el nickname ya existe (excluyendo el usuario actual)
+            const usuarioExistente = todosLosUsuarios.find(user => 
+                user.nickName === nickName && user.idUsuario !== parseInt(idUsuario)
+            );
+        
+            if (usuarioExistente) {
+                alert("El nombre de usuario ya existe.");
+                return;
+            }
+
+            // Si no existe conflicto, proceder con la actualización
+            const usuarioActualizado = {
+                nickName: nickName,
+                nombreCompleto: nombreCompleto,
+                email: usuario.email,
+                contrasena: contraseña,
+                pilotoFav: pilotoSeleccionado,
+                equipoFav: equipoSeleccionado,
+                circuitoFav: circuitoSeleccionado,
+                fotoPerfil: usuario.fotoPerfil
+            };
+
             await axios.put(`http://localhost:3000/api/usuarios/${idUsuario}`, usuarioActualizado);
+            navigate("/Perfil", { state: { idUser: idUsuario } });
+
         } catch (error) {
-            console.error(`Error al actualizar el usuario ${usuarioActualizado.nickName}:`, error);
+            console.error("Error al procesar la actualización del usuario:", error);
+            alert("Ocurrió un error al guardar los cambios. Por favor, inténtelo de nuevo.");
         }
-        navigate("/Perfil", { state: { idUser: idUsuario } });
     }
 
     // Muestra animación de carga mientras se obtienen los datos
