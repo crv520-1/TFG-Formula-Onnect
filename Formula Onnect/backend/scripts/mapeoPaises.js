@@ -100,6 +100,7 @@ function getTraduccionPais(nationality) {
 export { getPaisISO, getTraduccionPais };
 
 // IMPORTANTE. SI NO FUNCIONA LA BASE DE DATOS PROBAR A ACTIVAR ESTO.
+// IMPORTANTE. NECESARIO PARA CARGAR EN LA BASE DE DATOS LOS ELEMENTOS INCIALES.
 // Se usa para exportar de cara a la API de la base de datos
 /*module.exports = {
     getPaisISO,
