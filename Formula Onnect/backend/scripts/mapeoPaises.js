@@ -97,6 +97,7 @@ function getTraduccionPais(nationality) {
 }
 
 // Se usa para exportar de cara a la aplicación web para usarlo en el frontend de la clasificación de pilotos y de equipos
+// IMPORTANTE. COMENTAR AL CARGAR EN LA BASE DE DATOS LOS ELEMENTOS INICIALES.
 export { getPaisISO, getTraduccionPais };
 
 // IMPORTANTE. SI NO FUNCIONA LA BASE DE DATOS PROBAR A ACTIVAR ESTO.
