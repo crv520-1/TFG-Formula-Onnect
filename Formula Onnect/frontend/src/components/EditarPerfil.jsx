@@ -51,8 +51,8 @@ export const EditarPerfil = () => {
                 setUsuario(usuarioEncontrado);
                 setNickName(usuarioEncontrado.nickName);
                 setNombreCompleto(usuarioEncontrado.nombreCompleto);
-                setContraseña(usuarioEncontrado.contrasena);
-                setContraseñaRepe(usuarioEncontrado.contrasena);
+                setContraseña("");
+                setContraseñaRepe("");
 
                 // Actualizar listas de selección
                 setPilotos(datosFavoritos.pilotos);

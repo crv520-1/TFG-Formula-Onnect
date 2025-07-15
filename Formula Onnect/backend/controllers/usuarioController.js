@@ -1,4 +1,5 @@
 const usuarioModel = require('../models/usuarioModel.js');
+const bcrypt = require('bcrypt');
 
 // Obtener todos los usuarios
 exports.getAllUsuarios = async (req, res) => {
@@ -41,6 +42,28 @@ exports.getUsuarioByNickName = (req, res) => {
         res.json(results[0]);
     });
 }
+
+// Login de usuario
+exports.loginUsuario = async (req, res) => {
+    const { nickName, contrasena } = req.body;
+    try {
+        const usuario = await usuarioModel.getUsuarioByNickNameForLogin(nickName);
+        if (!usuario) {
+            return res.status(401).json({ error: 'Credenciales inválidas' });
+        }
+
+        const match = await bcrypt.compare(contrasena, usuario.contrasena);
+        if (match) {
+            // No devolver la contraseña en la respuesta
+            const { contrasena, ...usuarioSinContrasena } = usuario;
+            res.json({ message: 'Login exitoso', usuario: usuarioSinContrasena });
+        } else {
+            res.status(401).json({ error: 'Credenciales inválidas' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error en el servidor' });
+    }
+};
 
 // Crear un nuevo usuario
 exports.createUsuario = async (req, res) => {
