@@ -72,17 +72,20 @@ export const IniciarSesion = () => {
             alert("Por favor, llene todos los campos");
             return;
         }
-        let usuario = usuarios.find(usuario => usuario.nickName === nickName);
-        if (!usuario) {
-            alert("Usuario no encontrado o inexistente");
-            return;
+        try {
+            const response = await axios.post("http://localhost:3000/api/usuarios/login", {
+                nickName,
+                contrasena: contraseña
+            });
+            
+            if (response.data && response.data.usuario) {
+                setUser(response.data.usuario.idUsuario);
+                navigate("/Inicio");
+            }
+        } catch (error) {
+            alert("Usuario o contraseña incorrectos.");
+            console.error("Error al iniciar sesión:", error);
         }
-        if (usuario.contrasena !== contraseña) {
-            alert("Contraseña incorrecta");
-            return;
-        }
-        setUser(usuario.idUsuario);
-        navigate("/Inicio");
     };
 
     // Muestra animación de carga mientras se obtienen los datos
